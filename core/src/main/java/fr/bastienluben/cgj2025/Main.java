@@ -1,32 +1,61 @@
 package fr.bastienluben.cgj2025;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import fr.bastienluben.cgj2025.screens.MainMenuScreen;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Main extends ApplicationAdapter {
-    private SpriteBatch batch;
-    private Texture image;
+public class Main extends Game {
+    private SpriteBatch sprite;
+    private ShapeRenderer shape;
+    private BitmapFont font;
+    private FitViewport viewport;
+    private AssetManager assets;
 
-    @Override
     public void create() {
-        batch = new SpriteBatch();
-        image = new Texture("libgdx.png");
+        sprite = new SpriteBatch();
+        shape = new ShapeRenderer();
+        // use libGDX's default font
+        font = new BitmapFont();
+        viewport = new FitViewport(16, 9);
+
+
+        // font has 15pt, but we need to scale it to our viewport by ratio of viewport
+        // height to screen height
+        font.setUseIntegerPositions(false);
+        font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
+
+        this.setScreen(new MainMenuScreen(this));
     }
 
-    @Override
     public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.draw(image, 140, 210);
-        batch.end();
+        super.render(); // important!
     }
 
-    @Override
     public void dispose() {
-        batch.dispose();
-        image.dispose();
+        sprite.dispose();
+        font.dispose();
+    }
+
+    public SpriteBatch getSprite() {
+        return sprite;
+    }
+
+    public ShapeRenderer getShape() {
+        return shape;
+    }
+
+    public BitmapFont getFont() {
+        return font;
+    }
+
+    public FitViewport getViewport() {
+        return viewport;
     }
 }
