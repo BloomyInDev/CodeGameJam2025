@@ -6,11 +6,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.lib.movement.Coordonnee;
 
-import javax.swing.text.Position;
-
 public class Entity implements ISpriteDrawable {
-    private Sprite sprite;
-    private Coordonnee position;
+    protected Sprite sprite;
+    protected Coordonnee position;
 
     public Entity(Sprite sprite, Vector2 position) {
         this.sprite = sprite;
