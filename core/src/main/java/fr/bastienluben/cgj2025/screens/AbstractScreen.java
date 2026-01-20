@@ -2,11 +2,14 @@ package fr.bastienluben.cgj2025.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.Main;
 
-public abstract class AbstractScreen implements Screen {
+public abstract class AbstractScreen implements Screen, IScript {
     protected Main game;
+
 
     public AbstractScreen(Main game, AssetManager assets) {
         this.game = game;
@@ -18,12 +21,23 @@ public abstract class AbstractScreen implements Screen {
     /**
      * @param delta The time in seconds since the last render.
      */
-    public abstract void update(float delta);
-    public abstract void pause();
-    public abstract void resume();
-    public abstract void show();
-    public abstract void hide();
-    public abstract void dispose();
+    @Override
+    public void update(float delta) { }
+
+    @Override
+    public void pause() { }
+
+    @Override
+    public void resume() { }
+
+    @Override
+    public void hide() { }
+
+    @Override
+    public void dispose() { }
+
+    public void draw(SpriteBatch batch) {}
+    public void draw(ShapeRenderer batch) {}
 
     @Override
     public void resize(int width, int height) {
@@ -31,7 +45,11 @@ public abstract class AbstractScreen implements Screen {
     }
 
     @Override
-    public void render(float delta) {
+    public final void show() { start(); }
+    public final void render(float delta) {
         update(delta);
+        draw(game.getSprite());
+        draw(game.getShape());
     }
+
 }
