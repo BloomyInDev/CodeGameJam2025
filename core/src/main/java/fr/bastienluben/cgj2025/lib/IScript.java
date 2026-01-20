@@ -1,9 +1,12 @@
 package fr.bastienluben.cgj2025.lib;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.bastienluben.cgj2025.lib.entities.ISpriteDrawable;
 
-public interface IScript {
+public interface IScript
+{
     public void onLoad(AssetManager manager);
     public void start();
     public void update(float delta);

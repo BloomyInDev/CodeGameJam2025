@@ -1,5 +1,6 @@
 package fr.bastienluben.cgj2025.screens.main;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import fr.bastienluben.cgj2025.lib.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -8,11 +9,14 @@ import fr.bastienluben.cgj2025.lib.*;
 public class UITest implements IScript
 {
     Image test;
+    Text testtext;
 
     @Override
     public void onLoad(AssetManager manager)
     {
         test = new Image(256, 128, manager.getTexture("default.png"));
+        testtext = new Text("hello guys");
+        testtext.setPosition(Bounds.Center);
     }
 
     @Override
@@ -31,7 +35,8 @@ public class UITest implements IScript
     @Override
     public void draw(SpriteBatch batch)
     {
-        test.render(batch);
+        test.draw(batch);
+        testtext.draw(batch);
     }
 
     @Override

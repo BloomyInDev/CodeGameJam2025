@@ -1,11 +1,14 @@
 package fr.bastienluben.cgj2025.lib.ui;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import fr.bastienluben.cgj2025.lib.entities.ISpriteDrawable;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-public class UI
+public class UI implements ISpriteDrawable
 {
     public static void setScreenResolution(int width, int height)
     {
@@ -13,6 +16,19 @@ public class UI
     }
     private static UI Screen;
 
+    protected static Vector2[] outlinePos = new Vector2[]
+    {
+        new Vector2(-1, -1),
+        new Vector2(0, -1),
+        new Vector2(1, -1),
+
+        new Vector2(-1, 0),
+        new Vector2(1, 0),
+
+        new Vector2(-1, 1),
+        new Vector2(0, 1),
+        new Vector2(-1, 1)
+    };
 
     public void setVisible(boolean value)
     {
@@ -25,7 +41,7 @@ public class UI
     }
 
     protected UI parent;
-    protected Set<UI> childs;
+    protected ArrayList<UI> childs;
 
     public void setParent(UI parent)
     {
@@ -35,6 +51,7 @@ public class UI
     }
 
     protected Rectangle rect, margin, padding;
+    public Vector2 posOffset = new Vector2(0, 0);
     protected float layer;
     protected Bounds position;
 
@@ -45,6 +62,7 @@ public class UI
         rect = new Rectangle(0, 0, 32, 32);
         layer = 0;
         parent = Screen;
+        childs = new ArrayList<UI>();
         visible = true;
     }
 
@@ -54,6 +72,7 @@ public class UI
         padding = new Rectangle(0, 0, 0, 0);
         rect = new Rectangle(0, 0, width, height);
         parent = Screen;
+        childs = new ArrayList<UI>();
         visible = true;
     }
 
@@ -161,6 +180,15 @@ public class UI
         for (UI c : childs)
         {
             c.updatePosition();
+        }
+    }
+
+    @Override
+    public void draw(SpriteBatch spriteDrawer)
+    {
+        for (UI elem : childs)
+        {
+            elem.draw(spriteDrawer);
         }
     }
 }
