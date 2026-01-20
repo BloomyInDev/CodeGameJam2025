@@ -45,6 +45,7 @@ public class UI
         rect = new Rectangle(0, 0, 32, 32);
         layer = 0;
         parent = Screen;
+        visible = true;
     }
 
     protected UI(float width, float height)
@@ -53,6 +54,7 @@ public class UI
         padding = new Rectangle(0, 0, 0, 0);
         rect = new Rectangle(0, 0, width, height);
         parent = Screen;
+        visible = true;
     }
 
     protected UI(int width, int height, Bounds position)

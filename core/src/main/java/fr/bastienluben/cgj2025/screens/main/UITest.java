@@ -12,13 +12,14 @@ public class UITest implements IScript
     @Override
     public void onLoad(AssetManager manager)
     {
-        //test = new Image(manager.getTexture("default.png"));
+        test = new Image(256, 128, manager.getTexture("default.png"));
     }
 
     @Override
     public void start()
     {
-        //test.setPosition(Bounds.BottomLeft);
+        test.setMargin(8);
+        test.setPosition(Bounds.TopLeft);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class UITest implements IScript
     @Override
     public void draw(SpriteBatch batch)
     {
-        //test.render(batch);
+        test.render(batch);
     }
 
     @Override

@@ -48,9 +48,11 @@ public class MainMenuScreen extends AbstractScreen
     @Override
     public void draw(SpriteBatch batch)
     {
+        batch.begin();
         for (IScript s : scripts)
         {
             s.draw(batch);
         }
+        batch.end();
     }
 }

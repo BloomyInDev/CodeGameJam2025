@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.bastienluben.cgj2025.lib.AssetManager;
+import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.main.MainMenuScreen;
 
 public class Main extends Game {
@@ -36,13 +37,18 @@ public class Main extends Game {
         font.setUseIntegerPositions(false);
         font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
 
+        assets = new AssetManager();
+        UI.setScreenResolution(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         this.setScreen(new MainMenuScreen(this, assets));
     }
 
     public void render() {
+        ScreenUtils.clear(0.1f, 0f, 0f, 0f);  // faut clear avant bande de batard
+
+        // ça appelle le draw du screen
         super.render(); // important ?!?!?!
 
-        ScreenUtils.clear(1f, 0f, 0f, 0f);
         batch.begin();
         batch.draw(shawImage, 0, 0);
 
