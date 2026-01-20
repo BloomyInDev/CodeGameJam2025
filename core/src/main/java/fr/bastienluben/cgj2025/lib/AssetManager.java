@@ -1,4 +1,4 @@
-package fr.bastienluben.cgj2025;
+package fr.bastienluben.cgj2025.lib;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

@@ -1,4 +1,4 @@
-package tonpere.tamerecestjava;
+package fr.bastienluben.cgj2025.lib.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;

@@ -1,4 +1,4 @@
-package tonpere.tamerecestjava;
+package fr.bastienluben.cgj2025.lib.ui;
 
 public enum Bounds
 {

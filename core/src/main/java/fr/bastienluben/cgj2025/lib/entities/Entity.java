@@ -1,4 +1,4 @@
-package fr.bastienluben.cgj2025.entities;
+package fr.bastienluben.cgj2025.lib.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
