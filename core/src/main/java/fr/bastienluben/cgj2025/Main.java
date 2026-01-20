@@ -41,7 +41,7 @@ public class Main extends Game {
     }
 
     public void render() {
-        super.render();// important!
+        super.render(); // important ?!?!?!
 
         ScreenUtils.clear(1f, 0f, 0f, 0f);
         batch.begin();
