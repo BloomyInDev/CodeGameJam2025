@@ -2,7 +2,7 @@ package fr.bastienluben.cgj2025.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
-import fr.bastienluben.cgj2025.AssetManager;
+import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.Main;
 
 public abstract class AbstractScreen implements Screen {

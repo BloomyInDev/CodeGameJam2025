@@ -1,6 +1,6 @@
 package fr.bastienluben.cgj2025.screens;
 
-import fr.bastienluben.cgj2025.AssetManager;
+import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.Main;
 
 public class MainMenuScreen extends AbstractScreen{

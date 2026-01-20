@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.screens.MainMenuScreen;
 
 public class Main extends Game {
@@ -18,6 +19,9 @@ public class Main extends Game {
     private FitViewport viewport;
     private AssetManager assets;
 
+    private Texture shawImage;
+    private SpriteBatch batch;
+
     public void create() {
         sprite = new SpriteBatch();
         shape = new ShapeRenderer();
@@ -25,17 +29,25 @@ public class Main extends Game {
         font = new BitmapFont();
         viewport = new FitViewport(16, 9);
 
+        shawImage = new Texture("Silksong.jpg");
+        batch = new SpriteBatch();
 
         // font has 15pt, but we need to scale it to our viewport by ratio of viewport
         // height to screen height
         font.setUseIntegerPositions(false);
         font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
 
-        this.setScreen(new MainMenuScreen(this));
+        this.setScreen(new MainMenuScreen(this, assets));
     }
 
     public void render() {
-        super.render(); // important!
+        super.render();// important!
+
+        ScreenUtils.clear(1f, 0f, 0f, 0f);
+        batch.begin();
+        batch.draw(shawImage, 0, 0);
+
+        batch.end();
     }
 
     public void dispose() {
