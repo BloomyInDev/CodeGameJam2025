@@ -13,7 +13,7 @@ public abstract class AbstractScreen implements Screen {
         this.onLoad(assets);
     }
 
-    public abstract void onLoad(AssetManager assets);
+    public void onLoad(AssetManager assets) {};
 
     /**
      * @param delta The time in seconds since the last render.
@@ -29,6 +29,8 @@ public abstract class AbstractScreen implements Screen {
     public void resize(int width, int height) {
         game.getViewport().update(width, height, true);
     }
+
+    @Override
     public void render(float delta) {
         update(delta);
     }
