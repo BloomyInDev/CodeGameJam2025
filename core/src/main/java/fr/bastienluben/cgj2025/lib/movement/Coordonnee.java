@@ -5,7 +5,7 @@ public class Coordonnee {
     private Vector2 position;
 
     public Coordonnee(){
-        this.position = new Vector2(0, 0);
+        this.position = new Vector2();
     }
 
     public Coordonnee(float x, float y){

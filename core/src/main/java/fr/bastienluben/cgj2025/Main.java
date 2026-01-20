@@ -61,7 +61,8 @@ public class Main extends Game {
 
         batch.begin();
         batch.draw(shawImage, 0, 0);
-
+        // Quelqu'un peut faire en sorte que l'image soit toujours
+        // en bas à gauche même quand on change la taille de la fenêtre
         batch.end();
     }
 
