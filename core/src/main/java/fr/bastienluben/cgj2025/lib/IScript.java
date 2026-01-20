@@ -1,11 +1,10 @@
-package fr.bastienluben.cgj2025.screens;
+package fr.bastienluben.cgj2025.lib;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import fr.bastienluben.cgj2025.lib.AssetManager;
 
 public interface IScript {
-    public void load(AssetManager manager);
+    public void onLoad(AssetManager manager);
     public void start();
     public void update(float delta);
     public void draw(SpriteBatch batch);

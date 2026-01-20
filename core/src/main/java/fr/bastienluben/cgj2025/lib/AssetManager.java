@@ -2,6 +2,7 @@ package fr.bastienluben.cgj2025.lib;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,8 +21,9 @@ public class AssetManager {
 
     public Texture getTexture(String path) {
         if (textures.containsKey(path)) return textures.get(path);
-        textures.put(path, new Texture(Gdx.files.internal(path)));
-        return textures.get(path);
+        Texture t =  new Texture(Gdx.files.internal(path));
+        textures.put(path, t);
+        return t;
     }
 
     public void dispose(List<String> paths) {

@@ -9,6 +9,20 @@ public class Image extends UI
     private Texture img;
     public Color color;
 
+    public Image(Texture tex)
+    {
+        super(tex.getWidth(), tex.getHeight());
+        this.img = tex;
+        this.color = Color.WHITE;
+    }
+
+    public Image(Texture tex, Color color)
+    {
+        super(tex.getWidth(), tex.getHeight());
+        this.img = tex;
+        this.color = color;
+    }
+
     public Image(int width, int height, Texture tex)
     {
         super(width, height);

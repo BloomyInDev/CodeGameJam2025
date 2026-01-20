@@ -1,13 +1,14 @@
 package fr.bastienluben.cgj2025.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.Main;
+import fr.bastienluben.cgj2025.lib.IScript;
 
-public abstract class AbstractScreen implements Screen, IScript {
+public abstract class AbstractScreen implements Screen, IScript
+{
     protected Main game;
 
 
@@ -16,7 +17,7 @@ public abstract class AbstractScreen implements Screen, IScript {
         this.onLoad(assets);
     }
 
-    public void onLoad(AssetManager assets) {};
+    public void onLoad(AssetManager assets) {}
 
     /**
      * @param delta The time in seconds since the last render.
