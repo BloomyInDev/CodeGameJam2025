@@ -63,6 +63,8 @@ public class UI implements ISpriteDrawable
         layer = 0;
         parent = Screen;
         childs = new ArrayList<UI>();
+        margin = new Rectangle(0, 0, 0, 0);
+        padding = new Rectangle(0, 0, 0, 0);
         visible = true;
     }
 

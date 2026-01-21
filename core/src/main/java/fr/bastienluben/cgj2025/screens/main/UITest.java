@@ -15,8 +15,6 @@ public class UITest implements IScript
     public void onLoad(AssetManager manager)
     {
         test = new Image(256, 128, manager.getTexture("default.png"));
-        testtext = new Text("hello guys");
-        testtext.setPosition(Bounds.Center);
     }
 
     @Override
@@ -24,6 +22,8 @@ public class UITest implements IScript
     {
         test.setMargin(8);
         test.setPosition(Bounds.TopLeft);
+        testtext = new Text("hello guys");
+        testtext.setPosition(Bounds.Right);
     }
 
     @Override

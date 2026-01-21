@@ -36,6 +36,26 @@ public class Text extends UI
         this.color = color;
     }
 
+    /*
+    * change le texte
+    * */
+    public void changeText(String value)
+    {
+        text = value;
+        layout.setText(font, text);
+        rect = new Rectangle(0, 0, layout.width, layout.height);
+        updatePosition();
+    }
+
+    /*
+     * change le texte
+     * */
+    public void setText(String value) {changeText(value);}
+    /*
+     * change le texte
+     * */
+    public void updateText(String value) {changeText(value);}
+
     @Override
     public void draw(SpriteBatch batch)
     {
