@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import org.w3c.dom.css.Rect;
 
 public class Hitbox extends Entity{
     private boolean solid; // Si la hitbox doit être solide (comme un mur ou un sol)
