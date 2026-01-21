@@ -2,19 +2,24 @@ package fr.bastienluben.cgj2025;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.bastienluben.cgj2025.lib.AssetManager;
+import fr.bastienluben.cgj2025.lib.ui.Button;
 import fr.bastienluben.cgj2025.lib.ui.Image;
 import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.main.MainMenuScreen;
+
+import java.util.Vector;
 
 public class Main extends Game {
     public static final int FPS = 60;
@@ -58,7 +63,12 @@ public class Main extends Game {
     }
 
     public void render() {
-        notreScreen.update(); // bastinou !!!!
+        Button.updateAllButtons(
+            UI.coordonneeNormaleToCoordonneGdxDeMerde(
+            new Vector2(Gdx.input.getX(), Gdx.input.getY())
+            ),
+            Gdx.input.isTouched());
+        //notreScreen.update(); // bastinou !!!!
 
         ScreenUtils.clear(0.1f, 0f, 0f, 0f);  // faut clear avant bande de batard
 
