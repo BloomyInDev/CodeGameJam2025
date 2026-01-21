@@ -16,26 +16,29 @@ public class Button extends Image implements Disposable
         _buttons.clear();
     }
 
-    public static void updateAllButtons(Vector2 mousePos, boolean isMouseJustClicked, boolean isMouseHold)
+    private static boolean previousMouseHold = false;
+
+    public static void updateAllButtons(Vector2 mousePos, boolean isMouseHold)
     {
         for (Button b : _buttons)
         {
-            b.update(mousePos, isMouseJustClicked, isMouseHold);
+            b.update(mousePos, isMouseHold);
         }
+        previousMouseHold = isMouseHold;
     }
 
-    public void update(Vector2 mousePos, boolean isMouseJustReleased, boolean isMouseHold)
+    public void update(Vector2 mousePos, boolean isMouseHold)
     {
         if (rect.contains(mousePos))
         {
             if (isMouseHold)
             {
-                setColor(selectedColor);
+                super.setColor(restColor);
             }
             else
             {
-                setColor(restColor);
-                if (isMouseJustReleased)
+                super.setColor(selectedColor);
+                if (previousMouseHold)
                 {
                     action.run();  // wtf il se prend pour qui java
                 }
@@ -43,7 +46,7 @@ public class Button extends Image implements Disposable
         }
         else
         {
-            setColor(restColor);
+            super.setColor(restColor);
         }
     }
 
@@ -55,12 +58,13 @@ public class Button extends Image implements Disposable
     public void setColor(Color value)
     {
         restColor = value;
-        selectedColor = new Color(value.r + 0.1f, value.g + 0.1f, value.b + 0.1f, value.a);
+        selectedColor = new Color(value.r + 0.5f, value.g + 0.5f, value.b + 0.5f, value.a);
     }
 
     public Button(Runnable action, int width, int height, Color color)
     {
         super(width, height, color);
+        setColor(color);
         this.action = action;
         name = new Text("");
         _buttons.add(this);
@@ -69,8 +73,10 @@ public class Button extends Image implements Disposable
     public Button(Runnable action, int width, int height, Color color, String text)
     {
         super(width, height, color);
+        setColor(color);
         this.action = action;
         name = new Text(text);
+        _buttons.add(this);
         name.setParent(this);
         name.setPosition(Bounds.Center);
     }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.IScript;
+import fr.bastienluben.cgj2025.lib.ui.Button;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 
 public class MainMenuScreen extends AbstractScreen

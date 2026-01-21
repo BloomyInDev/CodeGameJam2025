@@ -30,6 +30,16 @@ public class UI implements ISpriteDrawable
         new Vector2(-1, 1)
     };
 
+    public static Vector2 coordonneeNormaleToCoordonneGdxDeMerde(Vector2 value)
+    {
+        return new Vector2(value.x, Screen.rect.height - value.y);
+    }
+
+    public static Vector2 coordonneGdxDeMerdeToCoordonneeNormale(Vector2 value)
+    {
+        return new Vector2(value.x, Screen.rect.height - value.y);
+    }
+
     public void setVisible(boolean value)
     {
         visible = value;
