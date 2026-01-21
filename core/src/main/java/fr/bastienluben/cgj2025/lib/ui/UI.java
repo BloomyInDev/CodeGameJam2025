@@ -18,16 +18,16 @@ public class UI implements ISpriteDrawable
 
     protected static Vector2[] outlinePos = new Vector2[]
     {
-        new Vector2(-1, -1),
-        new Vector2(0, -1),
-        new Vector2(1, -1),
+        new Vector2(-2, -2),
+        new Vector2(0, -2),
+        new Vector2(2, -2),
 
-        new Vector2(-1, 0),
-        new Vector2(1, 0),
+        new Vector2(-2, 0),
+        new Vector2(2, 0),
 
-        new Vector2(-1, 1),
-        new Vector2(0, 1),
-        new Vector2(-1, 1)
+        new Vector2(-2, 2),
+        new Vector2(0, 2),
+        new Vector2(2, 2)
     };
 
     public static Vector2 coordonneeNormaleToCoordonneGdxDeMerde(Vector2 value)
@@ -165,7 +165,7 @@ public class UI implements ISpriteDrawable
         }
         else if (position.x == 1) // centre
         {
-            rect.x = (parent.rect.width - this.rect.width) / 2;
+            rect.x = parent.rect.x + (parent.rect.width - this.rect.width) / 2;
         }
         else // droite
         {
@@ -178,21 +178,21 @@ public class UI implements ISpriteDrawable
         }
         else if (position.y == 1) // centre
         {
-            rect.y = (parent.rect.height - this.rect.height) / 2;
+            rect.y = parent.rect.y + (parent.rect.height - this.rect.height) / 2;
         }
         else // haut
         {
             rect.y = parent.rect.y + parent.rect.height - this.rect.height - margin.height - parent.margin.height;
+        }
+        for (UI c : childs)
+        {
+            c.updatePosition();
         }
     }
 
     public void updatePosition()  // à faire quand la taille de l'écran change
     {
         this.setPosition(this.position);
-        for (UI c : childs)
-        {
-            c.updatePosition();
-        }
     }
 
     @Override
