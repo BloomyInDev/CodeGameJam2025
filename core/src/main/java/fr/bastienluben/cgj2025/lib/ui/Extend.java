@@ -7,9 +7,10 @@ public enum Extend
     Full(true, true),
     None(false, false);
 
-    boolean x, y;
+    public final boolean x, y;
     private Extend(boolean x, boolean y)
     {
-
+        this.x = x;
+        this.y = y;
     }
 }
