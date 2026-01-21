@@ -10,12 +10,15 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.bastienluben.cgj2025.lib.AssetManager;
+import fr.bastienluben.cgj2025.lib.ui.Image;
 import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.main.MainMenuScreen;
 
 public class Main extends Game {
+    public static final int FPS = 60;
+
     private SpriteBatch sprite;
     private ShapeRenderer shape;
     private BitmapFont font;
@@ -26,6 +29,8 @@ public class Main extends Game {
     private SpriteBatch batch;
 
     private AbstractScreen notreScreen;
+
+    private float timer;
 
     public void create() {
         sprite = new SpriteBatch();
@@ -45,6 +50,7 @@ public class Main extends Game {
 
         assets = new AssetManager();
         UI.setScreenResolution(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Image.setDefaultTexture(assets.getTexture("default.png"));
         Text.setFont(font);
 
         notreScreen = new MainMenuScreen(this, assets);
@@ -52,7 +58,7 @@ public class Main extends Game {
     }
 
     public void render() {
-
+        notreScreen.update(); // bastinou !!!!
 
         ScreenUtils.clear(0.1f, 0f, 0f, 0f);  // faut clear avant bande de batard
 
