@@ -27,11 +27,4 @@ public class Hitbox extends Entity{
     public Hitbox(Sprite sprite, Vector2 position, Vector2 taille){
         this(sprite, position, taille, false);
     }
-
-    @Override
-    public void draw(SpriteBatch spriteDrawer) {
-        spriteDrawer.begin();
-        DrawRectangle.draw(box);
-        spriteDrawer.end();
-    }
 }
