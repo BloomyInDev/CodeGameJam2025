@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Entity implements ISpriteDrawable {
     protected Sprite sprite;
     protected Vector2 position;
+    protected Move mouvement = null;
 
     public Entity(Sprite sprite, Vector2 position) {
         this.sprite = sprite;
@@ -29,4 +30,9 @@ public class Entity implements ISpriteDrawable {
     public void draw(SpriteBatch spriteDrawer) {
         spriteDrawer.draw(sprite, position.x, position.y);
     }
+
+    public void setVitesse(Vector2 vitesse){
+        mouvement = new Move(vitesse);
+    }
+
 }
