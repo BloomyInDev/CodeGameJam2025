@@ -1,7 +1,9 @@
 package fr.bastienluben.cgj2025.screens.main;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.lib.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -29,14 +31,17 @@ public class UITest implements IScript
 
         but = new Button(() -> {
 
-        }, 300, 200, Color.BLUE, "start!");
+        }, 300, 200, Color.BLUE, "startaaaaaaaaaaaaaaaaaaaaaaaaaaaa!");
         but.setPosition(Bounds.Center);
     }
 
     @Override
     public void update(float delta)
     {
-
+        Vector2 mouse = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+        Vector2 o = UI.coordonneeNormaleToCoordonneGdxDeMerde(mouse);
+        testtext.setText("normale: " + mouse.toString()
+        + "\ngdx: " + o.toString());
     }
 
     @Override

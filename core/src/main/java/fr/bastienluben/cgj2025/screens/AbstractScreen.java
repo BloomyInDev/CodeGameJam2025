@@ -54,8 +54,6 @@ public abstract class AbstractScreen implements Screen, IScript
     @Override
     public final void show() { start(); }
     public final void render(float delta) {
-        Button.updateAllButtons(new Vector2(Gdx.input.getX(), Gdx.input.getY()),
-                Gdx.input.isKeyJustPressed(Input.Buttons.LEFT), Gdx.input.isKeyPressed(Input.Buttons.LEFT));
         update(delta);
         draw(game.getSprite());
         draw(game.getShape());
