@@ -31,7 +31,7 @@ public class UITest implements IScript
 
         but = new Button(() -> {
 
-        }, 300, 200, Color.BLUE, "startaaaaaaaaaaaaaaaaaaaaaaaaaaaa!");
+        }, 300, 200, Color.BLUE, "push me !");
         but.setPosition(Bounds.Center);
     }
 
