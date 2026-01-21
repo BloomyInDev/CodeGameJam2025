@@ -30,6 +30,7 @@ public class Main extends Game {
     public void create() {
         sprite = new SpriteBatch();
         shape = new ShapeRenderer();
+
         // use libGDX's default font
         font = new BitmapFont();
         viewport = new FitViewport(16, 9);
@@ -40,7 +41,7 @@ public class Main extends Game {
         // font has 15pt, but we need to scale it to our viewport by ratio of viewport
         // height to screen height
         font.setUseIntegerPositions(false);
-        font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
+        font.getData().setScale(2);
 
         assets = new AssetManager();
         UI.setScreenResolution(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
