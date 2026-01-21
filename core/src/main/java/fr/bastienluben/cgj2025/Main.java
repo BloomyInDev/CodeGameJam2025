@@ -2,16 +2,14 @@ package fr.bastienluben.cgj2025;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.bastienluben.cgj2025.lib.AssetManager;
+import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
 import fr.bastienluben.cgj2025.lib.ui.Button;
 import fr.bastienluben.cgj2025.lib.ui.Image;
 import fr.bastienluben.cgj2025.lib.ui.Text;
@@ -19,18 +17,14 @@ import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.main.MainMenuScreen;
 
-import java.util.Vector;
-
 public class Main extends Game {
     public static final int FPS = 60;
 
     private SpriteBatch sprite;
     private ShapeRenderer shape;
-    private BitmapFont font;
+    private FontLoader fonts;
     private FitViewport viewport;
     private AssetManager assets;
-
-    private Texture shawImage;
     private SpriteBatch batch;
 
     private AbstractScreen notreScreen;
@@ -40,52 +34,42 @@ public class Main extends Game {
     public void create() {
         sprite = new SpriteBatch();
         shape = new ShapeRenderer();
+        fonts = new FontLoader();
 
         // use libGDX's default font
-        font = new BitmapFont();
+
         viewport = new FitViewport(16, 9);
 
-        shawImage = new Texture("Silksong.jpg");
         batch = new SpriteBatch();
 
-        // font has 15pt, but we need to scale it to our viewport by ratio of viewport
-        // height to screen height
-        font.setUseIntegerPositions(false);
-        font.getData().setScale(2);
+        fonts.loadFont("font.ttf", "font");
 
         assets = new AssetManager();
         UI.setScreenResolution(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Image.setDefaultTexture(assets.getTexture("default.png"));
-        Text.setFont(font);
+        Text.setFont(fonts.getFont("font"));
 
         notreScreen = new MainMenuScreen(this, assets);
         this.setScreen(notreScreen);
     }
 
     public void render() {
-        Button.updateAllButtons(
-            UI.coordonneeNormaleToCoordonneGdxDeMerde(
-            new Vector2(Gdx.input.getX(), Gdx.input.getY())
-            ),
-            Gdx.input.isTouched());
-        //notreScreen.update(); // bastinou !!!!
+
 
         ScreenUtils.clear(0.1f, 0f, 0f, 0f);  // faut clear avant bande de batard
 
         // ça appelle le draw du screen
         super.render(); // important ?!?!?!
-        notreScreen.draw(shape);
+
 
         batch.begin();
-        batch.draw(shawImage, 0, 0);
-        // Quelqu'un peut faire en sorte que l'image soit toujours
-        // en bas à gauche même quand on change la taille de la fenêtre
+
         batch.end();
     }
 
     public void dispose() {
         sprite.dispose();
-        font.dispose();
+        fonts.dispose();
     }
 
     public SpriteBatch getSprite() {
@@ -94,10 +78,6 @@ public class Main extends Game {
 
     public ShapeRenderer getShape() {
         return shape;
-    }
-
-    public BitmapFont getFont() {
-        return font;
     }
 
     public FitViewport getViewport() {

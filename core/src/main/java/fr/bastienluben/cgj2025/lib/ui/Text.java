@@ -12,12 +12,6 @@ public class Text extends UI
 {
     private static BitmapFont font;
     private static GlyphLayout layout;
-    public static void setFont(BitmapFont value)
-    {
-        font = value;
-        layout = new GlyphLayout();
-    }
-
     private String text;
     public Color color;
 
@@ -72,5 +66,11 @@ public class Text extends UI
 
             super.draw(batch);
         }
+    }
+
+    public static void setFont(BitmapFont value)
+    {
+        font = value;
+        layout = new GlyphLayout();
     }
 }
