@@ -1,6 +1,5 @@
 package fr.bastienluben.cgj2025.lib.ui;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -30,12 +29,12 @@ public class UI implements ISpriteDrawable
         new Vector2(2, 2)
     };
 
-    public static Vector2 coordonneeNormaleToCoordonneGdxDeMerde(Vector2 value)
+    public static Vector2 normalToGdx(Vector2 value)
     {
         return new Vector2(value.x, Screen.rect.height - value.y);
     }
 
-    public static Vector2 coordonneGdxDeMerdeToCoordonneeNormale(Vector2 value)
+    public static Vector2 gdxToNormal(Vector2 value)
     {
         return new Vector2(value.x, Screen.rect.height - value.y);
     }
