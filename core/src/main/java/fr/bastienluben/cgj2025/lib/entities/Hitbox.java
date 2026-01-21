@@ -1,7 +1,6 @@
 package fr.bastienluben.cgj2025.lib.entities;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -26,5 +25,9 @@ public class Hitbox extends Entity{
 
     public Hitbox(Sprite sprite, Vector2 position, Vector2 taille){
         this(sprite, position, taille, false);
+    }
+
+    public boolean ilToucheLaHitbox(Hitbox hitbox){
+        return this.box.contains(hitbox.box);
     }
 }
