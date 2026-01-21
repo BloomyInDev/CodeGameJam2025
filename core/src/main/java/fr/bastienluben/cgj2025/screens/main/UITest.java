@@ -12,8 +12,10 @@ import fr.bastienluben.cgj2025.lib.*;
 public class UITest implements IScript
 {
     Image test;
-    Text testtext;
+    Text testtext, count;
     Button but;
+
+    int countValue;
 
     @Override
     public void onLoad(AssetManager manager)
@@ -30,9 +32,14 @@ public class UITest implements IScript
         testtext.setPosition(Bounds.Right);
 
         but = new Button(() -> {
-
+            countValue++;
+            count.setText("count: " + countValue);
         }, 300, 200, Color.BLUE, "push me !");
         but.setPosition(Bounds.Center);
+
+        count = new Text("count: 0");
+        count.setPosition(Bounds.Top);
+        countValue = 0;
     }
 
     @Override
@@ -50,6 +57,7 @@ public class UITest implements IScript
         test.draw(batch);
         testtext.draw(batch);
         but.draw(batch);
+        count.draw(batch);
     }
 
     @Override
