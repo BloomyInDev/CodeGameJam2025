@@ -5,10 +5,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Image extends UI
 {
-    private static Texture defaultTexture;
+    private static Texture _defaultTexture;
+
+    public static Texture getDefaultTexture()
+    {
+        return _defaultTexture;
+    }
     public static void setDefaultTexture(Texture value)
     {
-        defaultTexture = value;
+        _defaultTexture = value;
     }
 
     private Texture img;
@@ -41,7 +46,7 @@ public class Image extends UI
     public Image(int width, int height, Color color)
     {
         super(width, height);
-        this.img = defaultTexture;
+        this.img = _defaultTexture;
         this.color = color;
     }
 
