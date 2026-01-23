@@ -1,52 +1,51 @@
 package fr.bastienluben.cgj2025.screens.main;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.sun.tools.javac.util.List;
+import fr.bastienluben.cgj2025.enemies.Enemy1;
 import fr.bastienluben.cgj2025.lib.config.ConfigLoader;
 import fr.bastienluben.cgj2025.lib.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.bastienluben.cgj2025.lib.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Queue;
+import java.util.Random;
 
 public class UITest implements IScript
 {
-    private Image test, shaw;
-    private Text test_text, count;
-    private Button button;
+    Text score;
+    int scoreValue;
 
     private int countValue;
+    private float timer;
+    Chrono enemyLoop;
+    Texture enemyTexture;
+    Random rnd;
+    ArrayList<Enemy1> queue;
 
     @Override
     public void onLoad(AssetManager manager)
     {
-        test = new Image(256, 128, manager.getTexture("default.png"));
-        shaw = new Image(manager.getTexture("Silksong.jpg"));
+        enemyTexture = manager.getTexture("head.png");
     }
 
     @Override
     public void start()
     {
-        countValue = ConfigLoader.getInstance().getConfig().getScore();
-
-        test.setMargin(8);
-        test.setPosition(Bounds.TopLeft);
-
-        test_text = new Text("hello guys");
-        test_text.setPosition(Bounds.Right);
-
-        button = new Button(() -> {
-            countValue++;
-            count.setText("count: " + countValue);
-            ConfigLoader.getInstance().getConfig().setScore(countValue);
-        }, 300, 200, Color.BLUE, "push me !");
-        button.setPosition(Bounds.Center);
-
-        count = new Text(String.format("count: %d", countValue));
-        count.setPosition(Bounds.Top);
+        scoreValue = 0;
+        score = new Text("score : 0");
+        score.setPosition(Bounds.Top);
+        enemyLoop = new Chrono(() -> onEnemySpawn(), 1f);
+        rnd = new Random();
+        queue = new ArrayList<>();
     }
 
     @Override
@@ -54,14 +53,31 @@ public class UITest implements IScript
     {
         Vector2 mouse = new Vector2(Gdx.input.getX(), Gdx.input.getY());
         Vector2 o = UI.normalToGdx(mouse);
-        test_text.setText("normale: " + mouse.toString()
-        + "\ngdx: " + o.toString());
+        Button.updateAllButtons(o, Gdx.input.isTouched());
+
+        enemyLoop.update(delta);
+    }
+
+    private void onEnemySpawn()
+    {
+        queue.add(new Enemy1(() -> onEnemyDeleted(), rnd, enemyTexture));
+    }
+
+    private void onEnemyDeleted()
+    {
+        scoreValue++;
+        score.setText("score : " + scoreValue);
+        queue.remove(0);
     }
 
     @Override
     public void draw(SpriteBatch batch)
     {
-        Arrays.asList(test, shaw, test_text, button, count).forEach(e -> e.draw(batch));
+        score.draw(batch);
+        for(Enemy1 en : queue)
+        {
+            en.draw(batch);
+        }
     }
 
     @Override

@@ -96,7 +96,6 @@ public class MembreArticulable extends Element implements ISpriteDrawable
             pointsToScreen[i].x = position.x + (connectionsData[i].x * sprite.getWidth());
             pointsToScreen[i].y = position.y + (connectionsData[i].y * sprite.getHeight());
 
-            applyRotation(, pointsToScreen[i], rotation);
         }
     }
 

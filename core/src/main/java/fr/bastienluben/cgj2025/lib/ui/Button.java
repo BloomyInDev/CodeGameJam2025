@@ -70,6 +70,15 @@ public class Button extends Image implements Disposable
         _buttons.add(this);
     }
 
+    public Button(Runnable action, Texture tex)
+    {
+        super(tex);
+        setColor(Color.WHITE);
+        this.action = action;
+        name = new Text("");
+        _buttons.add(this);
+    }
+
     public Button(Runnable action, int width, int height, Color color, String text)
     {
         super(width, height, color);
