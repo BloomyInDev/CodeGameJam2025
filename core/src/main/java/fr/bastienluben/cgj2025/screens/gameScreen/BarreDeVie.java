@@ -1,5 +1,6 @@
 package fr.bastienluben.cgj2025.screens.gameScreen;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -50,6 +51,7 @@ public class BarreDeVie implements ISpriteDrawable
 
     public void draw(SpriteBatch batch)
     {
+        batch.setColor(Color.WHITE);
         batch.draw(outline, 8, 8);
         batch.draw(inner,
             valueRectangle.x,
