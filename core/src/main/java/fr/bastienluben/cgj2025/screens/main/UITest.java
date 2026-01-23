@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.sun.tools.javac.util.List;
+import fr.bastienluben.cgj2025.lib.config.ConfigLoader;
 import fr.bastienluben.cgj2025.lib.ui.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -29,6 +30,8 @@ public class UITest implements IScript
     @Override
     public void start()
     {
+        countValue = ConfigLoader.getInstance().getConfig().getScore();
+
         test.setMargin(8);
         test.setPosition(Bounds.TopLeft);
 
@@ -38,12 +41,12 @@ public class UITest implements IScript
         button = new Button(() -> {
             countValue++;
             count.setText("count: " + countValue);
+            ConfigLoader.getInstance().getConfig().setScore(countValue);
         }, 300, 200, Color.BLUE, "push me !");
         button.setPosition(Bounds.Center);
 
-        count = new Text("count: 0");
+        count = new Text(String.format("count: %d", countValue));
         count.setPosition(Bounds.Top);
-        countValue = 0;
     }
 
     @Override
