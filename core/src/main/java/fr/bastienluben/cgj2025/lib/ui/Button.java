@@ -1,6 +1,7 @@
 package fr.bastienluben.cgj2025.lib.ui;
 
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -29,7 +30,9 @@ public class Button extends Image implements Disposable
 
     public void update(Vector2 mousePos, boolean isMouseHold)
     {
-        if (rect.contains(mousePos))
+        Rectangle temp = new Rectangle(rect.x + posOffset.x,
+            rect.y + posOffset.y, rect.width, rect.height);
+        if (temp.contains(mousePos))
         {
             if (isMouseHold)
             {
