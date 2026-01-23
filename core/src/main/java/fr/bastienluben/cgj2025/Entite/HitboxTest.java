@@ -1,4 +1,4 @@
-package fr.bastienluben.cgj2025.screens.main;
+package fr.bastienluben.cgj2025.Entite;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
