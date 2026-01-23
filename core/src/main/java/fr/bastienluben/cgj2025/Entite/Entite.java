@@ -32,13 +32,21 @@ public abstract class Entite {
 
     public abstract void attaquer();
 
-    public double guerison(double nbVie){
+    public double guerison(double nbVie) {
         pointDeVie = Math.min(pointDeVie + nbVie, pointDeVieMax);
         return pointDeVie;
     }
 
-    public String getNom(){
+    public String getNom() {
         return nom;
+    }
+
+    public double getPointDeVie() {
+        return pointDeVie;
+    }
+
+    public boolean estMort() {
+        return pointDeVie <= 0;
     }
 
     public abstract Vector2 getPosition();

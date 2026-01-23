@@ -18,7 +18,7 @@ public class FontLoader {
     private Map<String, FreeTypeFontGenerator> fontGenerators;
     private Map<FontIdentifier, BitmapFont> generatedFonts;
 
-    private FontLoader() {
+    public FontLoader() {
         this.fontGenerators = new HashMap<>();
         this.generatedFonts = new HashMap<>();
     }

@@ -9,12 +9,11 @@ public class Hugo extends Ennemi {
 
     @Override
     public void attaquer() {
-        Attaque tirDeBalle = new TirDeBalle(10,this);
+        Attaque tirDeBalle = new TirDeBalle(10, this);
     }
 
     @Override
     public Vector2 getPosition() {
         return new Vector2(0, 0);
     }
-    
 }
