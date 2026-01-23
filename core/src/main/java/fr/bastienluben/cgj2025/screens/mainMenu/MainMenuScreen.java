@@ -1,20 +1,20 @@
-package fr.bastienluben.cgj2025.screens.main;
+package fr.bastienluben.cgj2025.screens.mainMenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.Main;
+import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.IScript;
-import fr.bastienluben.cgj2025.lib.ui.Button;
-import fr.bastienluben.cgj2025.lib.ui.UI;
+import fr.bastienluben.cgj2025.lib.ui.*;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class MainMenuScreen extends AbstractScreen
-{
+public class MainMenuScreen extends AbstractScreen {
     public MainMenuScreen(Main game, AssetManager assets) {
         super(game, assets);
     }
@@ -24,13 +24,9 @@ public class MainMenuScreen extends AbstractScreen
     @Override
     public void onLoad(AssetManager assets)
     {
-        this.scripts = new ArrayList<>();
-        this.scripts.add(new UITest());
+        scripts = new ArrayList<>();
+        scripts.addAll(Arrays.asList(new HighScoreText(), new MenuButtons(this)));
 
-        for (IScript s : scripts)
-        {
-            s.onLoad(assets);
-        }
     }
 
     @Override
@@ -58,6 +54,5 @@ public class MainMenuScreen extends AbstractScreen
         scripts.forEach(script -> script.draw(batch));
         batch.end();
     }
-
 
 }

@@ -62,7 +62,7 @@ public class UI implements ISpriteDrawable
     protected Rectangle rect, margin, padding;
     public Vector2 posOffset = new Vector2(0, 0);
     protected float layer;
-    protected Bounds position;
+    protected Bounds position = Bounds.TopLeft;
 
     protected boolean visible;
 
@@ -127,33 +127,38 @@ public class UI implements ISpriteDrawable
     public void setMargin(int up, int down, int left, int right)
     {
         margin = new Rectangle(left, up, right, down);
+        updatePosition();
     }
 
     public void setMargin(int horizontal, int vertical)
     {
-        margin = new Rectangle(horizontal, vertical, horizontal, vertical);
+        setMargin(horizontal, vertical, horizontal, vertical);
     }
 
     public void setMargin(int value)
     {
-        margin = new Rectangle(value, value, value, value);
+        setMargin(value, value, value, value);
     }
 
     public void setPadding(int up, int down, int left, int right)
     {
         padding = new Rectangle(left, up, right, down);
+        updatePosition();
     }
 
     public void setPadding(int horizontal, int vertical)
     {
-        padding = new Rectangle(horizontal, vertical, horizontal, vertical);
+        setPadding(horizontal, vertical, horizontal, vertical);
     }
 
     public void setPadding(int value)
     {
-        padding = new Rectangle(value, value, value, value);
+        setPadding(value, value, value, value);
     }
 
+    public Bounds getPosition() {
+        return this.position;
+    }
 
     public void setPosition(Bounds position)
     {
@@ -173,7 +178,7 @@ public class UI implements ISpriteDrawable
 
         if (position.y == 0) // bas
         {
-            rect.y = parent.rect.y + parent.padding.y + margin.y;
+            rect.y = parent.rect.y + margin.height;
         }
         else if (position.y == 1) // centre
         {
@@ -181,7 +186,7 @@ public class UI implements ISpriteDrawable
         }
         else // haut
         {
-            rect.y = parent.rect.y + parent.rect.height - this.rect.height - margin.height - parent.margin.height;
+            rect.y = parent.rect.y + parent.rect.height - this.rect.height - margin.y - parent.margin.y;
         }
         for (UI c : childs)
         {

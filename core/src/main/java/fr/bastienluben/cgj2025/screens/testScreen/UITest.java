@@ -1,4 +1,4 @@
-package fr.bastienluben.cgj2025.screens.main;
+package fr.bastienluben.cgj2025.screens.testScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -30,7 +30,7 @@ public class UITest implements IScript
     @Override
     public void start()
     {
-        countValue = ConfigLoader.getInstance().getConfig().getScore();
+        countValue = ConfigLoader.getInstance().getConfig().getBestScore();
 
         test.setMargin(8);
         test.setPosition(Bounds.TopLeft);
@@ -41,7 +41,7 @@ public class UITest implements IScript
         button = new Button(() -> {
             countValue++;
             count.setText("count: " + countValue);
-            ConfigLoader.getInstance().getConfig().setScore(countValue);
+            ConfigLoader.getInstance().getConfig().setBestScore(countValue);
         }, 300, 200, Color.BLUE, "push me !");
         button.setPosition(Bounds.Center);
 

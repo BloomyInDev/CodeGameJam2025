@@ -2,22 +2,19 @@ package fr.bastienluben.cgj2025;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.config.ConfigLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
-import fr.bastienluben.cgj2025.lib.ui.Button;
 import fr.bastienluben.cgj2025.lib.ui.Image;
 import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
-import fr.bastienluben.cgj2025.screens.BossTest.BosstestScreen;
-import fr.bastienluben.cgj2025.screens.main.MainMenuScreen;
+import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
+import fr.bastienluben.cgj2025.screens.testScreen.TestScreen;
 
 public class Main extends Game {
     public static final boolean DEBUG = true;
@@ -36,7 +33,7 @@ public class Main extends Game {
     public void create() {
         sprite = new SpriteBatch();
         shape = new ShapeRenderer();
-        fonts = new FontLoader();
+        fonts = FontLoader.getInstance();
 
         ConfigLoader.getInstance().parseFile();
 
@@ -47,19 +44,17 @@ public class Main extends Game {
         batch = new SpriteBatch();
 
         fonts.loadFont("font.ttf", "font");
+        fonts.loadFont("font.ttf", "default");
 
         assets = new AssetManager();
         UI.setScreenResolution(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Image.setDefaultTexture(assets.getTexture("default.png"));
-        Text.setFont(fonts.getFont("font"));
 
-        notreScreen = new BosstestScreen(this, assets);
-        this.setScreen(notreScreen);
+        // this.setScreen(new BosstestScreen(this, assets));
+        this.setScreen(new MainMenuScreen(this, assets));
     }
 
     public void render() {
-
-
         ScreenUtils.clear(0.1f, 0f, 0f, 0f);  // faut clear avant bande de batard
 
         // ça appelle le draw du screen
@@ -88,5 +83,9 @@ public class Main extends Game {
 
     public FitViewport getViewport() {
         return viewport;
+    }
+
+    public AssetManager getAssets() {
+        return assets;
     }
 }

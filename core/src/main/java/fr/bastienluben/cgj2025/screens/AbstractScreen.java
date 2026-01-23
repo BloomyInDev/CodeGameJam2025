@@ -59,4 +59,6 @@ public abstract class AbstractScreen implements Screen, IScript
         draw(game.getShape());
     }
 
+    public Main getGame() { return game; }
+
 }
