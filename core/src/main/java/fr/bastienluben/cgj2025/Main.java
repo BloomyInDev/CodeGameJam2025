@@ -84,4 +84,8 @@ public class Main extends Game {
     public FitViewport getViewport() {
         return viewport;
     }
+
+    public AssetManager getAssets() {
+        return assets;
+    }
 }

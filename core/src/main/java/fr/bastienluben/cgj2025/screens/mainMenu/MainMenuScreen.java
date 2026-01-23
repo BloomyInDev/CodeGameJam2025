@@ -9,12 +9,12 @@ import fr.bastienluben.cgj2025.lib.IScript;
 import fr.bastienluben.cgj2025.lib.ui.*;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainMenuScreen extends AbstractScreen {
-
-
     public MainMenuScreen(Main game, AssetManager assets) {
         super(game, assets);
     }
@@ -25,7 +25,8 @@ public class MainMenuScreen extends AbstractScreen {
     public void onLoad(AssetManager assets)
     {
         scripts = new ArrayList<>();
-        scripts.add(new HighScoreText());
+        scripts.addAll(Arrays.asList(new HighScoreText(), new MenuButtons(this)));
+
     }
 
     @Override

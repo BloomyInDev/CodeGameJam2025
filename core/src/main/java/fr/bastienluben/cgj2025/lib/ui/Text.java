@@ -73,5 +73,7 @@ public class Text extends UI
     {
         this.font = font;
         layout = new GlyphLayout(this.font, text);
+        rect = new Rectangle(0, 0, layout.width, layout.height);
+        updatePosition();
     }
 }
