@@ -1,4 +1,4 @@
-package fr.bastienluben.cgj2025.screens.main.Objets;
+package fr.bastienluben.cgj2025.Objets;
 
 public class Consommable extends Objet{
     private int nombreUtilisation;
@@ -9,9 +9,14 @@ public class Consommable extends Objet{
         this.nombreUtilisation = nbUtilisationMax;
     }
 
-    public void utiliser(){
+    public boolean utiliser(){
+        if(nombreUtilisation <= 0){
+            return false;
+        }
 
+
+        nombreUtilisation--;
+        return true;
     }
-
 
 }

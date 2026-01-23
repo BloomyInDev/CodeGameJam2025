@@ -1,4 +1,4 @@
-package fr.bastienluben.cgj2025.screens.main.Objets;
+package fr.bastienluben.cgj2025.Objets;
 
 public abstract class Objet {
     private final String nomObjet;
