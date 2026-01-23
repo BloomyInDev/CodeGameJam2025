@@ -38,13 +38,28 @@ public class MembreArticulable extends Element
 
     private final Vector2[] connectionsData;
     private final Vector2 origin;
+    private final Vector2[] pointsToScreen;
 
-    public MembreArticulable(Vector2 positionRef, Vector2 origin, Texture tex)
+    /// @param connectionsData - la position des articulations
+    /// avec des porté de 0f - 1f.
+    public MembreArticulable(
+        Vector2 positionRef,
+        Vector2[] connectionsData,
+        int indexDeLaConnectoinQuiSertDePointDeRotation,
+        Texture tex
+        )
     {
         super(tex);
-        connectorPoints = new ArrayList<Vector2>();
-
+        this.position = positionRef;
+        this.connectionsData = connectionsData;
+        this.pointsToScreen = new Vector2[connectionsData.length];
+        this.origin = new Vector2(
+            connectionsData[indexDeLaConnectoinQuiSertDePointDeRotation].x * tex.getWidth(),
+            connectionsData[indexDeLaConnectoinQuiSertDePointDeRotation].y * tex.getHeight()
+        );
     }
+
+    public void
 
     @Override
     public void draw(SpriteBatch batch)
