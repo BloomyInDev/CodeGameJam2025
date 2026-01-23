@@ -44,7 +44,7 @@ public class MembreArticulable extends Element implements ISpriteDrawable
     private final Vector2 origin;
     private final Vector2[] pointsToScreen;
 
-    public float rotation;
+    private float rotation;
 
     /// @param connectionsData - la position des articulations
     /// avec des porté de 0f - 1f.
@@ -59,14 +59,22 @@ public class MembreArticulable extends Element implements ISpriteDrawable
         this.position = positionRef;
         this.connectionsData = connectionsData;
         this.pointsToScreen = new Vector2[connectionsData.length];
+
+        for (byte i = 0; i < connectionsData.length; i++)
+        {
+            pointsToScreen[i] = new Vector2();
+        }
+
         this.origin = new Vector2(
             connectionsData[indexDeLaConnectoinQuiSertDePointDeRotation].x * tex.getWidth(),
             connectionsData[indexDeLaConnectoinQuiSertDePointDeRotation].y * tex.getHeight()
         );
+        setRotation(0f);
     }
 
-    public void updatePoints()
+    public void setRotation(float degree)
     {
+        this.rotation = degree;
         for (byte i = 0; i < connectionsData.length; i++)
         {
             pointsToScreen[i].x = position.x + (connectionsData[i].x * sprite.getWidth());
@@ -74,6 +82,23 @@ public class MembreArticulable extends Element implements ISpriteDrawable
 
             applyRotation(origin, pointsToScreen[i], rotation);
         }
+    }
+
+    @Override
+    public void draw(SpriteBatch batch)
+    {
+        batch.setColor(Color.WHITE);
+        batch.draw(
+            getSprite(),
+            position.x,
+            position.y,
+            origin.x,
+            origin.y,
+            getWidth(),
+            getHeight(),
+            getWidth(),
+            getHeight(),
+            rotation);
     }
 
     public void debug(SpriteBatch batch)
