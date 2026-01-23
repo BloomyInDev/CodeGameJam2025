@@ -5,7 +5,7 @@ public abstract class Stat {
     private final double nbStatMax;
     private final double nbStatDefaut;
 
-    public Stat(double nbStatMax, double statBase) {
+    public Stat(double statBase, double statMax) {
         this.nbStatMax = nbStatMax;
         this.nbStatDefaut = statBase;
         this.nbStat = statBase;

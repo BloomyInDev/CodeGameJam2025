@@ -31,13 +31,13 @@ public abstract class Attaque {
         return delaiAvantProchaineAttaque;
     }
 
-    public void attaquer(Personnage adversaire, double coefForce) {
-        double degat = getNbDegatAuHit();
-        boolean degatSuperieurAPointArmure = degat > adversaire.vie.getBouclier();
-        double bouclierRestant = adversaire.vie.enleverBouclier(degat);
+    public void attaquer(Personnage attaquant, Personnage adversaire) {
+        double degat = getNbDegatAuHit() * attaquant.getForce().getNbStat();
+        boolean degatSuperieurAPointArmure = degat > adversaire.getVie().getBouclier();
+        double bouclierRestant = adversaire.getVie().enleverBouclier(degat);
 
         if (degatSuperieurAPointArmure) {
-            adversaire.vie.ajoutStat(bouclierRestant);
+            adversaire.getVie().ajoutStat(bouclierRestant);
         }
     }
 

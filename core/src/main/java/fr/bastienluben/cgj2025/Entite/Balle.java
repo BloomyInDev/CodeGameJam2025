@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Circle;
 
 public class Balle extends Entite {
+    private final int pointDeVie = 1;
     private Circle hitbox;
     private boolean estDetruite;
     private float vitesse;
@@ -13,18 +14,12 @@ public class Balle extends Entite {
         super();
         this.position = new Vector2(x, y);
         this.nom = "Balle";
-        this.pointDeVie = 1; // Une balle a 1 PV
         this.hitbox = new Circle(x, y, rayon);
         this.estDetruite = false;
         this.vitesse = 200f; // 200 pixels par seconde
 
         // Calculer la direction vers la cible
         this.direction = new Vector2(cible.x - x, cible.y - y).nor();
-    }
-
-    @Override
-    public void attaquer() {
-        // Les balles n'attaquent pas activement, elles infligent des dégâts au contact
     }
 
     @Override

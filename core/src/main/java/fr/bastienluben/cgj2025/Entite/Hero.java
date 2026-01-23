@@ -14,10 +14,9 @@ public class Hero extends Personnage {
     private static Hero INSTANCE;
 
     private Hero(String nom, float x, float y) {
-        super();
-        super.nom = nom;
+        super(100, 1,1);
+        this.nom = nom;
         super.position = new Vector2(x, y);
-        super.pointDeVie = 10; // 10 points de vie par défaut
         listeObjetDuHero = new ArrayList<>();
     }
 
@@ -33,11 +32,6 @@ public class Hero extends Personnage {
     }
 
     @Override
-    public void attaquer() {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
     public Vector2 getPosition() {
         return position;
     }
@@ -47,10 +41,10 @@ public class Hero extends Personnage {
     }
 
     public double getPointDeVie() {
-        return pointDeVie;
+        return getVie().getNbStat();
     }
 
     public boolean estMort() {
-        return pointDeVie <= 0;
+        return getVie().getNbStat() <= 0;
     }
 }
