@@ -8,7 +8,7 @@ public abstract class Attaque {
     private float tempsExecution;
     private float delaiAvantProchaineAttaque;
 
-    public Attaque (double nbDegat, String nom, float tempsExecution, float delaiAvantProchaineAttaque) {
+    protected Attaque (double nbDegat, String nom, float tempsExecution, float delaiAvantProchaineAttaque) {
         this.nom = nom;
         this.nbDegatAuHit = nbDegat;
         this.tempsExecution = tempsExecution;
@@ -35,5 +35,5 @@ public abstract class Attaque {
         return delaiAvantProchaineAttaque;
     }
 
-    
+
 }
