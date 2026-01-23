@@ -33,15 +33,10 @@ public class MainKamikazeScreen extends AbstractScreen implements Screen {
         batch = new SpriteBatch();
         bombeTexture = new Texture(Gdx.files.internal("bombe.png"));
         font = new BitmapFont();
-        kamikaze = new kamikaze(Hero.getInstance());
+        kamikaze = new kamikaze();
         bombes = new ArrayList<>();
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
-    }
-
-    @Override
-    public void show() {
-        // Initialisation si nécessaire
     }
 
     @Override
