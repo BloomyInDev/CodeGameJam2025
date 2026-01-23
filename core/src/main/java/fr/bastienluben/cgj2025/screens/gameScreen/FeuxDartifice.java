@@ -67,8 +67,10 @@ public class FeuxDartifice implements ISpriteDrawable
         {
             for (int i = 0; i < lumCount; i++)
             {
-                bet[i].x = Lerps.CubeOut(lums[i].x, targs[i].x, timer / (ft * 2), (byte)64);
-                bet[i].y = Lerps.CubeOut(lums[i].y, targs[i].y, timer / (ft * 2), (byte)64);
+                bet[i].x = Lerps.CubeOut(lums[i].x, targs[i].x,
+                    ft > 10 ? timer : timer / 6, (byte)64);
+                bet[i].y = Lerps.CubeOut(lums[i].y, targs[i].y,
+                    ft > 10 ? timer : timer / 6, (byte)64);
             }
         }
         timer += dt / ft;

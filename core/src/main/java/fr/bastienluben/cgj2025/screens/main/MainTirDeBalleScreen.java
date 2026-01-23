@@ -1,6 +1,7 @@
 package fr.bastienluben.cgj2025.screens.main;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,6 +15,7 @@ import fr.bastienluben.cgj2025.Entite.Balle;
 import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
+import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartificeManager;
 
 import java.util.Random;
 
@@ -21,10 +23,14 @@ public class MainTirDeBalleScreen extends AbstractScreen {
     private ShapeRenderer shapeRenderer;
     private Hero hero;
     private TirDeBalle tirDeBalle;
+    private FeuxDartificeManager feux;
+
+    private final Color sang;
 
     public MainTirDeBalleScreen(Main game, AssetManager assets) {
         super(game, assets);
         this.shapeRenderer = new ShapeRenderer();
+        sang = new Color(0.5f, 0, 0, 1f);
     }
 
     @Override
@@ -34,6 +40,9 @@ public class MainTirDeBalleScreen extends AbstractScreen {
         // Créer l'attaque TirDeBalle : cible, délai 1s, rayon 60, 1 dégât par balle
         // Chaque balle est l'attaquant
         this.tirDeBalle = new TirDeBalle(60f);
+
+        // sang
+        feux = new FeuxDartificeManager(12f);
     }
 
     @Override
@@ -46,8 +55,14 @@ public class MainTirDeBalleScreen extends AbstractScreen {
         if (Gdx.input.justTouched()) {
             Vector2 clickPosition = new Vector2(Gdx.input.getX(), Gdx.input.getY());
             clickPosition = UI.normalToGdx(clickPosition);
-            tirDeBalle.gererClic(clickPosition.x, clickPosition.y);
+            if (tirDeBalle.gererClic(clickPosition.x, clickPosition.y))
+            {
+                // on kill
+                feux.createExplosionAt(clickPosition, 2f, sang);
+            }
         }
+
+        feux.update(delta);
     }
 
     @Override
@@ -62,6 +77,7 @@ public class MainTirDeBalleScreen extends AbstractScreen {
 
         // Dessiner les ennemis (images enerve.png) avec SpriteBatch
         batch.begin();
+        feux.draw(batch);
         for (Balle balle : tirDeBalle.getBalles()) {
             float rayon = balle.getHitbox().radius;
             float taille = rayon * ((float)1.3); // Diamètre
