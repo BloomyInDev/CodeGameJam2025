@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.config.ConfigLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
@@ -14,9 +15,11 @@ import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.BossTest.BosstestScreen;
+import fr.bastienluben.cgj2025.screens.main.MainKamikazeScreen;
 import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
 import fr.bastienluben.cgj2025.screens.main.MainTirDeBalleScreen;
 import fr.bastienluben.cgj2025.screens.testScreen.TestScreen;
+import fr.bastienluben.cgj2025.screens.main.MainTirDeBalleScreen;
 
 public class Main extends Game {
     public static final boolean DEBUG = true;
@@ -53,7 +56,7 @@ public class Main extends Game {
         Image.setDefaultTexture(assets.getTexture("default.png"));
 
         //notreScreen = new BosstestScreen(this, assets);
-        notreScreen = new MainTirDeBalleScreen(this, assets);
+        notreScreen = new MainKamikazeScreen(this, assets);
         this.setScreen(notreScreen);
     }
 
