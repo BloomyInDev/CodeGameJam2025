@@ -115,16 +115,12 @@ public class BossEntity implements IScript
     public void update(float delta)
     {
         corp.setRotation(0);
-        tete.setRotation(12);
     }
 
     @Override
     public void draw(SpriteBatch batch)
     {
-        for (MembreArticulable ma : membres)
-        {
-            ma.draw(batch);
-        }
+        corp.draw(batch);
         corp.debug(batch);
     }
 

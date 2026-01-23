@@ -8,8 +8,6 @@ import fr.bastienluben.cgj2025.lib.entities.Element;
 import fr.bastienluben.cgj2025.lib.entities.ISpriteDrawable;
 import fr.bastienluben.cgj2025.lib.ui.Image;
 
-
-
 public class MembreArticulable extends Element implements ISpriteDrawable
 {
     private static void applyRotation(
@@ -47,7 +45,6 @@ public class MembreArticulable extends Element implements ISpriteDrawable
     private final Vector2[] connectionsData;
     private final Vector2 origin;
     private final Vector2[] pointsToScreen;
-    private final Vector2 p;
     private final byte indexOrigin;
     private float startRotation;
 
@@ -79,7 +76,6 @@ public class MembreArticulable extends Element implements ISpriteDrawable
             connectionsData[indexDeLaConnectoinQuiSertDePointDeRotation].x * tex.getWidth(),
             connectionsData[indexDeLaConnectoinQuiSertDePointDeRotation].y * tex.getHeight()
         );
-        p = new Vector2(0f, 0f);
         startRotation = 0f;
         setRotation(startRotation);
     }
@@ -130,6 +126,11 @@ public class MembreArticulable extends Element implements ISpriteDrawable
                     applyRotation(position, pointsToScreen[i], rotation + parent.rotation);
             }
         }
+    }
+
+    public Vector2 getBottomLeft()
+    {
+        return new Vector2(position.x - origin.x, position.y - origin.y);
     }
 
     @Override
