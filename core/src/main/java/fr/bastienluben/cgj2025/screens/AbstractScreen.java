@@ -52,8 +52,8 @@ public abstract class AbstractScreen implements Screen, IScript
     }
 
     @Override
-    public final void show() { start(); }
-    public final void render(float delta) {
+    public void show() { start(); }
+    public void render(float delta) {
         update(delta);
         draw(game.getSprite());
         draw(game.getShape());
