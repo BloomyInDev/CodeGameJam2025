@@ -6,8 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.Chrono;
-import fr.bastienluben.cgj2025.lib.ui.Button;
-import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 
 public class GameScreen extends AbstractScreen {
@@ -18,6 +16,7 @@ public class GameScreen extends AbstractScreen {
 
     Chrono test;
     BarreDeVie vie;
+    FeuxDartificeManager feux;
 
     @Override
     public void onLoad(AssetManager assets)
@@ -32,12 +31,23 @@ public class GameScreen extends AbstractScreen {
         {
             vie.takeDamage(-10);
         }, 1f);
+
+        feux = new FeuxDartificeManager();
     }
 
     @Override
     public void update(float delta)
     {
         test.update(delta);
+        feux.update(delta);
+        if (Gdx.input.isTouched())
+        {
+            feux.createExplosionAt(
+                new Vector2(
+                Gdx.input.getX(),
+                Gdx.graphics.getHeight() - Gdx.input.getY()
+                ), 2f);
+        }
     }
 
     @Override
@@ -45,6 +55,7 @@ public class GameScreen extends AbstractScreen {
     {
         batch.begin();
         vie.draw(batch);
+        feux.draw(batch);
         batch.end();
     }
 }

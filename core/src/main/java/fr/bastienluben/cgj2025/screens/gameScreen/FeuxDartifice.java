@@ -47,6 +47,7 @@ public class FeuxDartifice implements ISpriteDrawable
             targs[i].x = startPos.x + (float)(Math.cos(dir) * amp * ampli);
             targs[i].y = startPos.y + (float)(Math.sin(dir) * amp * ampli);
         }
+
         timer = 0f;
         alive = true;
     }
