@@ -2,9 +2,11 @@ package fr.bastienluben.cgj2025.screens.main;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import fr.bastienluben.cgj2025.Enemis.Ennemi;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.Attaques.TirDeBalle;
@@ -28,9 +30,10 @@ public class MainTirDeBalleScreen extends AbstractScreen {
     @Override
     public void start() {
         this.hero = Hero.getInstance();
+
         // Créer l'attaque TirDeBalle : cible, délai 1s, rayon 60, 1 dégât par balle
         // Chaque balle est l'attaquant
-        this.tirDeBalle = new TirDeBalle(hero, 1f, 60f, 1);
+        this.tirDeBalle = new TirDeBalle(60f);
     }
 
     @Override
@@ -61,7 +64,7 @@ public class MainTirDeBalleScreen extends AbstractScreen {
         batch.begin();
         for (Balle balle : tirDeBalle.getBalles()) {
             float rayon = balle.getHitbox().radius;
-            float taille = rayon * 2; // Diamètre
+            float taille = rayon * ((float)1.3); // Diamètre
             float x = balle.getPosition().x - rayon;
             float y = balle.getPosition().y - rayon;
             batch.draw(balle.getTexture(), x, y, taille, taille);

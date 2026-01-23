@@ -2,7 +2,7 @@ package fr.bastienluben.cgj2025.Entite;
 
 import java.util.List;
 
-import fr.bastienluben.cgj2025.Stats.Defense;
+import fr.bastienluben.cgj2025.Stats.Difficulte;
 import fr.bastienluben.cgj2025.Stats.Force;
 import fr.bastienluben.cgj2025.Stats.PV;
 import fr.bastienluben.cgj2025.Attaques.Attaque;
@@ -11,13 +11,13 @@ public abstract class Personnage extends Entite{
     protected List<Attaque> listesAttaques;
     private PV vie;
     private Force force;
-    private Defense defense;
+    private Difficulte difficulte;
 
-    public Personnage(double maxPV, double forceDefaut, double defenceDefaut){
+    public Personnage(double maxPV, double forceDefaut, double difficulteDefaut){
         double statsMax = 5;
         vie = new PV(maxPV, maxPV);
         force = new Force(forceDefaut, statsMax);
-        defense = new Defense(defenceDefaut, statsMax);
+        difficulte = new Difficulte(difficulteDefaut, statsMax);
     }
 
     public PV getVie(){
@@ -28,8 +28,8 @@ public abstract class Personnage extends Entite{
         return this.force;
     }
 
-    public Defense getDefense(){
-        return this.defense;
+    public Difficulte getDefense(){
+        return this.difficulte;
     }
 
     public void attaquer(Personnage adversaire, Attaque attaque){

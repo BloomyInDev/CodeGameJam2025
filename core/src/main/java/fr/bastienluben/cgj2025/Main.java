@@ -57,11 +57,11 @@ public class Main extends Game {
 
 
         // this.setScreen(new BosstestScreen(this, assets));
-        this.setScreen(new GameScreen(this, assets));
+        this.setScreen(new MainTirDeBalleScreen(this, assets));
 
         //notreScreen = new BosstestScreen(this, assets);
-        //notreScreen = new MainTirDeBalleScreen(this, assets);
-        notreScreen = new MainKamikazeScreen(this, assets);
+        notreScreen = new MainTirDeBalleScreen(this, assets);
+        //notreScreen = new MainKamikazeScreen(this, assets);
         this.setScreen(notreScreen);
         //notreScreen = new MainTirDeBalleScreen(this, assets);
         //this.setScreen(notreScreen);

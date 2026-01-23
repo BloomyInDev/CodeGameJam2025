@@ -13,8 +13,8 @@ public class kamikaze extends Attaque {
     private List<Bombe> bombes;
     private Random random;
 
-    public kamikaze(Entite attaquant) {
-        super(1, "kamikaze", 10, 10);
+    public kamikaze() {
+        super(1, "kamikaze", 5, 1);
         bombes = new ArrayList<>();
         random = new Random();
     }
@@ -24,7 +24,7 @@ public class kamikaze extends Attaque {
         // Créer une nouvelle bombe à une position aléatoire
         int x = random.nextInt(800);
         int y = random.nextInt(600);
-        Bombe bombe = new Bombe(100,x,y);
+        Bombe bombe = new Bombe(100* attaquant.getDefense().getNbStat(),x,y);
         bombes.add(bombe);
 
         System.out.println("Bombe posée à la position (" + x + ", " + y + ")");

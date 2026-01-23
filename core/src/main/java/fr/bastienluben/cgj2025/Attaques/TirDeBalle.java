@@ -21,16 +21,15 @@ public class TirDeBalle extends Attaque {
     private List<Balle> balles;
     private Random random;
     private float tempsDepuisDerniereBalle;
-    private float delaiEntreBalles;
+    private static float delaiEntreBalles = 1f;
     private float rayonBalle;
-    private double degatsParBalle;
     private Hero cible;
 
     /**
      * Constructeur classique pour l'attaque entre entités.
      */
     public TirDeBalle() {
-        super(10, "Tir de balle", 10, 10);
+        this(1f);
         this.balles = new ArrayList<>();
         this.random = new Random();
     }
@@ -39,15 +38,13 @@ public class TirDeBalle extends Attaque {
      * Constructeur pour la gestion des projectiles avec cible.
      * Les balles elles-mêmes sont les attaquants.
      */
-    public TirDeBalle(Hero cible, float delaiEntreBalles, float rayonBalle, double degatsParBalle) {
-        super(degatsParBalle, "Tir de balle", 10, 10);
+    public TirDeBalle(float rayonBalle) {
+        super(2.3, "Tir de balle", 10, 4);
         this.balles = new ArrayList<>();
         this.random = new Random();
         this.tempsDepuisDerniereBalle = 0f;
-        this.delaiEntreBalles = delaiEntreBalles;
         this.rayonBalle = rayonBalle;
-        this.degatsParBalle = degatsParBalle;
-        this.cible = cible;
+        this.cible = Hero.getInstance();
     }
 
     // === Méthode héritée de Attaque ===
@@ -111,7 +108,7 @@ public class TirDeBalle extends Attaque {
         tempsDepuisDerniereBalle += delta;
 
         // Créer une nouvelle balle si le délai est écoulé
-        if (tempsDepuisDerniereBalle >= delaiEntreBalles) {
+        if (tempsDepuisDerniereBalle >= TirDeBalle.delaiEntreBalles) {
             ajouterBalle();
             tempsDepuisDerniereBalle = 0f;
         }
@@ -140,7 +137,7 @@ public class TirDeBalle extends Attaque {
      */
     private void ajouterBalle() {
         float x = random.nextFloat() * Gdx.graphics.getWidth();
-        float y = Gdx.graphics.getHeight();
+        float y = Gdx.graphics.getHeight() + 40;
         balles.add(new Balle(x, y, rayonBalle, cible.getPosition()));
     }
 
@@ -182,9 +179,5 @@ public class TirDeBalle extends Attaque {
 
     public void setDelaiEntreBalles(float delai) {
         this.delaiEntreBalles = delai;
-    }
-
-    public void setDegatsParBalle(double degats) {
-        this.degatsParBalle = degats;
     }
 }
