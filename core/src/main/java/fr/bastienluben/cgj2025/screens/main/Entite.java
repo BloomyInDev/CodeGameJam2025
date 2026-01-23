@@ -11,7 +11,7 @@ public abstract class Entite {
     protected double pointDeArmure;
 
     private Hitbox hitbox;
-    private String nom;
+    protected String nom;
     protected List<Attaque> listesAttaques;
 
     public void attaquer(Entite adversaire, Attaque attaqueUtilise) {
