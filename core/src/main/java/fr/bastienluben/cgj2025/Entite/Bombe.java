@@ -3,25 +3,27 @@ package fr.bastienluben.cgj2025.Entite;
 public class Bombe {
     private double timer;
     private boolean estClique;
+    private float tempsApparitionBombe;
+    private float delaiApparitionBombe;
     private int x;
     private int y;
 
-    public Bombe(double timer, int x, int y) {
+    public Bombe(double timer, int x, int y, float delaiApparitionBombe) {
         this.timer = timer;
         this.estClique = false;
         this.x = x;
         this.y = y;
-
+        this.delaiApparitionBombe = (float) (delaiApparitionBombe == 0.0 ?  0.1 : delaiApparitionBombe);
     }
 
-    public void update() {
+    public void update(float delta) {
+        tempsApparitionBombe += delta;
         if (timer > 0) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (tempsApparitionBombe > delaiApparitionBombe) {
+                tempsApparitionBombe = 0;
+                timer--;
             }
-            timer--;
+            
         }
     }
 
@@ -43,5 +45,9 @@ public class Bombe {
 
     public double getTimer() {
         return timer;
+    }
+
+    public int getTimerTexte() {
+        return (int) timer;
     }
 }
