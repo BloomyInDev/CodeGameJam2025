@@ -13,6 +13,7 @@ import fr.bastienluben.cgj2025.lib.ui.Image;
 import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
+import fr.bastienluben.cgj2025.screens.gameScreen.GameScreen;
 import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
 import fr.bastienluben.cgj2025.screens.testScreen.TestScreen;
 
@@ -51,7 +52,7 @@ public class Main extends Game {
         Image.setDefaultTexture(assets.getTexture("default.png"));
 
         // this.setScreen(new BosstestScreen(this, assets));
-        this.setScreen(new MainMenuScreen(this, assets));
+        this.setScreen(new GameScreen(this, assets));
     }
 
     public void render() {
