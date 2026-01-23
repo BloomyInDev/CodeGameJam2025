@@ -23,12 +23,16 @@ public class Button extends Image implements Disposable
     {
         for (Button b : _buttons)
         {
-            b.update(mousePos, isMouseHold);
+            if (b.update(mousePos, isMouseHold))
+            {
+                previousMouseHold = false;
+                return;
+            }
         }
         previousMouseHold = isMouseHold;
     }
 
-    public void update(Vector2 mousePos, boolean isMouseHold)
+    public boolean update(Vector2 mousePos, boolean isMouseHold)
     {
         Rectangle temp = new Rectangle(rect.x + posOffset.x,
             rect.y + posOffset.y, rect.width, rect.height);
@@ -44,7 +48,8 @@ public class Button extends Image implements Disposable
                 super.setColor(selectedColor);
                 if (previousMouseHold)
                 {
-                    action.run();  // wtf il se prend pour qui java
+                    action.run();
+                    return true; // wtf il se prend pour qui java
                 }
             }
         }
@@ -52,6 +57,8 @@ public class Button extends Image implements Disposable
         {
             super.setColor(restColor);
         }
+
+        return false;
     }
 
     Text name;

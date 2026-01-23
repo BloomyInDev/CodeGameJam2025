@@ -55,10 +55,8 @@ public class Main extends Game {
         UI.setScreenResolution(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Image.setDefaultTexture(assets.getTexture("default.png"));
 
-
-        // this.setScreen(new BosstestScreen(this, assets));
-        this.setScreen(new MainTirDeBalleScreen(this, assets));
-
+        this.setScreen(new MainMenuScreen(this, assets));
+      
         //notreScreen = new BosstestScreen(this, assets);
         notreScreen = new MainTirDeBalleScreen(this, assets);
         //notreScreen = new MainKamikazeScreen(this, assets);
