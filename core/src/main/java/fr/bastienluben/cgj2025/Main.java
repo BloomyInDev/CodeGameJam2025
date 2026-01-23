@@ -14,6 +14,7 @@ import fr.bastienluben.cgj2025.lib.ui.Image;
 import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
+import fr.bastienluben.cgj2025.screens.gameScreen.GameScreen;
 import fr.bastienluben.cgj2025.screens.BossTest.BosstestScreen;
 import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
 import fr.bastienluben.cgj2025.screens.main.MainTirDeBalleScreen;
@@ -53,9 +54,14 @@ public class Main extends Game {
         UI.setScreenResolution(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Image.setDefaultTexture(assets.getTexture("default.png"));
 
+
+        // this.setScreen(new BosstestScreen(this, assets));
+        this.setScreen(new GameScreen(this, assets));
+
         //notreScreen = new BosstestScreen(this, assets);
-        notreScreen = new MainTirDeBalleScreen(this, assets);
-        this.setScreen(notreScreen);
+        //notreScreen = new MainTirDeBalleScreen(this, assets);
+        //this.setScreen(notreScreen);
+
     }
 
     public void render() {
