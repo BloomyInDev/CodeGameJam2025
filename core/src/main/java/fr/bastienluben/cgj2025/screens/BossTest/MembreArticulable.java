@@ -42,17 +42,21 @@ public class MembreArticulable extends Element implements ISpriteDrawable
         output.y = origin.y + (float)(Math.sin(finalRot) * dist);
     }
 
+    private final MembreArticulable parent;
+
     private final Vector2[] connectionsData;
     private final Vector2 origin;
     private final Vector2[] pointsToScreen;
-    private final Vector2 justeunPoolpourorigin;
+    private final Vector2 p;
     private final byte indexOrigin;
+    private float startRotation;
 
     private float rotation;
 
     /// @param connectionsData - la position des articulations
     /// avec des porté de 0f - 1f.
     public MembreArticulable(
+        MembreArticulable parent,
         Vector2 positionRef,
         Vector2[] connectionsData,
         int indexDeLaConnectoinQuiSertDePointDeRotation,
@@ -60,6 +64,7 @@ public class MembreArticulable extends Element implements ISpriteDrawable
         )
     {
         super(tex);
+        this.parent = parent;
         this.position = positionRef;
         indexOrigin = (byte)indexDeLaConnectoinQuiSertDePointDeRotation;
         this.connectionsData = connectionsData;
@@ -74,9 +79,27 @@ public class MembreArticulable extends Element implements ISpriteDrawable
             connectionsData[indexDeLaConnectoinQuiSertDePointDeRotation].x * tex.getWidth(),
             connectionsData[indexDeLaConnectoinQuiSertDePointDeRotation].y * tex.getHeight()
         );
-        justeunPoolpourorigin = new Vector2(0f, 0f);
-        setRotation(0f);
+        p = new Vector2(0f, 0f);
+        startRotation = 0f;
+        setRotation(startRotation);
     }
+
+    public MembreArticulable(
+        MembreArticulable parent,
+        Vector2 positionRef,
+        Vector2[] connectionsData,
+        int indexDeLaConnectoinQuiSertDePointDeRotation,
+        Texture tex,
+        float startRotation
+    )
+    {
+        this(parent, positionRef, connectionsData,
+            indexDeLaConnectoinQuiSertDePointDeRotation,
+            tex);
+        this.startRotation = startRotation;
+        setRotation(startRotation);
+    }
+
 
     public Vector2 getConnection(int id)
     {
@@ -97,17 +120,14 @@ public class MembreArticulable extends Element implements ISpriteDrawable
 
     private void update()
     {
-        justeunPoolpourorigin.x = position.x + origin.x;
-        justeunPoolpourorigin.y = position.y + origin.y;
-
         for (byte i = 0; i < connectionsData.length; i++)
         {
-            pointsToScreen[i].x = position.x + (connectionsData[i].x * sprite.getWidth());
-            pointsToScreen[i].y = position.y + (connectionsData[i].y * sprite.getHeight());
-
             if (i != indexOrigin) // pas besoin de rotate le point de rotation
             {
-                applyRotation(justeunPoolpourorigin, pointsToScreen[i], rotation);
+                if (parent == null)
+                    applyRotation(position, pointsToScreen[i], rotation);
+                else
+                    applyRotation(position, pointsToScreen[i], rotation + parent.rotation);
             }
         }
     }
@@ -118,8 +138,8 @@ public class MembreArticulable extends Element implements ISpriteDrawable
         batch.setColor(Color.WHITE);
         batch.draw(
             getSprite(),
-            position.x,
-            position.y,
+            position.x - origin.x,
+            position.y - origin.y,
             origin.x,
             origin.y,
             getWidth(),

@@ -12,34 +12,13 @@ public class BosstestScreen extends AbstractScreen
         super(game, assets);
     }
 
-    MembreArticulable membre, bras;
-    Vector2 positionDuMembretest;
+    BossEntity boss;
 
     @Override
     public void onLoad(AssetManager assets)
     {
-        positionDuMembretest = new Vector2(400, 300);
-        membre = new MembreArticulable(
-            positionDuMembretest,
-            new Vector2[]
-            {
-                new Vector2(1, 0),
-                new Vector2(0.5f, 0.5f),
-                new Vector2(1f, 1f)
-            },
-            0,
-            assets.getTexture("Silksong.jpg")
-        );
-
-        bras = new MembreArticulable(
-            membre.getConnection(2),
-            new Vector2[]
-            {
-                new Vector2(0.5f, 0f)
-            },
-            0,
-            assets.getTexture("Silksong.jpg")
-        );
+        boss = new BossEntity();
+        boss.onLoad(assets);
     }
 
     @Override
@@ -51,19 +30,14 @@ public class BosstestScreen extends AbstractScreen
     @Override
     public void update(float dt)
     {
-        membre.addRotation(90 * dt);
-
+        boss.update(dt);
     }
 
     @Override
     public void draw(SpriteBatch batch)
     {
         batch.begin();
-        membre.draw(batch);
-        bras.draw(batch);
-
-        bras.debug(batch);
-        membre.debug(batch);
+        boss.draw(batch);
         batch.end();
     }
 }
