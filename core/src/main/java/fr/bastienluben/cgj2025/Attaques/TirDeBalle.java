@@ -1,12 +1,9 @@
 package fr.bastienluben.cgj2025.Attaques;
 
-import fr.bastienluben.cgj2025.Entite.Balle;
-import fr.bastienluben.cgj2025.Entite.Entite;
-import fr.bastienluben.cgj2025.Entite.Hero;
+import fr.bastienluben.cgj2025.Entite.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import fr.bastienluben.cgj2025.Entite.Personnage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +21,9 @@ public class TirDeBalle extends Attaque {
     private static float delaiEntreBalles = 1f;
     private float rayonBalle;
     private Hero cible;
+    private int compteurBallesMortes;
+    private boolean stopProduction;
+    private boolean estTermine;
 
     /**
      * Constructeur classique pour l'attaque entre entités.
@@ -32,6 +32,9 @@ public class TirDeBalle extends Attaque {
         this(1f);
         this.balles = new ArrayList<>();
         this.random = new Random();
+        compteurBallesMortes = 0;
+        stopProduction = false;
+        estTermine = false;
     }
 
     /**
@@ -109,7 +112,12 @@ public class TirDeBalle extends Attaque {
 
         // Créer une nouvelle balle si le délai est écoulé
         if (tempsDepuisDerniereBalle >= TirDeBalle.delaiEntreBalles) {
-            ajouterBalle();
+            if (compteurBallesMortes < 20) {
+                ajouterBalle();
+            } else if (!stopProduction) {
+                ajouterBalleBoss();
+                stopProduction = true;
+            }
             tempsDepuisDerniereBalle = 0f;
         }
 
@@ -129,7 +137,24 @@ public class TirDeBalle extends Attaque {
         }
 
         // Retirer les balles détruites ou sorties de l'écran
+
+        for (Balle balle : balles) {
+            if (balle.estDetruite()) {
+                compteurBallesMortes++;
+            }
+        }
+
         balles.removeIf(balle -> balle.estDetruite() || estHorsEcran(balle));
+
+        if (balles.isEmpty() && stopProduction) {
+            estTermine = true;
+        }
+    }
+
+    private void ajouterBalleBoss() {
+        float x = random.nextFloat() * Gdx.graphics.getWidth();
+        float y = Gdx.graphics.getHeight();
+        balles.add(new BalleBoss(x, y, rayonBalle, cible.getPosition()));
     }
 
     /**
@@ -138,7 +163,7 @@ public class TirDeBalle extends Attaque {
     private void ajouterBalle() {
         float x = random.nextFloat() * Gdx.graphics.getWidth();
         float y = Gdx.graphics.getHeight() + 40;
-        balles.add(new Balle(x, y, rayonBalle, cible.getPosition()));
+        balles.add(new BalleNormale(x, y, rayonBalle, cible.getPosition(), 200f, 800f));
     }
 
     /**
@@ -178,6 +203,10 @@ public class TirDeBalle extends Attaque {
     }
 
     public void setDelaiEntreBalles(float delai) {
-        this.delaiEntreBalles = delai;
+        delaiEntreBalles = delai;
+    }
+
+    public boolean isEstTermine() {
+        return estTermine;
     }
 }
