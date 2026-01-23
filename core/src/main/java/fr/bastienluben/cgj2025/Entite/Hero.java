@@ -17,5 +17,11 @@ public class Hero extends Entite {
         listeObjetDuHero.add(objetAAJouter);
     }
 
+    @Override
+    public void attaquer() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'attaquer'");
+    }
+
 
 }

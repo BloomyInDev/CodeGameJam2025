@@ -25,6 +25,8 @@ public abstract class Entite {
         }
     }
 
+    public abstract void attaquer();
+
     public double guerison(double nbVie){
         pointDeVie = Math.min(pointDeVie + nbVie, pointDeVieMax);
         return pointDeVie;
