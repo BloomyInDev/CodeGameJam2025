@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.MathUtils;
 
 import fr.bastienluben.cgj2025.Attaques.Bombe;
 import fr.bastienluben.cgj2025.Attaques.kamikaze;
+import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
@@ -37,7 +38,7 @@ public class MainKamikazeScreen extends AbstractScreen implements Screen {
         font = FontLoader.getInstance().getFont("default", new FontParameterBuilder().build());
         redFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setColor(Color.RED).build());
         orangeFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setColor(Color.ORANGE).build());
-        kamikaze = new kamikaze();
+        kamikaze = new kamikaze(Hero.getInstance());
         bombes = new ArrayList<>();
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
