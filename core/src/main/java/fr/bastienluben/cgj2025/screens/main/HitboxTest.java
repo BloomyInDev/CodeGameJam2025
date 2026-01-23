@@ -7,7 +7,7 @@ import fr.bastienluben.cgj2025.lib.*;
 
 public class HitboxTest implements IScript
 {
-    Entity test;
+    Element test;
 
     @Override
     public void onLoad(AssetManager manager)
@@ -18,7 +18,7 @@ public class HitboxTest implements IScript
     @Override
     public void start()
     {
-        test = new Entity();
+        test = new Element();
     }
 
     @Override

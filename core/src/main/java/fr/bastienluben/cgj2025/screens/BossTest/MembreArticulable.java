@@ -3,11 +3,11 @@ package fr.bastienluben.cgj2025.screens.BossTest;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import fr.bastienluben.cgj2025.lib.entities.Entity;
+import fr.bastienluben.cgj2025.lib.entities.Element;
 
 import java.util.ArrayList;
 
-public class MembreArticulable extends Entity
+public class MembreArticulable extends Element
 {
     private ArrayList<Vector2> connectorPoints;
 

@@ -9,33 +9,33 @@ import fr.bastienluben.cgj2025.lib.ui.Image;
 
 import java.util.List;
 
-public class Entity implements ISpriteDrawable {
-    private static List<Entity> entities;
+public class Element implements ISpriteDrawable {
+    private static List<Element> elements;
 
-    public static List<Entity> getEntities() {
-        return entities;
+    public static List<Element> getElements() {
+        return elements;
     }
 
     protected Sprite sprite;
     protected Vector2 position;
 
-    public Entity() {
+    public Element() {
         this.sprite = new Sprite(Image.getDefaultTexture(), 32, 32);
         this.position = new Vector2(0, 0);
-        Entity.entities.add(this);
+        Element.elements.add(this);
     }
 
-    public Entity(Sprite sprite) {
+    public Element(Sprite sprite) {
         this.sprite = sprite;
         this.position = new Vector2(0, 0);
     }
 
-    public Entity(Texture texture) {
+    public Element(Texture texture) {
         this.sprite = new Sprite(texture, texture.getWidth(), texture.getHeight());
         this.position = new Vector2(0, 0);
     }
 
-    public Entity(Texture texture, Vector2 taille) {
+    public Element(Texture texture, Vector2 taille) {
         this.sprite = new Sprite(texture, (int)taille.x, (int)taille.y);
         this.position = new Vector2(0, 0);
     }
