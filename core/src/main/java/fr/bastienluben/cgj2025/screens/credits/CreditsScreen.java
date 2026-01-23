@@ -7,10 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.Chrono;
-import fr.bastienluben.cgj2025.lib.ui.Bounds;
-import fr.bastienluben.cgj2025.lib.ui.Button;
-import fr.bastienluben.cgj2025.lib.ui.Text;
-import fr.bastienluben.cgj2025.lib.ui.UI;
+import fr.bastienluben.cgj2025.lib.ui.*;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartifice;
 import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartificeManager;
@@ -30,6 +27,15 @@ public class CreditsScreen extends AbstractScreen
     FeuxDartificeManager feux;
     Chrono timer;
     Random rnd;
+    Image morganaaaaaaa;
+
+    @Override
+    public void onLoad(AssetManager assets)
+    {
+        morganaaaaaaa = new Image(138, 198, assets.getTexture("morgana.png"));
+        morganaaaaaaa.setMargin(0, 0, 32, 0);
+        morganaaaaaaa.setPosition(Bounds.BottomLeft);
+    }
 
     @Override
     public void start()
@@ -46,6 +52,7 @@ public class CreditsScreen extends AbstractScreen
         retour.setPosition(Bounds.Bottom);
         retour.setMargin(0, 128);
         feux = new FeuxDartificeManager(2f);
+
         timer = new Chrono(() ->
         {
             feux.createExplosionAt(new Vector2
@@ -81,6 +88,7 @@ public class CreditsScreen extends AbstractScreen
         feux.draw(batch);
         credits.draw(batch);
         retour.draw(batch);
+        morganaaaaaaa.draw(batch);
         batch.end();
     }
 }
