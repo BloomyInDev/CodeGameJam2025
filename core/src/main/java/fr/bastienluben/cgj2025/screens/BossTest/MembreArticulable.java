@@ -36,13 +36,14 @@ public class MembreArticulable extends Element implements ISpriteDrawable
             }
         }
 
-        output.x = (float)(Math.cos(Math.toRadians(rot + degree)) * dist);
-        output.y = (float)(Math.sin(Math.toRadians(rot + degree)) * dist);
+        output.x = (float)(Math.cos(rot + Math.toRadians(degree)) * dist);
+        output.y = (float)(Math.sin(rot + Math.toRadians(degree)) * dist);
     }
 
     private final Vector2[] connectionsData;
     private final Vector2 origin;
     private final Vector2[] pointsToScreen;
+    private final Vector2 justeunPoolpourorigin;
 
     private float rotation;
 
@@ -69,18 +70,33 @@ public class MembreArticulable extends Element implements ISpriteDrawable
             connectionsData[indexDeLaConnectoinQuiSertDePointDeRotation].x * tex.getWidth(),
             connectionsData[indexDeLaConnectoinQuiSertDePointDeRotation].y * tex.getHeight()
         );
+        justeunPoolpourorigin = new Vector2(0f, 0f);
         setRotation(0f);
     }
 
     public void setRotation(float degree)
     {
         this.rotation = degree;
+        update();
+    }
+
+    public void addRotation(float degree)
+    {
+        this.rotation += degree;
+        update();
+    }
+
+    private void update()
+    {
+        justeunPoolpourorigin.x = position.x + origin.x;
+        justeunPoolpourorigin.y = position.y + origin.y;
+
         for (byte i = 0; i < connectionsData.length; i++)
         {
             pointsToScreen[i].x = position.x + (connectionsData[i].x * sprite.getWidth());
             pointsToScreen[i].y = position.y + (connectionsData[i].y * sprite.getHeight());
 
-            applyRotation(origin, pointsToScreen[i], rotation);
+            applyRotation(, pointsToScreen[i], rotation);
         }
     }
 
@@ -96,19 +112,19 @@ public class MembreArticulable extends Element implements ISpriteDrawable
             origin.y,
             getWidth(),
             getHeight(),
-            getWidth(),
-            getHeight(),
+            1f,
+            1f,
             rotation);
     }
 
     public void debug(SpriteBatch batch)
     {
-        batch.setColor(Color.RED);
+        batch.setColor(Color.BLUE);
         for (Vector2 p : pointsToScreen)
         {
             batch.draw(Image.getDefaultTexture(),
-                p.x, p.y,
-                2, 2);
+                p.x - 2, p.y - 2,
+                4, 4);
         }
     }
 }

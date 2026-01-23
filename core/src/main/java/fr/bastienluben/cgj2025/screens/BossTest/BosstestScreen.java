@@ -41,7 +41,7 @@ public class BosstestScreen extends AbstractScreen
     @Override
     public void update(float dt)
     {
-        membre.setRotation(180f * dt);
+        membre.addRotation(0f);
     }
 
     @Override
