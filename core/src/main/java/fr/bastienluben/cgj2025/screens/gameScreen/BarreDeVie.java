@@ -4,19 +4,20 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.entities.ISpriteDrawable;
 
 public class BarreDeVie implements ISpriteDrawable
 {
-    private final int maxValue;
-    private int value;
+    private final double maxValue;
+    private double value;
     private final Texture outline;
     private final TextureRegion inner;
     private final Rectangle valueRectangle;
 
-    public BarreDeVie(int maxValue, AssetManager assets)
+    public BarreDeVie(double maxValue, AssetManager assets)
     {
         this.maxValue = maxValue;
         this.value = maxValue;
@@ -27,20 +28,20 @@ public class BarreDeVie implements ISpriteDrawable
         inner = new TextureRegion(assets.getTexture("healthValue.png"));
     }
 
-    public void takeDamage(int v)
+    public void takeDamage(double v)
     {
-        this.value += v;
-        if (value > maxValue)
-        {
-            value = maxValue;
-        }
-        else if (value < 0)
-        {
-            value = 0;
-        }
+        this.value += MathUtils.clamp(v, 0, maxValue);
+        updateRegionSize();
+    }
 
+    public void setLife(double v) {
+        this.value = MathUtils.clamp(v, 0, maxValue);
+        updateRegionSize();
+    }
+
+    private void updateRegionSize() {
         inner.setRegion(0, 0,
-            ((value * inner.getTexture().getWidth()) / maxValue),
+            (int) ((value * inner.getTexture().getWidth()) / maxValue),
             inner.getRegionHeight());
     }
 
@@ -56,7 +57,7 @@ public class BarreDeVie implements ISpriteDrawable
         batch.draw(inner,
             valueRectangle.x,
             valueRectangle.y,
-            (valueRectangle.getWidth() * value) / maxValue,
+            (float) ((valueRectangle.getWidth() * value) / maxValue),
             valueRectangle.getHeight()
         );
     }

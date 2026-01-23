@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.Chrono;
@@ -16,13 +17,13 @@ public class GameScreen extends AbstractScreen {
     }
 
     Chrono test;
-    BarreDeVie vie;
+    BarreDeVieHero vie;
     FeuxDartificeManager feux;
 
     @Override
     public void onLoad(AssetManager assets)
     {
-        vie = new BarreDeVie(100, assets);
+        vie = new BarreDeVieHero(assets);
     }
 
     @Override
@@ -30,7 +31,7 @@ public class GameScreen extends AbstractScreen {
     {
         test = new Chrono(() ->
         {
-            vie.takeDamage(-10);
+            Hero.getInstance().getVie().retirerStat(10);
         }, 1f);
 
         feux = new FeuxDartificeManager(16);
@@ -39,6 +40,7 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void update(float delta)
     {
+        vie.update(delta);
         test.update(delta);
         feux.update(delta);
         if (Gdx.input.isTouched())
