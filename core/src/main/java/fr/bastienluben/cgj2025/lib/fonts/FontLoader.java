@@ -8,10 +8,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FontLoader {
+    private static FontLoader instance;
+
+    public static FontLoader getInstance() {
+        if (instance == null) instance = new FontLoader();
+        return instance;
+    }
+
     private Map<String, FreeTypeFontGenerator> fontGenerators;
     private Map<FontIdentifier, BitmapFont> generatedFonts;
 
-    public FontLoader() {
+    private FontLoader() {
         this.fontGenerators = new HashMap<>();
         this.generatedFonts = new HashMap<>();
     }

@@ -13,7 +13,7 @@ public class ConfigLoader {
     private ConfigStructure config = null;
     public ConfigLoader() {
         gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        parseFile();
+        //parseFile();
     }
 
     public static ConfigLoader getInstance() {
@@ -74,6 +74,7 @@ public class ConfigLoader {
     }
 
     public ConfigStructure getConfig() {
+        if (config == null) parseFile();
         return config;
     }
 }
