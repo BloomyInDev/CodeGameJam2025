@@ -37,6 +37,6 @@ public abstract class Attaque {
         return attaquant;
     }
 
-    protected abstract void attaque();
+    public abstract void attaque(Entite adversaire);
 
 }
