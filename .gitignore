@@ -62,9 +62,6 @@ www-test/
 *.iws
 *.iml
 
-## VS Code:
-.vscode/
-
 ## Eclipse:
 .classpath
 .project
@@ -157,7 +154,6 @@ Thumbs.db
 *#*#
 /.kotlin/
 /assets/assets.txt
-/assets/config.json
 
 ## Special cases:
 
