@@ -1,0 +1,87 @@
+package fr.bastienluben.cgj2025.screens.main;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
+import fr.bastienluben.cgj2025.lib.AssetManager;
+import fr.bastienluben.cgj2025.Main;
+import fr.bastienluben.cgj2025.Attaques.TirDeBalle;
+import fr.bastienluben.cgj2025.Entite.Balle;
+import fr.bastienluben.cgj2025.Entite.Hero;
+import fr.bastienluben.cgj2025.lib.ui.UI;
+import fr.bastienluben.cgj2025.screens.AbstractScreen;
+
+public class MainTirDeBalleScreen extends AbstractScreen {
+    private ShapeRenderer shapeRenderer;
+    private Hero hero;
+    private TirDeBalle tirDeBalle;
+    private Texture textureEnerve;
+
+    public MainTirDeBalleScreen(Main game, AssetManager assets) {
+        super(game, assets);
+        this.shapeRenderer = new ShapeRenderer();
+    }
+
+    @Override
+    public void onLoad(AssetManager assets) {
+        // Charger la texture pour les ennemis
+        textureEnerve = new Texture(Gdx.files.internal("enerve.png"));
+    }
+
+    @Override
+    public void start() {
+        this.hero = Hero.getInstance();
+        // Créer l'attaque TirDeBalle : cible, délai 1s, rayon 60, 1 dégât par balle
+        // Chaque balle est l'attaquant
+        this.tirDeBalle = new TirDeBalle(hero, 1f, 60f, 1);
+    }
+
+    @Override
+    public void update(float delta) {
+        // Déléguer toute la logique des balles à TirDeBalle
+        tirDeBalle.mettreAJour(delta);
+
+        // Gérer les clics pour détruire les balles (justTouched = nouveau clic
+        // uniquement)
+        if (Gdx.input.justTouched()) {
+            Vector2 clickPosition = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+            clickPosition = UI.normalToGdx(clickPosition);
+            tirDeBalle.gererClic(clickPosition.x, clickPosition.y);
+        }
+    }
+
+    @Override
+    public void draw(SpriteBatch batch) {
+        // Dessiner le héros (carré blanc) avec ShapeRenderer
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(1, 1, 1, 1); // Blanc
+        float heroX = hero.getPosition().x - hero.getTaille() / 2;
+        float heroY = hero.getPosition().y - hero.getTaille() / 2;
+        shapeRenderer.rect(heroX, heroY, hero.getTaille(), hero.getTaille());
+        shapeRenderer.end();
+
+        // Dessiner les ennemis (images enerve.png) avec SpriteBatch
+        batch.begin();
+        for (Balle balle : tirDeBalle.getBalles()) {
+            float rayon = balle.getHitbox().radius;
+            float taille = rayon * 2; // Diamètre
+            float x = balle.getPosition().x - rayon;
+            float y = balle.getPosition().y - rayon;
+            batch.draw(textureEnerve, x, y, taille, taille);
+        }
+        batch.end();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (textureEnerve != null) {
+            textureEnerve.dispose();
+        }
+        if (shapeRenderer != null) {
+            shapeRenderer.dispose();
+        }
+    }
+}

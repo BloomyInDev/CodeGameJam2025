@@ -4,22 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import fr.bastienluben.cgj2025.Main;
 
 public class ConfigLoader {
-    private static ConfigLoader instance = null;
     private static final String CONFIG_FILE = "config.json";
+    private static ConfigLoader instance = null;
+    private final Gson gson;
+    private ConfigStructure config = null;
+    public ConfigLoader() {
+        gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        //parseFile();
+    }
 
     public static ConfigLoader getInstance() {
         if (instance == null) instance = new ConfigLoader();
         return instance;
-    }
-
-    private final Gson gson;
-    private ConfigStructure config = null;
-
-    public ConfigLoader() {
-        gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        parseFile();
     }
 
     private boolean canStoreFile() {
@@ -32,22 +31,27 @@ public class ConfigLoader {
 
     private boolean _parseFile() {
         if (!canStoreFile()) {
-            System.out.println("Je ne peux pas stocker de ficher sur cet appareil");
+            if (Main.DEBUG)
+                System.out.println("Je ne peux pas stocker de ficher sur cet appareil");
             return false;
         }
         if (!getFile().exists()) {
-            System.out.println("Je ne trouve pas de fichier de configuration");
+            if (Main.DEBUG)
+                System.out.println("Je ne trouve pas de fichier de configuration");
             return false;
         }
         String content = Gdx.files.local(CONFIG_FILE).readString();
 
         if (content.isEmpty()) {
-            System.out.println("Le fichier de configuration est vide");
+            if (Main.DEBUG)
+                System.out.println("Le fichier de configuration est vide");
             return false;
         }
 
         config = gson.fromJson(content, ConfigStructure.class);
         config.setLoader(this);
+        if (Main.DEBUG)
+            System.out.printf("J'ai lu le fichier de configuration: %s\n", config.toString());
         return true;
     }
 
@@ -63,12 +67,14 @@ public class ConfigLoader {
 
         String content = gson.toJson(config);
         getFile().writeString(content, false);
-        System.out.printf(
-            "Fichier écrit dans le stockage: %s\n", content
-        );
+        if (Main.DEBUG)
+            System.out.printf(
+                "Fichier écrit dans le stockage: %s\n", content
+            );
     }
 
     public ConfigStructure getConfig() {
+        if (config == null) parseFile();
         return config;
     }
 }

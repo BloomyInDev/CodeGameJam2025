@@ -8,6 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FontLoader {
+    private static FontLoader instance;
+
+    public static FontLoader getInstance() {
+        if (instance == null) instance = new FontLoader();
+        return instance;
+    }
+
     private Map<String, FreeTypeFontGenerator> fontGenerators;
     private Map<FontIdentifier, BitmapFont> generatedFonts;
 
@@ -46,6 +53,10 @@ public class FontLoader {
         generatedFonts.put(identifier, fontGen.generateFont(parameters));
 
         return generatedFonts.get(identifier);
+    }
+
+    public BitmapFont getFont(String fontName, FontParameterBuilder builder) {
+        return getFont(fontName, builder.build());
     }
 
     public BitmapFont getFont(String fontName) {

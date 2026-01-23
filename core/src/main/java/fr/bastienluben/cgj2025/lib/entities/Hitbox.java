@@ -1,19 +1,32 @@
 package fr.bastienluben.cgj2025.lib.entities;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Hitbox {
-    private boolean solid; // Si la hitbox doit être solide (comme un mur ou un sol)
-    private Rectangle box;
-    private Entity parent;
+    private static List<Hitbox> hitboxes = new ArrayList<Hitbox>();
 
-    public Hitbox(Entity entite) {
-        this.box = entite.getRectangle();
+    public static List<Hitbox> getHitboxes() {
+        return hitboxes;
     }
 
-    public Hitbox(Entity entite, boolean solid){
+    public static List<Hitbox> getHitboxesParentOf(Element element) {
+        return Arrays.asList((Hitbox[]) hitboxes.stream().filter(h -> h.parent == element).toArray());
+    }
+
+    private boolean solid; // Si la hitbox doit être solide (comme un mur ou un sol)
+    private Rectangle box;
+    private Element parent;
+
+    public Hitbox(Element entite) {
+        this.box = entite.getRectangle();
+        hitboxes.add(this);
+    }
+
+    public Hitbox(Element entite, boolean solid){
         this(entite);
         this.solid = solid;
     }

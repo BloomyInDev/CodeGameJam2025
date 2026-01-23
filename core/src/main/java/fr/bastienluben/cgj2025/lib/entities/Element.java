@@ -7,26 +7,35 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.lib.ui.Image;
 
-public class Entity implements ISpriteDrawable {
+import java.util.List;
+
+public class Element implements ISpriteDrawable {
+    private static List<Element> elements;
+
+    public static List<Element> getElements() {
+        return elements;
+    }
+
     protected Sprite sprite;
     protected Vector2 position;
 
-    public Entity() {
+    public Element() {
         this.sprite = new Sprite(Image.getDefaultTexture(), 32, 32);
         this.position = new Vector2(0, 0);
+        Element.elements.add(this);
     }
 
-    public Entity(Sprite sprite) {
+    public Element(Sprite sprite) {
         this.sprite = sprite;
         this.position = new Vector2(0, 0);
     }
 
-    public Entity(Texture texture) {
+    public Element(Texture texture) {
         this.sprite = new Sprite(texture, texture.getWidth(), texture.getHeight());
         this.position = new Vector2(0, 0);
     }
 
-    public Entity(Texture texture, Vector2 taille) {
+    public Element(Texture texture, Vector2 taille) {
         this.sprite = new Sprite(texture, (int)taille.x, (int)taille.y);
         this.position = new Vector2(0, 0);
     }
@@ -70,4 +79,7 @@ public class Entity implements ISpriteDrawable {
         spriteDrawer.draw(sprite, position.x, position.y);
     }
 
+    public List<Hitbox> getHitboxes() {
+        return Hitbox.getHitboxesParentOf(this);
+    }
 }
