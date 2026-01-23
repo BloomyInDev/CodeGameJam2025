@@ -13,8 +13,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
-import fr.bastienluben.cgj2025.Attaques.Bombe;
 import fr.bastienluben.cgj2025.Attaques.kamikaze;
+import fr.bastienluben.cgj2025.Entite.Bombe;
 import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.AssetManager;
