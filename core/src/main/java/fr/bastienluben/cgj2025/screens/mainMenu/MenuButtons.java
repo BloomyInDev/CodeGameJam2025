@@ -1,5 +1,6 @@
 package fr.bastienluben.cgj2025.screens.mainMenu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -59,6 +60,7 @@ public class MenuButtons implements IScript {
 
         exitButton = new Button(() -> {
             System.out.println("Bouton exit cliqué");
+            Gdx.app.exit();
         }, 400, 100, Color.BLUE);
         exitButton.setPosition(Bounds.Bottom);
         exitButton.setMargin(0, 150);
