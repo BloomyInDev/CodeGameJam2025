@@ -15,7 +15,7 @@ public class Chrono
     {
         action = tache;
         this.delay = delay;
-        reStart();
+        timer = delay + 1f;
     }
 
     public void reStart()

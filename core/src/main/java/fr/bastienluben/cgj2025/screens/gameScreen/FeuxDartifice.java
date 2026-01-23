@@ -19,9 +19,11 @@ public class FeuxDartifice implements ISpriteDrawable
     public boolean alive;
     private final Random rnd;
     private float timer;
+    final float ft;
 
-    public FeuxDartifice(Random rnd)
+    public FeuxDartifice(Random rnd, float ft)
     {
+        this.ft = ft;
         alive = false;
         this.rnd = rnd;
         lums = new Vector2[lumCount];
@@ -33,10 +35,9 @@ public class FeuxDartifice implements ISpriteDrawable
             lums[i] = new Vector2();
             targs[i] = new Vector2();
         }
-        color = new Color(1, 0, 0, 0f);
     }
 
-    public void start(Vector2 startPos, float ampli)
+    public void start(Vector2 startPos, float ampli, Color c)
     {
         for (int i = 0; i < lumCount; i++)
         {
@@ -50,6 +51,7 @@ public class FeuxDartifice implements ISpriteDrawable
 
         timer = 0f;
         alive = true;
+        this.color = c;
     }
 
     public void update(float dt)
@@ -65,11 +67,11 @@ public class FeuxDartifice implements ISpriteDrawable
         {
             for (int i = 0; i < lumCount; i++)
             {
-                bet[i].x = Lerps.CubeOut(lums[i].x, targs[i].x, timer, (byte)64);
-                bet[i].y = Lerps.CubeOut(lums[i].y, targs[i].y, timer, (byte)64);
+                bet[i].x = Lerps.CubeOut(lums[i].x, targs[i].x, timer / (ft * 2), (byte)64);
+                bet[i].y = Lerps.CubeOut(lums[i].y, targs[i].y, timer / (ft * 2), (byte)64);
             }
         }
-        timer += dt * 0.08f;
+        timer += dt / ft;
     }
 
     private Color color;

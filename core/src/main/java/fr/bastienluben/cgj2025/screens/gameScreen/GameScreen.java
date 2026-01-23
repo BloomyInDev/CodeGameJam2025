@@ -1,6 +1,7 @@
 package fr.bastienluben.cgj2025.screens.gameScreen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.Main;
@@ -32,7 +33,7 @@ public class GameScreen extends AbstractScreen {
             vie.takeDamage(-10);
         }, 1f);
 
-        feux = new FeuxDartificeManager();
+        feux = new FeuxDartificeManager(16);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class GameScreen extends AbstractScreen {
                 new Vector2(
                 Gdx.input.getX(),
                 Gdx.graphics.getHeight() - Gdx.input.getY()
-                ), 2f);
+                ), 2f, Color.RED);
         }
     }
 

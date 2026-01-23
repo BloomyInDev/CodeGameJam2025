@@ -6,12 +6,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.AssetManager;
+import fr.bastienluben.cgj2025.lib.Chrono;
 import fr.bastienluben.cgj2025.lib.ui.Bounds;
 import fr.bastienluben.cgj2025.lib.ui.Button;
 import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
+import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartifice;
+import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartificeManager;
 import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
+
+import java.util.Random;
 
 public class CreditsScreen extends AbstractScreen
 {
@@ -22,13 +27,17 @@ public class CreditsScreen extends AbstractScreen
 
     Text credits;
     Button retour;
+    FeuxDartificeManager feux;
+    Chrono timer;
+    Random rnd;
 
     @Override
     public void start()
     {
-        credits = new Text("Bastinou\nClement\nQuentin\nLeo\nOmar\nRomain\nRomain");
+        credits = new Text("Bastinou L\nClement ?\nQuentin ?\nLeo M\nOmar ?\nRomain ?\nRomain T");
         credits.setPosition(Bounds.Center);
         credits.posOffset.y -= 16;
+        rnd = new Random();
         retour = new Button(() ->
         {
             Button.disoseAllButtons();
@@ -36,6 +45,20 @@ public class CreditsScreen extends AbstractScreen
         }, 256, 64, Color.BLUE, "retour");
         retour.setPosition(Bounds.Bottom);
         retour.setMargin(0, 128);
+        feux = new FeuxDartificeManager(2f);
+        timer = new Chrono(() ->
+        {
+            feux.createExplosionAt(new Vector2
+            (
+                    rnd.nextFloat(Gdx.graphics.getWidth()),
+                    rnd.nextFloat(Gdx.graphics.getHeight())
+            ), 1f, new Color(
+                    rnd.nextFloat(1f),
+                    rnd.nextFloat(1f),
+                    rnd.nextFloat(1f),
+                    1f
+            ));
+        }, 0.1f);
     }
 
     @Override
@@ -46,12 +69,16 @@ public class CreditsScreen extends AbstractScreen
                         new Vector2(Gdx.input.getX(), Gdx.input.getY())
                 ),
                 Gdx.input.isTouched());
+
+        timer.update(dt);
+        feux.update(dt);
     }
 
     @Override
     public void draw(SpriteBatch batch)
     {
         batch.begin();
+        feux.draw(batch);
         credits.draw(batch);
         retour.draw(batch);
         batch.end();
