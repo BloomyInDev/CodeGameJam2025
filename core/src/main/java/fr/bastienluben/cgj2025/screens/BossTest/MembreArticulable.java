@@ -78,6 +78,11 @@ public class MembreArticulable extends Element implements ISpriteDrawable
         setRotation(0f);
     }
 
+    public Vector2 getConnection(int id)
+    {
+        return pointsToScreen[id];
+    }
+
     public void setRotation(float degree)
     {
         this.rotation = degree;

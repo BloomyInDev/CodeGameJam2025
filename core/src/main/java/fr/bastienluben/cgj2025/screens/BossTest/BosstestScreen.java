@@ -32,7 +32,13 @@ public class BosstestScreen extends AbstractScreen
         );
 
         bras = new MembreArticulable(
-
+            membre.getConnection(2),
+            new Vector2[]
+            {
+                new Vector2(0.5f, 0f)
+            },
+            0,
+            assets.getTexture("Silksong.jpg")
         );
     }
 
@@ -46,6 +52,7 @@ public class BosstestScreen extends AbstractScreen
     public void update(float dt)
     {
         membre.addRotation(90 * dt);
+
     }
 
     @Override
@@ -53,6 +60,9 @@ public class BosstestScreen extends AbstractScreen
     {
         batch.begin();
         membre.draw(batch);
+        bras.draw(batch);
+
+        bras.debug(batch);
         membre.debug(batch);
         batch.end();
     }
