@@ -2,6 +2,8 @@ package fr.bastienluben.cgj2025.Entite;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.math.Vector2;
+
 import fr.bastienluben.cgj2025.Objets.Objet;
 
 public class Hero extends Entite {
@@ -21,6 +23,12 @@ public class Hero extends Entite {
     public void attaquer() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'attaquer'");
+    }
+
+    @Override
+    public Vector2 getPosition() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getPosition'");
     }
 
 
