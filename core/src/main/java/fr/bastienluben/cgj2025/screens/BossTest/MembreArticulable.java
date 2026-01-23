@@ -76,11 +76,6 @@ public class MembreArticulable extends Element implements ISpriteDrawable
         }
     }
 
-    public void draw(SpriteBatch batch)
-    {
-        //batch.draw();
-    }
-
     public void debug(SpriteBatch batch)
     {
         batch.setColor(Color.RED);

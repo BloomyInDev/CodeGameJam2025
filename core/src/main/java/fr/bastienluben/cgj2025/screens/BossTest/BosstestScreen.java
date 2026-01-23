@@ -13,13 +13,23 @@ public class BosstestScreen extends AbstractScreen
     }
 
     MembreArticulable membre;
-
+    Vector2 positionDuMembretest;
 
     @Override
     public void onLoad(AssetManager assets)
     {
-        membre = new MembreArticulable(new Vector2(300, 300), new Vector2(0.5f, 0.5f),
-            assets.getTexture("Silksong.jpg"));
+        positionDuMembretest = new Vector2(400, 300);
+        membre = new MembreArticulable(
+            positionDuMembretest,
+            new Vector2[]
+            {
+                new Vector2(1, 0),
+                new Vector2(0.5f, 0.5f),
+                new Vector2(1f, 1f)
+            },
+            0,
+            assets.getTexture("Silksong.jpg")
+        );
     }
 
     @Override
@@ -31,7 +41,7 @@ public class BosstestScreen extends AbstractScreen
     @Override
     public void update(float dt)
     {
-        membre.addRotation(180f * dt);
+        membre.rotation = 180f * dt;
     }
 
     @Override

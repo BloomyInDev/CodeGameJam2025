@@ -70,9 +70,6 @@ public class Main extends Game {
         batch.end();
     }
 
-    /**
-     * Appelé a la fermeture du jeu, on va pas que l'utiliser pour nettoyer ce qu'on a chargé
-     */
     public void dispose() {
         sprite.dispose();
         assets.dispose();
