@@ -1,12 +1,9 @@
 package fr.bastienluben.cgj2025.Attaques;
 
-import fr.bastienluben.cgj2025.Entite.Entite;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.Entite.Personnage;
 
 public class kamikaze extends Attaque {
@@ -24,7 +21,7 @@ public class kamikaze extends Attaque {
         // Créer une nouvelle bombe à une position aléatoire
         int x = random.nextInt(800);
         int y = random.nextInt(600);
-        Bombe bombe = new Bombe(100* attaquant.getDefense().getNbStat(),x,y);
+        Bombe bombe = new Bombe(100 * attaquant.getDefense().getNbStat(),x,y);
         bombes.add(bombe);
 
         System.out.println("Bombe posée à la position (" + x + ", " + y + ")");
