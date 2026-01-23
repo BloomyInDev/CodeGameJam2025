@@ -1,7 +1,8 @@
-package fr.bastienluben.cgj2025.screens.main;
+package fr.bastienluben.cgj2025.Entite;
 
 import java.util.ArrayList;
-import fr.bastienluben.cgj2025.screens.main.Objets.Objet;
+
+import fr.bastienluben.cgj2025.Objets.Objet;
 
 public class Hero extends Entite {
     private ArrayList<Objet> listeObjetDuHero;

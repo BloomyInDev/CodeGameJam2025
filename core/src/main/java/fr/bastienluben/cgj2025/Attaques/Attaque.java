@@ -1,6 +1,4 @@
-package fr.bastienluben.cgj2025.screens.main.Attaques;
-
-import fr.bastienluben.cgj2025.screens.main.Entite;
+package fr.bastienluben.cgj2025.Attaques;
 
 public abstract class Attaque {
     private double nbDegatAuHit;

@@ -1,9 +1,9 @@
-package fr.bastienluben.cgj2025.screens.main;
+package fr.bastienluben.cgj2025.Entite;
 
 import java.util.List;
 
 import fr.bastienluben.cgj2025.lib.entities.Hitbox;
-import fr.bastienluben.cgj2025.screens.main.Attaques.Attaque;
+import fr.bastienluben.cgj2025.Attaques.Attaque;
 
 public abstract class Entite {
     protected double pointDeVie;
