@@ -186,8 +186,11 @@ public class TirDeBalle extends Attaque {
     public boolean gererClic(float clickX, float clickY) {
         for (Balle balle : balles) {
             if (balle.estTouche(clickX, clickY)) {
-                balle.detruire();
-                return true;
+                balle.retirerPV();
+                if (balle.getPointDeVie() <= 0) {
+                    balle.detruire();
+                    return true;
+                }
             }
         }
         return false;

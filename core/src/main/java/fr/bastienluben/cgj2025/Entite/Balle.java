@@ -98,4 +98,12 @@ public abstract class Balle extends Entite {
     public void setTypeMouvement(TypeMouvementBalle typeMouvement) {
         this.typeMouvement = typeMouvement;
     }
+
+    public void retirerPV() {
+        pointDeVie--;
+    }
+
+    public int getPointDeVie() {
+        return pointDeVie;
+    }
 }
