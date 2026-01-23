@@ -22,7 +22,7 @@ public class Entity implements ISpriteDrawable {
     }
 
     public Entity(Texture texture) {
-        this.sprite = new Sprite(texture, 32, 32);
+        this.sprite = new Sprite(texture, texture.getWidth(), texture.getHeight());
         this.position = new Vector2(0, 0);
     }
 
