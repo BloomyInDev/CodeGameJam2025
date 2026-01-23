@@ -9,8 +9,8 @@ import java.util.Random;
 public class BalleNormale extends Balle {
     private Random random;
 
-    public BalleNormale(float x, float y, float rayon, Vector2 cible, float vitesseMin, float vitesseMax) {
-        super(x, y, rayon, cible, 1, "normale");
+    public BalleNormale(float x, float y, Vector2 cible, float vitesseMin, float vitesseMax) {
+        super(x, y, 70f, cible, 1, "normale");
         random = new Random();
         setVitesse(random.nextFloat(vitesseMin, vitesseMax));
 

@@ -33,7 +33,7 @@ public class MainTirDeBalleScreen extends AbstractScreen {
 
         // Créer l'attaque TirDeBalle : cible, délai 1s, rayon 60, 1 dégât par balle
         // Chaque balle est l'attaquant
-        this.tirDeBalle = new TirDeBalle(60f);
+        this.tirDeBalle = new TirDeBalle( 200f, 700f);
     }
 
     @Override
