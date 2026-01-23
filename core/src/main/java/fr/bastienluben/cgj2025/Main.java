@@ -16,9 +16,6 @@ import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.BossTest.BosstestScreen;
 import fr.bastienluben.cgj2025.screens.main.MainKamikazeScreen;
-import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
-import fr.bastienluben.cgj2025.screens.main.MainTirDeBalleScreen;
-import fr.bastienluben.cgj2025.screens.testScreen.TestScreen;
 import fr.bastienluben.cgj2025.screens.main.MainTirDeBalleScreen;
 
 public class Main extends Game {
