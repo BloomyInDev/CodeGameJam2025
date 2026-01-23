@@ -1,16 +1,17 @@
 package fr.bastienluben.cgj2025.Attaques;
 
 public class Bombe {
-    private int timer;
+    private double timer;
     private boolean estClique;
     private int x;
     private int y;
 
-    public Bombe(int timer, int x, int y) {
+    public Bombe(double timer, int x, int y) {
         this.timer = timer;
         this.estClique = false;
         this.x = x;
         this.y = y;
+
     }
 
     public void update() {
@@ -40,7 +41,7 @@ public class Bombe {
         return y;
     }
 
-    public int getTimer() {
+    public double getTimer() {
         return timer;
     }
 }

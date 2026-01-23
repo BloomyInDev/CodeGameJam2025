@@ -1,20 +1,18 @@
 package fr.bastienluben.cgj2025.Attaques;
 
-import fr.bastienluben.cgj2025.Entite.Entite;
+import fr.bastienluben.cgj2025.Entite.Personnage;
 
 public abstract class Attaque {
     private double nbDegatAuHit;
     private String nom;
     private float tempsExecution;
     private float delaiAvantProchaineAttaque;
-    private Entite attaquant;
 
-    protected Attaque (double nbDegat, String nom, float tempsExecution, float delaiAvantProchaineAttaque, Entite attaquant) {
+    protected Attaque (double nbDegat, String nom, float tempsExecution, float delaiAvantProchaineAttaque) {
         this.nom = nom;
         this.nbDegatAuHit = nbDegat;
         this.tempsExecution = tempsExecution;
         this.delaiAvantProchaineAttaque = delaiAvantProchaineAttaque;
-        this.attaquant = attaquant;
     }
 
     public double getNbDegatAuHit() {
@@ -33,10 +31,15 @@ public abstract class Attaque {
         return delaiAvantProchaineAttaque;
     }
 
-    public Entite getAttaquant() {
-        return attaquant;
+    public void attaquer(Personnage attaquant, Personnage adversaire) {
+        double degat = getNbDegatAuHit() * attaquant.getForce().getNbStat();
+        boolean degatSuperieurAPointArmure = degat > adversaire.getVie().getBouclier();
+        double bouclierRestant = adversaire.getVie().enleverBouclier(degat);
+
+        if (degatSuperieurAPointArmure) {
+            adversaire.getVie().ajoutStat(bouclierRestant);
+        }
     }
 
-    public abstract void attaque(Entite adversaire);
 
 }

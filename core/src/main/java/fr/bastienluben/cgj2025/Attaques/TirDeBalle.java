@@ -6,6 +6,7 @@ import fr.bastienluben.cgj2025.Entite.Hero;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import fr.bastienluben.cgj2025.Entite.Personnage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +21,15 @@ public class TirDeBalle extends Attaque {
     private List<Balle> balles;
     private Random random;
     private float tempsDepuisDerniereBalle;
-    private float delaiEntreBalles;
+    private static float delaiEntreBalles = 1f;
     private float rayonBalle;
-    private double degatsParBalle;
     private Hero cible;
 
     /**
      * Constructeur classique pour l'attaque entre entités.
      */
-    public TirDeBalle(double nbDegat, Entite attaquant) {
-        super(nbDegat, "Tir de balle", 10, 10, attaquant);
+    public TirDeBalle() {
+        this(1f);
         this.balles = new ArrayList<>();
         this.random = new Random();
     }
@@ -38,35 +38,33 @@ public class TirDeBalle extends Attaque {
      * Constructeur pour la gestion des projectiles avec cible.
      * Les balles elles-mêmes sont les attaquants.
      */
-    public TirDeBalle(Hero cible, float delaiEntreBalles, float rayonBalle, double degatsParBalle) {
-        super(degatsParBalle, "Tir de balle", 10, 10, null);
+    public TirDeBalle(float rayonBalle) {
+        super(2.3, "Tir de balle", 10, 4);
         this.balles = new ArrayList<>();
         this.random = new Random();
         this.tempsDepuisDerniereBalle = 0f;
-        this.delaiEntreBalles = delaiEntreBalles;
         this.rayonBalle = rayonBalle;
-        this.degatsParBalle = degatsParBalle;
-        this.cible = cible;
+        this.cible = Hero.getInstance();
     }
 
     // === Méthode héritée de Attaque ===
 
     @Override
-    public void attaque(Entite adversaire) {
-        if (entiteEstTouche(adversaire)) {
+    public void attaquer(Personnage attaquant, Personnage adversaire) {
+        if (entiteEstTouche(attaquant, adversaire)) {
             double degats = this.getNbDegatAuHit();
 
-            this.getAttaquant().attaquer(adversaire, this);
+            super.attaquer(attaquant, adversaire);
 
             // débogage
             System.out.println(
-                    this.getAttaquant().getNom() + " a touché " +
+                    attaquant.getNom() + " a touché " +
                             adversaire.getNom() + " avec " + this.getNom() +
                             " et inflige " + degats + " points de dégâts !");
         } else {
             // debogage utilisateur rate
             System.out.println(
-                    this.getAttaquant().getNom() + " a raté " +
+                attaquant.getNom() + " a raté " +
                             adversaire.getNom() + " avec " + this.getNom() + ".");
         }
     }
@@ -75,8 +73,6 @@ public class TirDeBalle extends Attaque {
      * Effectue une attaque avec une balle spécifique comme attaquant.
      */
     public void attaqueAvecBalle(Balle balle, Entite adversaire) {
-        balle.attaquer(adversaire, this);
-
         // débogage
         System.out.println(
                 balle.getNom() + " a touché " +
@@ -84,9 +80,9 @@ public class TirDeBalle extends Attaque {
                         " et inflige " + this.getNbDegatAuHit() + " points de dégâts !");
     }
 
-    private boolean entiteEstTouche(Entite adversaire) {
+    private boolean entiteEstTouche(Personnage attaquant, Personnage adversaire) {
         // Positions de l'attaquant et de l'adversaire
-        Vector2 positionAttaquant = this.getAttaquant().getPosition();
+        Vector2 positionAttaquant = attaquant.getPosition();
         Vector2 positionAdversaire = adversaire.getPosition();
 
         // Calcule la distance entre les deux entités
@@ -112,7 +108,7 @@ public class TirDeBalle extends Attaque {
         tempsDepuisDerniereBalle += delta;
 
         // Créer une nouvelle balle si le délai est écoulé
-        if (tempsDepuisDerniereBalle >= delaiEntreBalles) {
+        if (tempsDepuisDerniereBalle >= TirDeBalle.delaiEntreBalles) {
             ajouterBalle();
             tempsDepuisDerniereBalle = 0f;
         }
@@ -141,7 +137,7 @@ public class TirDeBalle extends Attaque {
      */
     private void ajouterBalle() {
         float x = random.nextFloat() * Gdx.graphics.getWidth();
-        float y = Gdx.graphics.getHeight();
+        float y = Gdx.graphics.getHeight() + 40;
         balles.add(new Balle(x, y, rayonBalle, cible.getPosition()));
     }
 
@@ -183,9 +179,5 @@ public class TirDeBalle extends Attaque {
 
     public void setDelaiEntreBalles(float delai) {
         this.delaiEntreBalles = delai;
-    }
-
-    public void setDegatsParBalle(double degats) {
-        this.degatsParBalle = degats;
     }
 }
