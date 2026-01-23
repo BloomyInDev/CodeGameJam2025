@@ -28,7 +28,7 @@ public class MembreArticulable extends Element implements ISpriteDrawable
         }
         else
         {
-            rot = (float)Math.atan2(dy, dx);
+            rot = (float)Math.toDegrees(Math.atan2(dy, dx));
 
             if (dx > 0)
             {
@@ -36,14 +36,17 @@ public class MembreArticulable extends Element implements ISpriteDrawable
             }
         }
 
-        output.x = (float)(Math.cos(rot + Math.toRadians(degree)) * dist);
-        output.y = (float)(Math.sin(rot + Math.toRadians(degree)) * dist);
+        float finalRot = (float)Math.toRadians(rot + degree);
+
+        output.x = origin.x + (float)(Math.cos(finalRot) * dist);
+        output.y = origin.y + (float)(Math.sin(finalRot) * dist);
     }
 
     private final Vector2[] connectionsData;
     private final Vector2 origin;
     private final Vector2[] pointsToScreen;
     private final Vector2 justeunPoolpourorigin;
+    private final byte indexOrigin;
 
     private float rotation;
 
@@ -58,6 +61,7 @@ public class MembreArticulable extends Element implements ISpriteDrawable
     {
         super(tex);
         this.position = positionRef;
+        indexOrigin = (byte)indexDeLaConnectoinQuiSertDePointDeRotation;
         this.connectionsData = connectionsData;
         this.pointsToScreen = new Vector2[connectionsData.length];
 
@@ -96,7 +100,10 @@ public class MembreArticulable extends Element implements ISpriteDrawable
             pointsToScreen[i].x = position.x + (connectionsData[i].x * sprite.getWidth());
             pointsToScreen[i].y = position.y + (connectionsData[i].y * sprite.getHeight());
 
-            applyRotation(, pointsToScreen[i], rotation);
+            if (i != indexOrigin) // pas besoin de rotate le point de rotation
+            {
+                applyRotation(justeunPoolpourorigin, pointsToScreen[i], rotation);
+            }
         }
     }
 

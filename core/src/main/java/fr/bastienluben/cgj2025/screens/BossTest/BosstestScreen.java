@@ -12,7 +12,7 @@ public class BosstestScreen extends AbstractScreen
         super(game, assets);
     }
 
-    MembreArticulable membre;
+    MembreArticulable membre, bras;
     Vector2 positionDuMembretest;
 
     @Override
@@ -30,6 +30,10 @@ public class BosstestScreen extends AbstractScreen
             0,
             assets.getTexture("Silksong.jpg")
         );
+
+        bras = new MembreArticulable(
+
+        );
     }
 
     @Override
@@ -41,7 +45,7 @@ public class BosstestScreen extends AbstractScreen
     @Override
     public void update(float dt)
     {
-        membre.addRotation(0f);
+        membre.addRotation(90 * dt);
     }
 
     @Override

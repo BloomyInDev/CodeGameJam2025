@@ -16,6 +16,7 @@ import fr.bastienluben.cgj2025.lib.ui.Image;
 import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
+import fr.bastienluben.cgj2025.screens.BossTest.BosstestScreen;
 import fr.bastienluben.cgj2025.screens.main.MainMenuScreen;
 
 public class Main extends Game {
@@ -52,7 +53,7 @@ public class Main extends Game {
         Image.setDefaultTexture(assets.getTexture("default.png"));
         Text.setFont(fonts.getFont("font"));
 
-        notreScreen = new MainMenuScreen(this, assets);
+        notreScreen = new BosstestScreen(this, assets);
         this.setScreen(notreScreen);
     }
 
