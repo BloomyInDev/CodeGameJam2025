@@ -48,6 +48,10 @@ public class FontLoader {
         return generatedFonts.get(identifier);
     }
 
+    public BitmapFont getFont(String fontName, FontParameterBuilder builder) {
+        return getFont(fontName, builder.build());
+    }
+
     public BitmapFont getFont(String fontName) {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         return getFont(fontName, parameter);
