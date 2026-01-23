@@ -32,6 +32,7 @@ public class Button extends Image implements Disposable
     {
         Rectangle temp = new Rectangle(rect.x + posOffset.x,
             rect.y + posOffset.y, rect.width, rect.height);
+
         if (temp.contains(mousePos))
         {
             if (isMouseHold)
