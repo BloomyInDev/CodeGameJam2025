@@ -12,6 +12,7 @@ import fr.bastienluben.cgj2025.lib.ui.Bounds;
 import fr.bastienluben.cgj2025.lib.ui.Button;
 import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
+import fr.bastienluben.cgj2025.screens.gameScreen.GameScreen;
 
 import java.util.Arrays;
 
