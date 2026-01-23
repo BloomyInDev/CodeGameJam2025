@@ -28,10 +28,6 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void start()
     {
-        test = new Chrono(() ->
-        {
-            vie.takeDamage(-10);
-        }, 1f);
     }
 
     @Override

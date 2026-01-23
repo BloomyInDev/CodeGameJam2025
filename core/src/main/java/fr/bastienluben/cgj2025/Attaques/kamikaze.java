@@ -7,19 +7,20 @@ import java.util.List;
 import java.util.Random;
 
 import fr.bastienluben.cgj2025.Entite.Hero;
+import fr.bastienluben.cgj2025.Entite.Personnage;
 
 public class kamikaze extends Attaque {
     private List<Bombe> bombes;
     private Random random;
 
     public kamikaze(Entite attaquant) {
-        super(1, "kamikaze", 10, 10, attaquant);
+        super(1, "kamikaze", 10, 10);
         bombes = new ArrayList<>();
         random = new Random();
     }
 
     @Override
-    public void attaque(Entite adversaire) {
+    public void attaquer(Personnage attaquant, Personnage adversaire) {
         // Créer une nouvelle bombe à une position aléatoire
         int x = random.nextInt(800);
         int y = random.nextInt(600);
@@ -31,13 +32,13 @@ public class kamikaze extends Attaque {
         for (Bombe b : bombes) {
             b.update();
             if (!b.isEstClique() && b.getTimer() <= 0) {
-                getAttaquant().attaquer(adversaire,this);
+                super.attaquer(attaquant, adversaire);
                 bombes.remove(b);
                 //gameOver();
             }
         }
     }
-    
+
     public void clickBombe(int x, int y) {
         for (Bombe b : bombes) {
             if (x >= b.getX() && x <= b.getX() + 50 && y >= b.getY() && y <= b.getY() + 50) {
