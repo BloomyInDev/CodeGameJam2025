@@ -1,17 +1,16 @@
-package fr.bastienluben.cgj2025.Attaques;
+package fr.bastienluben.cgj2025.Entite;
 
 public class Bombe {
-    private double timer;
+    private int timer;
     private boolean estClique;
     private int x;
     private int y;
 
-    public Bombe(double timer, int x, int y) {
+    public Bombe(int timer, int x, int y) {
         this.timer = timer;
         this.estClique = false;
         this.x = x;
         this.y = y;
-
     }
 
     public void update() {
@@ -41,7 +40,7 @@ public class Bombe {
         return y;
     }
 
-    public double getTimer() {
+    public int getTimer() {
         return timer;
     }
 }
