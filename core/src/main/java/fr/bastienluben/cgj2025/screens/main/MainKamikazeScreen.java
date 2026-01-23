@@ -60,7 +60,7 @@ public class MainKamikazeScreen extends AbstractScreen implements Screen {
         if (MathUtils.randomBoolean(0.01f)) { // 1% de chance de poser une bombe à chaque frame
             int x = MathUtils.random(0, (int) screenWidth - 50);
             int y = MathUtils.random(0, (int) screenHeight - 50);
-            Bombe bombe = new Bombe(60, x, y);
+            Bombe bombe = new Bombe(60, x, y,0);
             bombes.add(bombe);
         }
 
@@ -68,7 +68,7 @@ public class MainKamikazeScreen extends AbstractScreen implements Screen {
         Iterator<Bombe> iterator = bombes.iterator();
         while (iterator.hasNext()) {
             Bombe bombe = iterator.next();
-            bombe.update();
+            bombe.update(delta);
             if (bombe.isEstClique() || bombe.getTimer() <= 0) {
                 iterator.remove();
             } else {
@@ -76,11 +76,11 @@ public class MainKamikazeScreen extends AbstractScreen implements Screen {
                 batch.draw(bombeTexture, bombe.getX(), bombe.getY(), 50, 50);
                 // Dessiner le compteur
                 if (bombe.getTimer() < 10) {
-                    redFont.draw(batch, String.valueOf(bombe.getTimer()), bombe.getX() + 25, bombe.getY() + 25);
+                    redFont.draw(batch, String.valueOf(bombe.getTimerTexte()), bombe.getX() + 25, bombe.getY() + 25);
                 } else if (bombe.getTimer() > 10 && bombe.getTimer() < 20) {
-                    orangeFont.draw(batch, String.valueOf(bombe.getTimer()), bombe.getX() + 25, bombe.getY() + 25);
+                    orangeFont.draw(batch, String.valueOf(bombe.getTimerTexte()), bombe.getX() + 25, bombe.getY() + 25);
                 } else {
-                    font.draw(batch, String.valueOf(bombe.getTimer()), bombe.getX() + 25, bombe.getY() + 25);
+                    font.draw(batch, String.valueOf(bombe.getTimerTexte()), bombe.getX() + 25, bombe.getY() + 25);
                 }
             }
         }

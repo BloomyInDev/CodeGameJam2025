@@ -32,14 +32,14 @@ public class kamikaze extends Attaque {
         for (int i = 0; i < rand.nextInt(nbBombes) + 1; i++)  {
             int x = random.nextInt(800);
             int y = random.nextInt(600);
-            Bombe bombe = new Bombe(100 * attaquant.getDefense().getNbStat(),x,y);
+            Bombe bombe = new Bombe(100 * attaquant.getDefense().getNbStat(),x,y,0);
             bombes.add(bombe);
 
             System.out.println("Bombe posée à la position (" + x + ", " + y + ")");
         }
 
         for (Bombe b : bombes) {
-            b.update();
+            b.update(0);
             if (!b.isEstClique() && b.getTimer() <= 0) {
                 super.attaquer(attaquant, adversaire);
                 bombes.remove(b);
