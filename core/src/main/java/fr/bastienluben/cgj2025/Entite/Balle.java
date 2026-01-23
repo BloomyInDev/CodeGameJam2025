@@ -1,30 +1,45 @@
 package fr.bastienluben.cgj2025.Entite;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Circle;
 
+import java.util.Random;
+
 public class Balle extends Entite {
+    private final int pointDeVie = 1;
     private Circle hitbox;
     private boolean estDetruite;
     private float vitesse;
     private Vector2 direction;
+    private Texture texture;
+    private Random random;
 
     public Balle(float x, float y, float rayon, Vector2 cible) {
         super();
         this.position = new Vector2(x, y);
         this.nom = "Balle";
-        this.pointDeVie = 1; // Une balle a 1 PV
         this.hitbox = new Circle(x, y, rayon);
         this.estDetruite = false;
-        this.vitesse = 200f; // 200 pixels par seconde
+        random = new Random();
+
+        this.vitesse = random.nextFloat(200f, 600f); // entre 200 et 500 pixels par seconde
 
         // Calculer la direction vers la cible
         this.direction = new Vector2(cible.x - x, cible.y - y).nor();
-    }
 
-    @Override
-    public void attaquer() {
-        // Les balles n'attaquent pas activement, elles infligent des dégâts au contact
+
+
+        int num = random.nextInt(3);
+
+        if (num == 1) {
+            texture = new Texture(Gdx.files.internal("enerve2.png"));
+        } else if (num == 2) {
+            texture = new Texture(Gdx.files.internal("enerve3.png"));
+        } else {
+            texture = new Texture(Gdx.files.internal("enerve1.png"));
+        }
     }
 
     @Override
@@ -77,5 +92,9 @@ public class Balle extends Entite {
         float distanceCarree = distanceX * distanceX + distanceY * distanceY;
 
         return distanceCarree <= hitbox.radius * hitbox.radius;
+    }
+
+    public Texture getTexture() {
+        return texture;
     }
 }
