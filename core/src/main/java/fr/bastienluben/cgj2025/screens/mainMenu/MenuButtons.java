@@ -13,6 +13,7 @@ import fr.bastienluben.cgj2025.lib.ui.Bounds;
 import fr.bastienluben.cgj2025.lib.ui.Button;
 import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
+import fr.bastienluben.cgj2025.screens.credits.CreditsScreen;
 import fr.bastienluben.cgj2025.screens.gameScreen.GameScreen;
 
 import java.util.Arrays;
@@ -25,6 +26,7 @@ public class MenuButtons implements IScript {
     private Text exitText;
     private Button startGameButton;
     private Button exitButton;
+    private Button credits;
 
 
     public MenuButtons(AbstractScreen screen) {
@@ -68,6 +70,12 @@ public class MenuButtons implements IScript {
         exitText.setFont(smallFont);
         exitText.setPosition(Bounds.Bottom);
         exitText.setMargin(0, 195);
+
+        credits = new Button(() -> {
+            screen.getGame().setScreen(new CreditsScreen(this.screen.getGame(), screen.getGame().getAssets()));
+        }, 64, 32, Color.YELLOW, "credits");
+        credits.setPosition(Bounds.Bottom);
+        credits.posOffset.y -= 24;
     }
 
     @Override
@@ -77,7 +85,7 @@ public class MenuButtons implements IScript {
 
     @Override
     public void draw(SpriteBatch batch) {
-        Arrays.asList(titleText, startGameButton, startGameText, exitButton, exitText).forEach(e -> e.draw(batch));
+        Arrays.asList(titleText, startGameButton, startGameText, exitButton, exitText, credits).forEach(e -> e.draw(batch));
 
     }
 

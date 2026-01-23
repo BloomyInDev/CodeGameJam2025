@@ -17,7 +17,6 @@ public abstract class AbstractScreen implements Screen, IScript
 {
     protected Main game;
 
-
     public AbstractScreen(Main game, AssetManager assets) {
         this.game = game;
         this.onLoad(assets);
