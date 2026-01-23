@@ -72,10 +72,11 @@ public class MenuButtons implements IScript {
         exitText.setMargin(0, 195);
 
         credits = new Button(() -> {
+            Button.disoseAllButtons();
             screen.getGame().setScreen(new CreditsScreen(this.screen.getGame(), screen.getGame().getAssets()));
-        }, 64, 32, Color.YELLOW, "credits");
+        }, 256, 64, Color.YELLOW, "credits");
+        credits.setMargin(0, 32);
         credits.setPosition(Bounds.Bottom);
-        credits.posOffset.y -= 24;
     }
 
     @Override
