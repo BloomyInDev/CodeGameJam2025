@@ -15,6 +15,7 @@ import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.credits.CreditsScreen;
 import fr.bastienluben.cgj2025.screens.gameScreen.GameScreen;
+import fr.bastienluben.cgj2025.screens.main.MainTirDeBalleScreen;
 
 import java.util.Arrays;
 
@@ -50,7 +51,7 @@ public class MenuButtons implements IScript {
         titleText.setMargin(150);
 
         startGameButton = new Button(() -> {
-            this.screen.getGame().setScreen(new GameScreen(this.screen.getGame(), this.screen.getGame().getAssets()));
+            this.screen.getGame().setScreen(new MainTirDeBalleScreen(this.screen.getGame(), this.screen.getGame().getAssets()));
         }, 400, 100, Color.BLUE);
         startGameButton.setPosition(Bounds.Bottom);
         startGameButton.setMargin(0, 300);

@@ -56,9 +56,9 @@ public class Main extends Game {
         Image.setDefaultTexture(assets.getTexture("default.png"));
 
         this.setScreen(new MainMenuScreen(this, assets));
-      
+
         //notreScreen = new BosstestScreen(this, assets);
-        notreScreen = new MainTirDeBalleScreen(this, assets);
+        notreScreen = new MainMenuScreen(this, assets);
         //notreScreen = new MainKamikazeScreen(this, assets);
         this.setScreen(notreScreen);
         //notreScreen = new MainTirDeBalleScreen(this, assets);
