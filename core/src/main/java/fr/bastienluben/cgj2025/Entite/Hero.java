@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import fr.bastienluben.cgj2025.Objets.Objet;
 
-public class Hero extends Entite {
+public class Hero extends Personnage {
     private ArrayList<Objet> listeObjetDuHero;
     private float taille = 50f; // Taille du carré représentant le héros
 
