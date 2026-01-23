@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.bastienluben.cgj2025.lib.AssetManager;
+import fr.bastienluben.cgj2025.lib.config.ConfigLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
 import fr.bastienluben.cgj2025.lib.ui.Button;
 import fr.bastienluben.cgj2025.lib.ui.Image;
@@ -18,7 +19,7 @@ import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.main.MainMenuScreen;
 
 public class Main extends Game {
-    public static final int FPS = 60;
+    public static final boolean DEBUG = true;
 
     private SpriteBatch sprite;
     private ShapeRenderer shape;
@@ -35,6 +36,8 @@ public class Main extends Game {
         sprite = new SpriteBatch();
         shape = new ShapeRenderer();
         fonts = new FontLoader();
+
+        ConfigLoader.getInstance().parseFile();
 
         // use libGDX's default font
 
@@ -67,9 +70,14 @@ public class Main extends Game {
         batch.end();
     }
 
+    /**
+     * Appelé a la fermeture du jeu, on va pas que l'utiliser pour nettoyer ce qu'on a chargé
+     */
     public void dispose() {
         sprite.dispose();
+        assets.dispose();
         fonts.dispose();
+        ConfigLoader.getInstance().storeFile();
     }
 
     public SpriteBatch getSprite() {
