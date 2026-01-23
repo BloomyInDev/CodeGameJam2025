@@ -12,7 +12,7 @@ import fr.bastienluben.cgj2025.lib.ui.Image;
 
 public class MembreArticulable extends Element implements ISpriteDrawable
 {
-    private static void applyRotation(
+    public static void applyRotation(
         Vector2 origin,
         Vector2 output,
         float degree)
