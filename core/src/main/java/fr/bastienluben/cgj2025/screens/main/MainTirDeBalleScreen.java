@@ -13,21 +13,16 @@ import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 
+import java.util.Random;
+
 public class MainTirDeBalleScreen extends AbstractScreen {
     private ShapeRenderer shapeRenderer;
     private Hero hero;
     private TirDeBalle tirDeBalle;
-    private Texture textureEnerve;
 
     public MainTirDeBalleScreen(Main game, AssetManager assets) {
         super(game, assets);
         this.shapeRenderer = new ShapeRenderer();
-    }
-
-    @Override
-    public void onLoad(AssetManager assets) {
-        // Charger la texture pour les ennemis
-        textureEnerve = new Texture(Gdx.files.internal("enerve.png"));
     }
 
     @Override
@@ -69,7 +64,7 @@ public class MainTirDeBalleScreen extends AbstractScreen {
             float taille = rayon * 2; // Diamètre
             float x = balle.getPosition().x - rayon;
             float y = balle.getPosition().y - rayon;
-            batch.draw(textureEnerve, x, y, taille, taille);
+            batch.draw(balle.getTexture(), x, y, taille, taille);
         }
         batch.end();
     }
@@ -77,9 +72,6 @@ public class MainTirDeBalleScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
-        if (textureEnerve != null) {
-            textureEnerve.dispose();
-        }
         if (shapeRenderer != null) {
             shapeRenderer.dispose();
         }
