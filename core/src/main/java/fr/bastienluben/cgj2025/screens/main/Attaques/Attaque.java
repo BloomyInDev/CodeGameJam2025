@@ -15,10 +15,6 @@ public abstract class Attaque {
         this.delaiAvantProchaineAttaque = delaiAvantProchaineAttaque;
     }
 
-    public void attaquer(Entite e) {
-        e.subitDegat(nbDegatAuHit);
-    }
-
     public double getNbDegatAuHit() {
         return nbDegatAuHit;
     }

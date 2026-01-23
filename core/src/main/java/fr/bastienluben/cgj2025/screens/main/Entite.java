@@ -14,15 +14,14 @@ public abstract class Entite {
     private String nom;
     protected List<Attaque> listesAttaques;
 
-    protected abstract void attaquer(Attaque attaque);
-
-    public void subitDegat(double degat) {
-        boolean degatSuperieurAPointArmure = degat > pointDeArmure;
-        pointDeArmure -= degat;
+    public void attaquer(Entite adversaire, Attaque attaqueUtilise) {
+        double degat = attaqueUtilise.getNbDegatAuHit();
+        boolean degatSuperieurAPointArmure = degat > adversaire.pointDeArmure;
+        adversaire.pointDeArmure -= degat;
 
         if (degatSuperieurAPointArmure) {
-            pointDeVie += pointDeArmure;
-            pointDeArmure = 0;
+            adversaire.pointDeVie += adversaire.pointDeArmure;
+            adversaire.pointDeArmure = 0;
         }
     }
 
