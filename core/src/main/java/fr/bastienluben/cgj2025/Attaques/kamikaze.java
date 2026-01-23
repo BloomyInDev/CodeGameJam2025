@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import fr.bastienluben.cgj2025.Entite.Bombe;
 import fr.bastienluben.cgj2025.Entite.Entite;
 import fr.bastienluben.cgj2025.Entite.Personnage;
 

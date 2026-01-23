@@ -1,4 +1,4 @@
-package fr.bastienluben.cgj2025.Attaques;
+package fr.bastienluben.cgj2025.Entite;
 
 public class Bombe {
     private double timer;
