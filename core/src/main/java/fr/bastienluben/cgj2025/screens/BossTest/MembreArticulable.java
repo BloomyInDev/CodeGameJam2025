@@ -1,12 +1,16 @@
 package fr.bastienluben.cgj2025.screens.BossTest;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.lib.entities.Element;
+import fr.bastienluben.cgj2025.lib.entities.ISpriteDrawable;
+import fr.bastienluben.cgj2025.lib.ui.Image;
 
 
-public class MembreArticulable extends Element
+
+public class MembreArticulable extends Element implements ISpriteDrawable
 {
     private static void applyRotation(
         Vector2 origin,
@@ -40,6 +44,8 @@ public class MembreArticulable extends Element
     private final Vector2 origin;
     private final Vector2[] pointsToScreen;
 
+    public float rotation;
+
     /// @param connectionsData - la position des articulations
     /// avec des porté de 0f - 1f.
     public MembreArticulable(
@@ -59,11 +65,30 @@ public class MembreArticulable extends Element
         );
     }
 
-    public void
+    public void updatePoints()
+    {
+        for (byte i = 0; i < connectionsData.length; i++)
+        {
+            pointsToScreen[i].x = position.x + (connectionsData[i].x * sprite.getWidth());
+            pointsToScreen[i].y = position.y + (connectionsData[i].y * sprite.getHeight());
 
-    @Override
+            applyRotation(origin, pointsToScreen[i], rotation);
+        }
+    }
+
     public void draw(SpriteBatch batch)
     {
         //batch.draw();
+    }
+
+    public void debug(SpriteBatch batch)
+    {
+        batch.setColor(Color.RED);
+        for (Vector2 p : pointsToScreen)
+        {
+            batch.draw(Image.getDefaultTexture(),
+                p.x, p.y,
+                2, 2);
+        }
     }
 }
