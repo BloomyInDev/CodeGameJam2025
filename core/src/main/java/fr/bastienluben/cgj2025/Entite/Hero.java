@@ -22,7 +22,7 @@ public class Hero extends Personnage {
 
     public synchronized static Hero getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new Hero("héros", Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f);
+            INSTANCE = new Hero("héros", Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 200f);
         }
         return INSTANCE;
     }
