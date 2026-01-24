@@ -24,7 +24,6 @@ import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartificeManager;
 
 public class MainKamikazeScreen extends AbstractGameScreen {
-    private SpriteBatch batch;
     private Texture bombeTexture;
     private BitmapFont font, redFont, orangeFont;
     private Kamikaze kamikaze;
@@ -38,7 +37,6 @@ public class MainKamikazeScreen extends AbstractGameScreen {
 
     public MainKamikazeScreen(Main game, AssetManager assets, int nbBombes, float probabiliteApparitionBombe, int nbBombesAvantFin) {
         super(game, assets);
-        batch = new SpriteBatch();
         bombeTexture = new Texture(Gdx.files.internal("bombe.png"));
         font = FontLoader.getInstance().getFont("default", new FontParameterBuilder().build());
         redFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setColor(Color.RED).build());
@@ -129,7 +127,6 @@ public class MainKamikazeScreen extends AbstractGameScreen {
 
     @Override
     public void dispose() {
-        batch.dispose();
         bombeTexture.dispose();
         font.dispose();
     }

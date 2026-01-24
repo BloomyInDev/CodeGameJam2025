@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.IScript;
+import fr.bastienluben.cgj2025.lib.Lerps;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontParameterBuilder;
 import fr.bastienluben.cgj2025.lib.ui.Bounds;
@@ -66,12 +67,15 @@ public class MenuButtons implements IScript {
         titleText = new Text("Le Carnaval de Makoto");
         titleText.setPosition(Bounds.Top);
         titleText.setFont(titleFont);
-        titleText.setMargin(150);
+        timer = 0f;
     }
+
+    private float timer;
 
     @Override
     public void update(float delta) {
-
+        titleText.setMargin((int)Math.round(Lerps.BounceOut(0, 150, timer, false)));
+        timer += delta;
     }
 
     @Override
