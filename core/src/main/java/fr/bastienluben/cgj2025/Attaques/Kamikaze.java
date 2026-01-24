@@ -8,51 +8,93 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import fr.bastienluben.cgj2025.Entite.Bombe;
 import fr.bastienluben.cgj2025.Entite.Entite;
-import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.Entite.Personnage;
 
 public class Kamikaze extends Attaque {
     private List<Bombe> bombes;
     private Random random;
+    /**
+     * Le nombre de bombes a spawner en meme temps max
+     */
     private int nbBombes;
+    /**
+     * Le nombre de bombes crées
+     */
     private int nbBombesCrees;
-    private boolean limiteDeNbBombesSpawnees;
-    private int limiteNbBombesSpawnees;
+    private boolean aLimiteDeNbBombesSpawnees;
+    private int limiteDeBombesSpawnees;
+    private float screenWidth;
+    private float screenHeight;
 
     public Kamikaze(Entite attaquant, int nbBombes) {
         super(10, "kamikaze", 10, 10);
-        this.limiteDeNbBombesSpawnees = false;
+        this.aLimiteDeNbBombesSpawnees = false;
         bombes = new ArrayList<>();
         random = new Random();
         this.nbBombes = nbBombes;
+        this.screenWidth = Gdx.graphics.getWidth();
+        this.screenHeight = Gdx.graphics.getHeight();
     }
 
     public Kamikaze(Entite attaquant, int nbBombes, int limiteNbBombesSpawnees) {
         this(attaquant, nbBombes);
-        this.limiteNbBombesSpawnees = limiteNbBombesSpawnees;
-        this.limiteDeNbBombesSpawnees = true;
+        this.limiteDeBombesSpawnees = limiteNbBombesSpawnees;
+        this.aLimiteDeNbBombesSpawnees = true;
     }
 
     public Kamikaze(Entite attaquant) {
         this(attaquant, 8);
     }
 
+    /**
+     * Vérifie si on peut encore spawner des bombes
+     */
+    public boolean peutSpawnerBombe() {
+        return !aLimiteDeNbBombesSpawnees || nbBombesCrees < limiteDeBombesSpawnees;
+    }
+
+    /**
+     * Crée une bombe à une position aléatoire et l'ajoute à la liste
+     * @param timer le timer de la bombe
+     * @return la bombe créée, ou null si la limite est atteinte
+     */
+    public Bombe spawnBombe(float timer) {
+        if (!peutSpawnerBombe()) {
+            return null;
+        }
+
+        int x = MathUtils.random(0, (int) screenWidth - 50);
+        int y = MathUtils.random(150, (int) screenHeight - 50);
+        Bombe bombe = new Bombe(timer, x, y, 0);
+        bombes.add(bombe);
+        nbBombesCrees++;
+        System.out.printf("Il y a %d / %d bombes crées\n", nbBombesCrees, limiteDeBombesSpawnees);
+        return bombe;
+    }
+
+    /**
+     * Retire une bombe de la liste
+     */
+    public void retirerBombe(Bombe bombe) {
+        bombes.remove(bombe);
+    }
+
+    public List<Bombe> getBombes() {
+        return bombes;
+    }
+
 
     @Override
     public void attaquer(Personnage attaquant, Personnage adversaire) {
-        // Créer une nouvelle bombe à une position aléatoire
+        // Créer des bombes aléatoires
         Random rand = new Random();
-        for (int i = 0; i < rand.nextInt(nbBombes) + 1; i++)  {
-            int x = MathUtils.random(0, (int) Gdx.graphics.getWidth() - 50);
-            int y = MathUtils.random(150, (int) Gdx.graphics.getHeight() - 50);
-            if (limiteDeNbBombesSpawnees && nbBombesCrees <= limiteNbBombesSpawnees) {
-                Bombe bombe = new Bombe(100 * attaquant.getDefense().getNbStat(),x,y,0);
-                nbBombesCrees++;
-                System.out.printf("Il y a %d / %d bombes crées\n", nbBombesCrees, limiteNbBombesSpawnees);
-                bombes.add(bombe);
+        int nbBombesACreer = rand.nextInt(nbBombes) + 1;
+        for (int i = 0; i < nbBombesACreer; i++) {
+            float timer = (float) (100 * attaquant.getDefense().getNbStat());
+            Bombe bombe = spawnBombe(timer);
+            if (bombe != null) {
+                System.out.println("Bombe posée à la position (" + bombe.getX() + ", " + bombe.getY() + ")");
             }
-
-            System.out.println("Bombe posée à la position (" + x + ", " + y + ")");
         }
 
         for (Bombe b : bombes) {
@@ -80,21 +122,18 @@ public class Kamikaze extends Attaque {
         System.exit(0);
     }
 
-    public void augmenterNbBombesCrees() {
-        nbBombesCrees += 1;
-    }
 
-    public int getLimiteNbBombesSpawnees() {
-        return limiteNbBombesSpawnees;
+    public int getLimiteDeBombesSpawnees() {
+        return limiteDeBombesSpawnees;
     }
 
     public int getNbBombesCrees() {
-        if (!limiteDeNbBombesSpawnees) return -1;
+        if (!aLimiteDeNbBombesSpawnees) return -1;
         return nbBombesCrees;
     }
 
 
     public boolean estTerminee() {
-        return limiteDeNbBombesSpawnees && nbBombesCrees >= limiteNbBombesSpawnees;
+        return aLimiteDeNbBombesSpawnees && nbBombesCrees >= limiteDeBombesSpawnees && this.bombes.isEmpty();
     }
 }
