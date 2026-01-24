@@ -1,7 +1,6 @@
 package fr.bastienluben.cgj2025.screens.main;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,7 +14,6 @@ import fr.bastienluben.cgj2025.Entite.Balle;
 import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
-import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartificeManager;
 
 import java.util.Random;
 

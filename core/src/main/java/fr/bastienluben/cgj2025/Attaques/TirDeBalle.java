@@ -19,35 +19,25 @@ public class TirDeBalle extends Attaque {
     private Random random;
     private float tempsDepuisDerniereBalle;
     private static float delaiEntreBalles = 1f;
-    private float rayonBalle;
     private Hero cible;
     private int compteurBallesMortes;
     private boolean stopProduction;
     private boolean estTermine;
-
-    /**
-     * Constructeur classique pour l'attaque entre entités.
-     */
-    public TirDeBalle() {
-        this(1f);
-        this.balles = new ArrayList<>();
-        this.random = new Random();
-        compteurBallesMortes = 0;
-        stopProduction = false;
-        estTermine = false;
-    }
+    private float vitesseMin;
+    private float vitesseMax;
 
     /**
      * Constructeur pour la gestion des projectiles avec cible.
      * Les balles elles-mêmes sont les attaquants.
      */
-    public TirDeBalle(float rayonBalle) {
+    public TirDeBalle(float vitesseMin, float vitesseMax) {
         super(2.3, "Tir de balle", 10, 4);
         this.balles = new ArrayList<>();
         this.random = new Random();
         this.tempsDepuisDerniereBalle = 0f;
-        this.rayonBalle = rayonBalle;
         this.cible = Hero.getInstance();
+        this.vitesseMin = vitesseMin;
+        this.vitesseMax = vitesseMax;
     }
 
     // === Méthode héritée de Attaque ===
@@ -154,7 +144,7 @@ public class TirDeBalle extends Attaque {
     private void ajouterBalleBoss() {
         float x = random.nextFloat() * Gdx.graphics.getWidth();
         float y = Gdx.graphics.getHeight();
-        balles.add(new BalleBoss(x, y, rayonBalle, cible.getPosition()));
+        balles.add(new BalleBoss(x, y, cible.getPosition()));
     }
 
     /**
@@ -163,7 +153,7 @@ public class TirDeBalle extends Attaque {
     private void ajouterBalle() {
         float x = random.nextFloat() * Gdx.graphics.getWidth();
         float y = Gdx.graphics.getHeight() + 40;
-        balles.add(new BalleNormale(x, y, rayonBalle, cible.getPosition(), 200f, 800f));
+        balles.add(new BalleNormale(x, y, cible.getPosition(), vitesseMin, vitesseMax));
     }
 
     /**
@@ -211,5 +201,21 @@ public class TirDeBalle extends Attaque {
 
     public boolean isEstTermine() {
         return estTermine;
+    }
+
+    public float getVitesseMin() {
+        return vitesseMin;
+    }
+
+    public void setVitesseMin(float vitesseMin) {
+        this.vitesseMin = vitesseMin;
+    }
+
+    public float getVitesseMax() {
+        return vitesseMax;
+    }
+
+    public void setVitesseMax(float vitesseMax) {
+        this.vitesseMax = vitesseMax;
     }
 }
