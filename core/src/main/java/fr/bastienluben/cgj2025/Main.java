@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -21,15 +22,46 @@ import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
 import fr.bastienluben.cgj2025.screens.main.MainTirDeBalleScreen;
 import fr.bastienluben.cgj2025.screens.testScreen.TestScreen;
 
+import java.util.Random;
+
 public class Main extends Game {
     public static final boolean DEBUG = true;
+
+    public static Vector2 camera = new Vector2(0, 0);
+    private static Random rand = new Random();
+    private static float shakeTimer, shakeTime;
+    private static int shakeAmount;
+    public static void resetCamera()
+    {
+        camera.x = 0;
+        camera.y = 0;
+    }
+    public static void updateShake(float dt)
+    {
+        if (shakeTimer < shakeTime)
+        {
+            shakeTimer += dt;
+            camera.x = rand.nextInt(shakeAmount) - (shakeAmount / 2);
+            camera.y = rand.nextInt(shakeAmount) - (shakeAmount / 2);
+        }
+        else
+        {
+            camera.x = 0;
+            camera.y = 0;
+        }
+    }
+    public static void shake(float duree, int amount)
+    {
+        shakeTimer = 0f;
+        shakeTime = duree;
+        shakeAmount = amount;
+    }
 
     private SpriteBatch sprite;
     private ShapeRenderer shape;
     private FontLoader fonts;
     private FitViewport viewport;
     private AssetManager assets;
-    private SpriteBatch batch;
 
     private AbstractScreen notreScreen;
 
@@ -45,8 +77,6 @@ public class Main extends Game {
         // use libGDX's default font
 
         viewport = new FitViewport(16, 9);
-
-        batch = new SpriteBatch();
 
         fonts.loadFont("font.ttf", "font");
         fonts.loadFont("font.ttf", "default");

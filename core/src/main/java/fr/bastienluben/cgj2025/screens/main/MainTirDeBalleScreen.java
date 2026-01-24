@@ -1,6 +1,7 @@
 package fr.bastienluben.cgj2025.screens.main;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -59,8 +60,11 @@ public class MainTirDeBalleScreen extends AbstractScreen {
             {
                 // on kill
                 feux.createExplosionAt(clickPosition, 2f, sang);
+                this.getGame().shake(0.05f, 4);
             }
         }
+
+        Main.updateShake(delta);
 
         feux.update(delta);
     }
@@ -70,19 +74,20 @@ public class MainTirDeBalleScreen extends AbstractScreen {
         // Dessiner le héros (carré blanc) avec ShapeRenderer
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(1, 1, 1, 1); // Blanc
-        float heroX = hero.getPosition().x - hero.getTaille() / 2;
-        float heroY = hero.getPosition().y - hero.getTaille() / 2;
+        float heroX = hero.getPosition().x - hero.getTaille() / 2 + Main.camera.x;
+        float heroY = hero.getPosition().y - hero.getTaille() / 2 + Main.camera.y;
         shapeRenderer.rect(heroX, heroY, hero.getTaille(), hero.getTaille());
         shapeRenderer.end();
 
         // Dessiner les ennemis (images enerve.png) avec SpriteBatch
         batch.begin();
         feux.draw(batch);
+        batch.setColor(Color.WHITE);
         for (Balle balle : tirDeBalle.getBalles()) {
             float rayon = balle.getHitbox().radius;
-            float taille = rayon * ((float)1.3); // Diamètre
-            float x = balle.getPosition().x - rayon;
-            float y = balle.getPosition().y - rayon;
+            float taille = rayon * 1.3f; // Diamètre
+            float x = balle.getPosition().x - rayon + getGame().camera.x;
+            float y = balle.getPosition().y - rayon + getGame().camera.y;
             batch.draw(balle.getTexture(), x, y, taille, taille);
         }
         batch.end();
