@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
+import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.Attaques.Kamikaze;
 import fr.bastienluben.cgj2025.Entite.Bombe;
 import fr.bastienluben.cgj2025.Entite.Hero;
@@ -20,6 +21,7 @@ import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontParameterBuilder;
 import fr.bastienluben.cgj2025.screens.AbstractGameScreen;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
+import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartificeManager;
 
 public class MainKamikazeScreen extends AbstractGameScreen {
     private SpriteBatch batch;
@@ -31,6 +33,8 @@ public class MainKamikazeScreen extends AbstractGameScreen {
     private float screenHeight;
     private int nbBombes;
     private float probabiliteApparitionBombe;
+
+    private FeuxDartificeManager feux;
 
     public MainKamikazeScreen(Main game, AssetManager assets, int nbBombes, float probabiliteApparitionBombe, int nbBombesAvantFin) {
         super(game, assets);
@@ -44,6 +48,7 @@ public class MainKamikazeScreen extends AbstractGameScreen {
         bombes = new ArrayList<>();
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
+        feux = new FeuxDartificeManager(1f);
     }
 
     public MainKamikazeScreen(Main game, AssetManager assets) {
@@ -84,20 +89,30 @@ public class MainKamikazeScreen extends AbstractGameScreen {
             for (Bombe bombe : bombes) {
                 if (x >= bombe.getX() && x <= bombe.getX() + 50 && y >= bombe.getY() && y <= bombe.getY() + 50) {
                     bombe.click();
+                    feux.createExplosionAt(
+                        new Vector2(bombe.getX() + 25, bombe.getY() + 25), 1f, Color.ORANGE);
+                    Main.shake(0.1f, 6);
                 }
             }
         }
+
+        feux.update(delta);
+        Main.updateShake(delta);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
+        feux.draw(batch);
+
         // Mettre à jour les bombes
         Iterator<Bombe> iterator = bombes.iterator();
         while (iterator.hasNext()) {
             Bombe bombe = iterator.next();
             if (!(bombe.isEstClique() || bombe.getTimer() <= 0)) {
                 // Dessiner la bombe
-                batch.draw(bombeTexture, bombe.getX(), bombe.getY(), 50, 50);
+                batch.draw(bombeTexture,
+                    bombe.getX() + Main.camera.x,
+                    bombe.getY() + Main.camera.y, 50, 50);
                 // Dessiner le compteur
                 if (bombe.getTimer() < 10) {
                     redFont.draw(batch, String.valueOf(bombe.getTimerTexte()), bombe.getX() + 25, bombe.getY() + 25);
