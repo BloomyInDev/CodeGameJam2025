@@ -1,6 +1,7 @@
 package fr.bastienluben.cgj2025.screens.main;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,8 +15,8 @@ import fr.bastienluben.cgj2025.Entite.Balle;
 import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
+import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartificeManager;
 
-import java.util.Random;
 
 public class MainTirDeBalleScreen extends AbstractScreen {
     private ShapeRenderer shapeRenderer;
@@ -37,7 +38,7 @@ public class MainTirDeBalleScreen extends AbstractScreen {
 
         // Créer l'attaque TirDeBalle : cible, délai 1s, rayon 60, 1 dégât par balle
         // Chaque balle est l'attaquant
-        this.tirDeBalle = new TirDeBalle(60f);
+        this.tirDeBalle = new TirDeBalle(200f, 700f);
 
 
         // sang
