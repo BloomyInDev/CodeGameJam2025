@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.config.ConfigLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
+import fr.bastienluben.cgj2025.lib.son.SoundManager;
 import fr.bastienluben.cgj2025.lib.ui.Image;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
@@ -80,6 +81,7 @@ public class Main extends Game {
         Music musicDeFond =  Gdx.audio.newMusic(Gdx.files.internal("musique/musiqueDeFond.mp3"));
         musicDeFond.setLooping(true);
         musicDeFond.play();
+        SoundManager soundManager = new SoundManager();
 
         assets = new AssetManager();
         UI.setScreenResolution(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
