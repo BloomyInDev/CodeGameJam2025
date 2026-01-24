@@ -36,6 +36,7 @@ public class Main extends Game {
         camera.x = 0;
         camera.y = 0;
     }
+
     public static void updateShake(float dt)
     {
         if (shakeTimer < shakeTime)
