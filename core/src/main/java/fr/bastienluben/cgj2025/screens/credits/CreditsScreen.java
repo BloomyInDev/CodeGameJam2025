@@ -36,8 +36,8 @@ public class CreditsScreen extends AbstractScreen
     @Override
     public void onLoad(AssetManager assets)
     {
-        morganaaaaaaa = new Image(138, 138,
-            assets.getTexture("enerve1.png"));
+        morganaaaaaaa = new Image(138, 198,
+            assets.getTexture("morgana.png"));
         morganaaaaaaa.setMargin(0, 0, 32, 0);
         morganaaaaaaa.setPosition(Bounds.BottomLeft);
 
