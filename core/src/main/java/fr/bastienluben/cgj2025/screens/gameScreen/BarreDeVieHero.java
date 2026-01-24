@@ -6,11 +6,9 @@ import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.IScript;
 
 public class BarreDeVieHero extends BarreDeVie implements IScript {
-    private Hero hero;
-
     public BarreDeVieHero(AssetManager assets) {
         super(Hero.getInstance().getVieMax(), assets);
-        hero = Hero.getInstance();
+
     }
 
     @Override
