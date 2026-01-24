@@ -22,7 +22,10 @@ public class MusiqueFabrique {
 
     public HashMap<String,Music> creerMusique() {
         HashMap<String,Music> listeMusique = new HashMap<>();
-        listeMusique.put("fondMusicalJeu", Gdx.audio.newMusic(Gdx.files.internal("musique/musiqueDeFond.mp3")));
+        Music sonDeFond = Gdx.audio.newMusic(Gdx.files.internal("musique/musiqueDeFond.mp3"));
+        sonDeFond.setVolume(.2f);
+
+        listeMusique.put("fondMusicalJeu", sonDeFond);
         listeMusique.put("credit",Gdx.audio.newMusic(Gdx.files.internal("musique/10eCodeGameJam.mp3")));
         return listeMusique;
     }

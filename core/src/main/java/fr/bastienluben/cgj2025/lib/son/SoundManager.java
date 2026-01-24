@@ -1,5 +1,9 @@
 package fr.bastienluben.cgj2025.lib.son;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +34,15 @@ public class SoundManager {
             int unites = numero % 10;
 
             if (dizaines >= 20 && dizaines < 100) {
-                chemin.add("audionombres/" + dizaines + ".mp3");
+                if (dizaines == 90) {
+                    chemin.add("audionombres/80.mp3");
+                    chemin.add("audionombres/10.mp3");
+                } else if (dizaines == 70) {
+                    chemin.add("audionombres/60.mp3");
+                    chemin.add("audionombres/10.mp3");
+                } else {
+                    chemin.add("audionombres/" + dizaines + ".mp3");
+                }
             }
 
             if (unites != 0) {
@@ -71,12 +83,45 @@ public class SoundManager {
         mettreEnPauseAutreMusiqueQue(musiqueEnCours);
     }
 
+    public void reduireLeVolumeTemporairement() {
+        musiqueEnCours.setVolume(musiqueEnCours.getVolume()/2);
+    }
+
+    public void augmenterLeVolumeTemporairement() {
+        musiqueEnCours.setVolume(musiqueEnCours.getVolume()*2);
+    }
+
     private void mettreEnPauseAutreMusiqueQue(Music musiqueCourante) {
         for (Map.Entry<String, Music> entry : listeMusiqueJeu.entrySet()) {
             Music musique = entry.getValue();
             if (musique != musiqueCourante && musique.isPlaying()) {
                 musique.pause();
             }
+        }
+    }
+
+    public List<Music> chargerSonsPourNiveau(int numero) {
+        List<Music> sounds = new ArrayList<>();
+        for (String chemin : obtenirListCheminDAccesPourNiveau(numero)) {
+            sounds.add(Gdx.audio.newMusic(Gdx.files.internal(chemin)));
+        }
+        return sounds;
+    }
+
+    public boolean ecouterSonSuivantQuandLaMusiqueEstTerminee(List<Music> musics) {
+        if (musics.isEmpty()) return true;
+        else if (musics.get(0).isPlaying()) {
+            return false;
+        } else {
+            musics.get(0).dispose();
+            musics.remove(0);
+            if (musics.isEmpty()) return true;
+            Music music = musics.get(0);
+            System.out.printf("Ecoute du son : %s%n", music.toString());
+            music.play();
+            music.setVolume(10);
+
+            return false;
         }
     }
 
