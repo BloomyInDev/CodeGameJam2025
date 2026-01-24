@@ -28,6 +28,7 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
     private float vitesseMax;
 
     private FeuxDartificeManager feux;
+    private Texture heroTexture;
 
     private final Color sang;
 
@@ -36,6 +37,7 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
         super(game, assets);
         this.vitesseMin = vitesseMin;
         this.vitesseMax = vitesseMax;
+        this.heroTexture = new Texture(Gdx.files.internal("hero.png"));
         sang = new Color(0.5f, 0, 0, 1f);
     }
 
@@ -65,8 +67,7 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
         if (Gdx.input.justTouched()) {
             Vector2 clickPosition = new Vector2(Gdx.input.getX(), Gdx.input.getY());
             clickPosition = UI.normalToGdx(clickPosition);
-            if (tirDeBalle.gererClic(clickPosition.x, clickPosition.y))
-            {
+            if (tirDeBalle.gererClic(clickPosition.x, clickPosition.y)) {
                 // on kill
                 feux.createExplosionAt(clickPosition, 2f, sang);
                 this.getGame().shake(0.05f, 4);
@@ -80,6 +81,15 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
 
     @Override
     public void draw(SpriteBatch batch) {
+        // Dessiner le héros avec la texture hero.png
+        batch.begin();
+        float heroX = hero.getPosition().x - hero.getTaille() / 2 + Main.camera.x;
+        float heroY = hero.getPosition().y - hero.getTaille() / 2 + Main.camera.y;
+        batch.draw(heroTexture, heroX, heroY, hero.getTaille(), hero.getTaille());
+        batch.end();
+
+        // Dessiner les ennemis (images enerve.png) avec SpriteBatch
+        batch.begin();
         feux.draw(batch);
         for (Balle balle : tirDeBalle.getBalles()) {
             float rayon = balle.getHitbox().radius;
@@ -104,6 +114,9 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
     @Override
     public void dispose() {
         super.dispose();
+        if (heroTexture != null) {
+            heroTexture.dispose();
+        }
     }
 
     @Override
