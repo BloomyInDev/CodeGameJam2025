@@ -20,6 +20,13 @@ public class Hero extends Personnage {
         listeObjetDuHero = new ArrayList<>();
     }
 
+    public synchronized static Hero getInstance(boolean reset) {
+        if (reset) {
+            INSTANCE = null;
+        }
+        return getInstance();
+    }
+
     public synchronized static Hero getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Hero("héros", Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f - 200f);
@@ -31,17 +38,16 @@ public class Hero extends Personnage {
         listeObjetDuHero.add(objetAAJouter);
     }
 
-    @Override
-    public Vector2 getPosition() {
-        return position;
-    }
-
     public float getTaille() {
         return taille;
     }
 
     public double getPointDeVie() {
         return getVie().getNbStat();
+    }
+
+    public double getVieMax() {
+        return getVie().getNbStatMax();
     }
 
     public boolean estMort() {

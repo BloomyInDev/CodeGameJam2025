@@ -3,6 +3,7 @@ package fr.bastienluben.cgj2025.screens.gameScreen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.Lerps;
 import fr.bastienluben.cgj2025.lib.entities.ISpriteDrawable;
 import fr.bastienluben.cgj2025.lib.ui.Image;
@@ -19,9 +20,11 @@ public class FeuxDartifice implements ISpriteDrawable
     public boolean alive;
     private final Random rnd;
     private float timer;
+    final float ft;
 
-    public FeuxDartifice(Random rnd)
+    public FeuxDartifice(Random rnd, float ft)
     {
+        this.ft = ft;
         alive = false;
         this.rnd = rnd;
         lums = new Vector2[lumCount];
@@ -33,10 +36,9 @@ public class FeuxDartifice implements ISpriteDrawable
             lums[i] = new Vector2();
             targs[i] = new Vector2();
         }
-        color = new Color(1, 0, 0, 0f);
     }
 
-    public void start(Vector2 startPos, float ampli)
+    public void start(Vector2 startPos, float ampli, Color c)
     {
         for (int i = 0; i < lumCount; i++)
         {
@@ -50,6 +52,7 @@ public class FeuxDartifice implements ISpriteDrawable
 
         timer = 0f;
         alive = true;
+        this.color = c;
     }
 
     public void update(float dt)
@@ -65,11 +68,13 @@ public class FeuxDartifice implements ISpriteDrawable
         {
             for (int i = 0; i < lumCount; i++)
             {
-                bet[i].x = Lerps.CubeOut(lums[i].x, targs[i].x, timer, (byte)64);
-                bet[i].y = Lerps.CubeOut(lums[i].y, targs[i].y, timer, (byte)64);
+                bet[i].x = Lerps.CubeOut(lums[i].x, targs[i].x,
+                    ft > 10 ? timer : timer / 6, (byte)64);
+                bet[i].y = Lerps.CubeOut(lums[i].y, targs[i].y,
+                    ft > 10 ? timer : timer / 6, (byte)64);
             }
         }
-        timer += dt * 0.08f;
+        timer += dt / ft;
     }
 
     private Color color;
@@ -82,8 +87,8 @@ public class FeuxDartifice implements ISpriteDrawable
             for (int i = 0; i < lumCount; i++)
             {
                 batch.draw(Image.getDefaultTexture(),
-                    bet[i].x - 2,
-                    bet[i].y - 2,
+                    bet[i].x - 2 + Main.camera.x,
+                    bet[i].y - 2 + Main.camera.x,
                     4, 4);
             }
         }

@@ -26,4 +26,8 @@ public abstract class Stat {
     public double getNbStat(){
         return this.nbStat;
     }
+
+    public double getNbStatMax(){
+        return this.nbStatMax;
+    }
 }

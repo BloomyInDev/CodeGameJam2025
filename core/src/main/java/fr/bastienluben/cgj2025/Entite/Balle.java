@@ -7,44 +7,28 @@ import com.badlogic.gdx.math.Circle;
 
 import java.util.Random;
 
-public class Balle extends Entite {
-    private final int pointDeVie = 1;
+public abstract class Balle extends Entite {
+    private int pointDeVie;
     private Circle hitbox;
     private boolean estDetruite;
     private float vitesse;
     private Vector2 direction;
     private Texture texture;
     private Random random;
+    private TypeMouvementBalle typeMouvement;
 
-    public Balle(float x, float y, float rayon, Vector2 cible) {
+    public Balle(float x, float y, float rayon, Vector2 cible, int pointDeVie, String complementNom) {
         super();
+        this.pointDeVie = pointDeVie;
         this.position = new Vector2(x, y);
-        this.nom = "Balle";
+        this.nom = "Balle " + complementNom;
         this.hitbox = new Circle(x, y, rayon);
         this.estDetruite = false;
         random = new Random();
-
-        this.vitesse = random.nextFloat(200f, 600f); // entre 200 et 500 pixels par seconde
+        this.vitesse = 0f;
 
         // Calculer la direction vers la cible
         this.direction = new Vector2(cible.x - x, cible.y - y).nor();
-
-
-
-        int num = random.nextInt(3);
-
-        if (num == 1) {
-            texture = new Texture(Gdx.files.internal("enerve2.png"));
-        } else if (num == 2) {
-            texture = new Texture(Gdx.files.internal("enerve3.png"));
-        } else {
-            texture = new Texture(Gdx.files.internal("enerve1.png"));
-        }
-    }
-
-    @Override
-    public Vector2 getPosition() {
-        return position;
     }
 
     public void mettreAJourPosition(float x, float y) {
@@ -69,10 +53,7 @@ public class Balle extends Entite {
     }
 
     public void mettreAJour(float delta) {
-        // Se déplacer dans la direction de la cible
-        this.position.x += direction.x * vitesse * delta;
-        this.position.y += direction.y * vitesse * delta;
-        this.hitbox.setPosition(position.x, position.y);
+        typeMouvement.mettreAJour(this, delta);
     }
 
     public boolean toucheHero(Vector2 heroPosition, float heroTaille) {
@@ -96,5 +77,33 @@ public class Balle extends Entite {
 
     public Texture getTexture() {
         return texture;
+    }
+
+    public Vector2 getDirection() {
+        return direction;
+    }
+
+    public float getVitesse() {
+        return vitesse;
+    }
+
+    public void setVitesse(float vitesse) {
+        this.vitesse = vitesse;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
+    public void setTypeMouvement(TypeMouvementBalle typeMouvement) {
+        this.typeMouvement = typeMouvement;
+    }
+
+    public void retirerPV() {
+        pointDeVie--;
+    }
+
+    public int getPointDeVie() {
+        return pointDeVie;
     }
 }

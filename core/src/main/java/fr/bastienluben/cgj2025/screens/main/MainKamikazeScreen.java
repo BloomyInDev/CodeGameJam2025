@@ -5,42 +5,49 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
-import fr.bastienluben.cgj2025.Attaques.Bombe;
-import fr.bastienluben.cgj2025.Attaques.kamikaze;
+import fr.bastienluben.cgj2025.Attaques.Kamikaze;
+import fr.bastienluben.cgj2025.Entite.Bombe;
+import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontParameterBuilder;
+import fr.bastienluben.cgj2025.screens.AbstractGameScreen;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 
-public class MainKamikazeScreen extends AbstractScreen implements Screen {
+public class MainKamikazeScreen extends AbstractGameScreen {
     private SpriteBatch batch;
     private Texture bombeTexture;
     private BitmapFont font, redFont, orangeFont;
-    private kamikaze kamikaze;
+    private Kamikaze kamikaze;
     private List<Bombe> bombes;
     private float screenWidth;
     private float screenHeight;
+    private int nbBombes;
+    private float probabiliteApparitionBombe;
 
-    public MainKamikazeScreen(Main game, AssetManager assets) {
+    public MainKamikazeScreen(Main game, AssetManager assets, int nbBombes, float probabiliteApparitionBombe, int nbBombesAvantFin) {
         super(game, assets);
         batch = new SpriteBatch();
         bombeTexture = new Texture(Gdx.files.internal("bombe.png"));
         font = FontLoader.getInstance().getFont("default", new FontParameterBuilder().build());
         redFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setColor(Color.RED).build());
         orangeFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setColor(Color.ORANGE).build());
-        kamikaze = new kamikaze();
+        kamikaze = new Kamikaze(Hero.getInstance(), nbBombes, nbBombesAvantFin);
+        this.probabiliteApparitionBombe = probabiliteApparitionBombe;
         bombes = new ArrayList<>();
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
+    }
+
+    public MainKamikazeScreen(Main game, AssetManager assets) {
+        this(game, assets, 8, .01f, 50);
     }
 
     @Override
@@ -49,43 +56,27 @@ public class MainKamikazeScreen extends AbstractScreen implements Screen {
     }
 
     @Override
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        batch.begin();
-
+    public void update(float delta) {
         // Logique de jeu
-        if (MathUtils.randomBoolean(0.01f)) { // 1% de chance de poser une bombe à chaque frame
+        if (MathUtils.randomBoolean(probabiliteApparitionBombe)) {
             int x = MathUtils.random(0, (int) screenWidth - 50);
             int y = MathUtils.random(0, (int) screenHeight - 50);
-            Bombe bombe = new Bombe(60, x, y);
+            Bombe bombe = new Bombe(60, x, y, 0);
             bombes.add(bombe);
         }
 
-        // Mettre à jour les bombes
         Iterator<Bombe> iterator = bombes.iterator();
         while (iterator.hasNext()) {
             Bombe bombe = iterator.next();
-            bombe.update();
-            if (bombe.isEstClique() || bombe.getTimer() <= 0) {
+            bombe.update(delta);
+            if (bombe.isEstClique()) {
                 iterator.remove();
-            } else {
-                // Dessiner la bombe
-                batch.draw(bombeTexture, bombe.getX(), bombe.getY(), 50, 50);
-                // Dessiner le compteur
-                if (bombe.getTimer() < 10) {
-                    redFont.draw(batch, String.valueOf(bombe.getTimer()), bombe.getX() + 25, bombe.getY() + 25);
-                } else if (bombe.getTimer() > 10 && bombe.getTimer() < 20) {
-                    orangeFont.draw(batch, String.valueOf(bombe.getTimer()), bombe.getX() + 25, bombe.getY() + 25);
-                } else {
-                    font.draw(batch, String.valueOf(bombe.getTimer()), bombe.getX() + 25, bombe.getY() + 25);
-                }
+            }
+            else if (bombe.getTimer() <= 0) {
+                iterator.remove();
+                Hero.getInstance().getVie().retirerStat(10);
             }
         }
-
-        batch.end();
-
         // Gestion des clics
         if (Gdx.input.justTouched()) {
             int x = Gdx.input.getX();
@@ -99,23 +90,26 @@ public class MainKamikazeScreen extends AbstractScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
-        // Gestion du redimensionnement si nécessaire
-    }
+    public void draw(SpriteBatch batch) {
+        // Mettre à jour les bombes
+        Iterator<Bombe> iterator = bombes.iterator();
+        while (iterator.hasNext()) {
+            Bombe bombe = iterator.next();
+            if (!(bombe.isEstClique() || bombe.getTimer() <= 0)) {
+                // Dessiner la bombe
+                batch.draw(bombeTexture, bombe.getX(), bombe.getY(), 50, 50);
+                // Dessiner le compteur
+                if (bombe.getTimer() < 10) {
+                    redFont.draw(batch, String.valueOf(bombe.getTimerTexte()), bombe.getX() + 25, bombe.getY() + 25);
+                } else if (bombe.getTimer() > 10 && bombe.getTimer() < 20) {
+                    orangeFont.draw(batch, String.valueOf(bombe.getTimerTexte()), bombe.getX() + 25, bombe.getY() + 25);
+                } else {
+                    font.draw(batch, String.valueOf(bombe.getTimerTexte()), bombe.getX() + 25, bombe.getY() + 25);
+                }
+            }
+        }
 
-    @Override
-    public void pause() {
-        // Pause si nécessaire
-    }
 
-    @Override
-    public void resume() {
-        // Reprise si nécessaire
-    }
-
-    @Override
-    public void hide() {
-        // Masquage si nécessaire
     }
 
     @Override
@@ -127,7 +121,10 @@ public class MainKamikazeScreen extends AbstractScreen implements Screen {
 
     @Override
     public void start() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'start'");
+    }
+
+    @Override
+    public boolean estTerminee() {
+        return kamikaze.estTerminee();
     }
 }

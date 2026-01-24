@@ -1,35 +1,64 @@
 package fr.bastienluben.cgj2025;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.config.ConfigLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
+import fr.bastienluben.cgj2025.lib.son.SoundManager;
 import fr.bastienluben.cgj2025.lib.ui.Image;
-import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
-import fr.bastienluben.cgj2025.screens.gameScreen.GameScreen;
-import fr.bastienluben.cgj2025.screens.BossTest.BosstestScreen;
-import fr.bastienluben.cgj2025.screens.main.MainKamikazeScreen;
 import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
-import fr.bastienluben.cgj2025.screens.main.MainTirDeBalleScreen;
-import fr.bastienluben.cgj2025.screens.testScreen.TestScreen;
 
 public class Main extends Game {
     public static final boolean DEBUG = true;
+
+    public static Vector2 camera = new Vector2(0, 0);
+    private static Random rand = new Random();
+    private static float shakeTimer, shakeTime;
+    private static int shakeAmount;
+    public static void resetCamera()
+    {
+        camera.x = 0;
+        camera.y = 0;
+    }
+
+    public static void updateShake(float dt)
+    {
+        if (shakeTimer < shakeTime)
+        {
+            shakeTimer += dt;
+            camera.x = rand.nextInt(shakeAmount) - (shakeAmount / 2);
+            camera.y = rand.nextInt(shakeAmount) - (shakeAmount / 2);
+        }
+        else
+        {
+            camera.x = 0;
+            camera.y = 0;
+        }
+    }
+    public static void shake(float duree, int amount)
+    {
+        shakeTimer = 0f;
+        shakeTime = duree;
+        shakeAmount = amount;
+    }
 
     private SpriteBatch sprite;
     private ShapeRenderer shape;
     private FontLoader fonts;
     private FitViewport viewport;
     private AssetManager assets;
-    private SpriteBatch batch;
 
     private AbstractScreen notreScreen;
 
@@ -46,10 +75,13 @@ public class Main extends Game {
 
         viewport = new FitViewport(16, 9);
 
-        batch = new SpriteBatch();
-
         fonts.loadFont("font.ttf", "font");
         fonts.loadFont("font.ttf", "default");
+
+        Music musicDeFond =  Gdx.audio.newMusic(Gdx.files.internal("musique/musiqueDeFond.mp3"));
+        musicDeFond.setLooping(true);
+        musicDeFond.play();
+        SoundManager soundManager = new SoundManager();
 
         assets = new AssetManager();
         UI.setScreenResolution(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -58,9 +90,9 @@ public class Main extends Game {
         this.setScreen(new MainMenuScreen(this, assets));
 
         //notreScreen = new BosstestScreen(this, assets);
-        notreScreen = new MainMenuScreen(this, assets);
-        //notreScreen = new MainKamikazeScreen(this, assets);
-        this.setScreen(notreScreen);
+        //notreScreen = new MainTirDeBalleScreen(this, assets);
+        this.setScreen(new MainMenuScreen(this, assets));
+
         //notreScreen = new MainTirDeBalleScreen(this, assets);
         //this.setScreen(notreScreen);
 

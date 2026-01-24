@@ -1,12 +1,9 @@
 package fr.bastienluben.cgj2025.Attaques;
 
-import fr.bastienluben.cgj2025.Entite.Balle;
-import fr.bastienluben.cgj2025.Entite.Entite;
-import fr.bastienluben.cgj2025.Entite.Hero;
+import fr.bastienluben.cgj2025.Entite.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import fr.bastienluben.cgj2025.Entite.Personnage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,29 +19,25 @@ public class TirDeBalle extends Attaque {
     private Random random;
     private float tempsDepuisDerniereBalle;
     private static float delaiEntreBalles = 1f;
-    private float rayonBalle;
     private Hero cible;
-
-    /**
-     * Constructeur classique pour l'attaque entre entités.
-     */
-    public TirDeBalle() {
-        this(1f);
-        this.balles = new ArrayList<>();
-        this.random = new Random();
-    }
+    private int compteurBallesMortes;
+    private boolean stopProduction;
+    private boolean estTermine;
+    private float vitesseMin;
+    private float vitesseMax;
 
     /**
      * Constructeur pour la gestion des projectiles avec cible.
      * Les balles elles-mêmes sont les attaquants.
      */
-    public TirDeBalle(float rayonBalle) {
+    public TirDeBalle(float vitesseMin, float vitesseMax) {
         super(2.3, "Tir de balle", 10, 4);
         this.balles = new ArrayList<>();
         this.random = new Random();
         this.tempsDepuisDerniereBalle = 0f;
-        this.rayonBalle = rayonBalle;
         this.cible = Hero.getInstance();
+        this.vitesseMin = vitesseMin;
+        this.vitesseMax = vitesseMax;
     }
 
     // === Méthode héritée de Attaque ===
@@ -57,10 +50,8 @@ public class TirDeBalle extends Attaque {
             super.attaquer(attaquant, adversaire);
 
             // débogage
-            System.out.println(
-                    attaquant.getNom() + " a touché " +
-                            adversaire.getNom() + " avec " + this.getNom() +
-                            " et inflige " + degats + " points de dégâts !");
+            System.out.printf("%s a touché %s avec %s et inflige %f points de dégâts ! Vie restante : %f\n", attaquant.getNom(), adversaire.getNom(), this.getNom(), degats, adversaire.getVie().getNbStat());
+            adversaire.getVie().retirerStat(this.getNbDegatAuHit());
         } else {
             // debogage utilisateur rate
             System.out.println(
@@ -72,12 +63,10 @@ public class TirDeBalle extends Attaque {
     /**
      * Effectue une attaque avec une balle spécifique comme attaquant.
      */
-    public void attaqueAvecBalle(Balle balle, Entite adversaire) {
+    public void attaqueAvecBalle(Balle balle, Hero adversaire) {
         // débogage
-        System.out.println(
-                balle.getNom() + " a touché " +
-                        adversaire.getNom() + " avec " + this.getNom() +
-                        " et inflige " + this.getNbDegatAuHit() + " points de dégâts !");
+        System.out.printf("%s a touché %s avec %s et inflige %f points de dégâts ! Vie restante : %f\n", balle.getNom(), adversaire.getNom(), this.getNom(), this.getNbDegatAuHit(), adversaire.getVie().getNbStat());
+        adversaire.getVie().retirerStat(this.getNbDegatAuHit());
     }
 
     private boolean entiteEstTouche(Personnage attaquant, Personnage adversaire) {
@@ -109,7 +98,12 @@ public class TirDeBalle extends Attaque {
 
         // Créer une nouvelle balle si le délai est écoulé
         if (tempsDepuisDerniereBalle >= TirDeBalle.delaiEntreBalles) {
-            ajouterBalle();
+            if (compteurBallesMortes < 20) {
+                ajouterBalle();
+            } else if (!stopProduction) {
+                ajouterBalleBoss();
+                stopProduction = true;
+            }
             tempsDepuisDerniereBalle = 0f;
         }
 
@@ -129,7 +123,24 @@ public class TirDeBalle extends Attaque {
         }
 
         // Retirer les balles détruites ou sorties de l'écran
+
+        for (Balle balle : balles) {
+            if (balle.estDetruite()) {
+                compteurBallesMortes++;
+            }
+        }
+
         balles.removeIf(balle -> balle.estDetruite() || estHorsEcran(balle));
+
+        if (balles.isEmpty() && stopProduction) {
+            estTermine = true;
+        }
+    }
+
+    private void ajouterBalleBoss() {
+        float x = random.nextFloat() * Gdx.graphics.getWidth();
+        float y = Gdx.graphics.getHeight();
+        balles.add(new BalleBoss(x, y, cible.getPosition()));
     }
 
     /**
@@ -138,7 +149,7 @@ public class TirDeBalle extends Attaque {
     private void ajouterBalle() {
         float x = random.nextFloat() * Gdx.graphics.getWidth();
         float y = Gdx.graphics.getHeight() + 40;
-        balles.add(new Balle(x, y, rayonBalle, cible.getPosition()));
+        balles.add(new BalleNormale(x, y, cible.getPosition(), vitesseMin, vitesseMax));
     }
 
     /**
@@ -161,8 +172,11 @@ public class TirDeBalle extends Attaque {
     public boolean gererClic(float clickX, float clickY) {
         for (Balle balle : balles) {
             if (balle.estTouche(clickX, clickY)) {
-                balle.detruire();
-                return true;
+                balle.retirerPV();
+                if (balle.getPointDeVie() <= 0) {
+                    balle.detruire();
+                    return true;
+                }
             }
         }
         return false;
@@ -178,6 +192,26 @@ public class TirDeBalle extends Attaque {
     }
 
     public void setDelaiEntreBalles(float delai) {
-        this.delaiEntreBalles = delai;
+        delaiEntreBalles = delai;
+    }
+
+    public boolean isEstTermine() {
+        return estTermine;
+    }
+
+    public float getVitesseMin() {
+        return vitesseMin;
+    }
+
+    public void setVitesseMin(float vitesseMin) {
+        this.vitesseMin = vitesseMin;
+    }
+
+    public float getVitesseMax() {
+        return vitesseMax;
+    }
+
+    public void setVitesseMax(float vitesseMax) {
+        this.vitesseMax = vitesseMax;
     }
 }
