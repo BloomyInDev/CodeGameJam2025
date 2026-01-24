@@ -1,9 +1,16 @@
 package fr.bastienluben.cgj2025.lib.son;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.badlogic.gdx.audio.Music;
 
 public class SoundManager {
+
+    private HashMap<String, Music> listeMusiqueJeu = MusiqueFabrique.getInstance().creerMusique();
+    private Music musiqueEnCours = null;
 
     public List<String> obtenirListCheminDAccesPourNiveau(int numero) {
         List<String> chemin = new ArrayList<>();
@@ -55,6 +62,22 @@ public class SoundManager {
         }
 
         return chemin;
+    }
+
+    public void play(String nomMusique) {
+        musiqueEnCours = listeMusiqueJeu.get(nomMusique);
+        musiqueEnCours.setLooping(true);
+        musiqueEnCours.play();
+        mettreEnPauseAutreMusiqueQue(musiqueEnCours);
+    }
+
+    private void mettreEnPauseAutreMusiqueQue(Music musiqueCourante) {
+        for (Map.Entry<String, Music> entry : listeMusiqueJeu.entrySet()) {
+            Music musique = entry.getValue();
+            if (musique != musiqueCourante && musique.isPlaying()) {
+                musique.pause();
+            }
+        }
     }
 
     public SoundManager getSoundManager() {
