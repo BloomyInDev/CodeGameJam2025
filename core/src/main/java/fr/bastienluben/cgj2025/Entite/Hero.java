@@ -9,7 +9,7 @@ import fr.bastienluben.cgj2025.Objets.Objet;
 
 public class Hero extends Personnage {
     private ArrayList<Objet> listeObjetDuHero;
-    private float taille = 50f; // Taille du carré représentant le héros
+    private float taille = 100f; // Taille du carré représentant le héros
 
     private static Hero INSTANCE;
 

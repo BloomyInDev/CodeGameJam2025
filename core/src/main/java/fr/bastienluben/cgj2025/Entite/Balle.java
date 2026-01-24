@@ -106,4 +106,8 @@ public abstract class Balle extends Entite {
     public int getPointDeVie() {
         return pointDeVie;
     }
+
+    public boolean estGrosseBalle() {
+        return false;
+    }
 }

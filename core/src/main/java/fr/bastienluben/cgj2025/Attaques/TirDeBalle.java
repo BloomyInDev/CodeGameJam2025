@@ -31,7 +31,7 @@ public class TirDeBalle extends Attaque {
      * Les balles elles-mêmes sont les attaquants.
      */
     public TirDeBalle(float vitesseMin, float vitesseMax) {
-        super(2.3, "Tir de balle", 10, 4);
+        super(10, "Tir de balle", 10, 4);
         this.balles = new ArrayList<>();
         this.random = new Random();
         this.tempsDepuisDerniereBalle = 0f;
@@ -66,7 +66,7 @@ public class TirDeBalle extends Attaque {
     public void attaqueAvecBalle(Balle balle, Hero adversaire) {
         // débogage
         System.out.printf("%s a touché %s avec %s et inflige %f points de dégâts ! Vie restante : %f\n", balle.getNom(), adversaire.getNom(), this.getNom(), this.getNbDegatAuHit(), adversaire.getVie().getNbStat());
-        adversaire.getVie().retirerStat(this.getNbDegatAuHit());
+        adversaire.getVie().retirerStat(this.getNbDegatAuHit() * (balle.estGrosseBalle() ? 2 : 1));
     }
 
     private boolean entiteEstTouche(Personnage attaquant, Personnage adversaire) {
@@ -94,6 +94,9 @@ public class TirDeBalle extends Attaque {
      * @param delta temps écoulé depuis la dernière frame
      */
     public void mettreAJour(float delta) {
+        if (balles.isEmpty() && stopProduction) {
+            estTermine = true;
+        }
         tempsDepuisDerniereBalle += delta;
 
         // Créer une nouvelle balle si le délai est écoulé
@@ -131,10 +134,6 @@ public class TirDeBalle extends Attaque {
         }
 
         balles.removeIf(balle -> balle.estDetruite() || estHorsEcran(balle));
-
-        if (balles.isEmpty() && stopProduction) {
-            estTermine = true;
-        }
     }
 
     private void ajouterBalleBoss() {

@@ -15,4 +15,9 @@ public class BalleBoss extends Balle
 
         setTypeMouvement(new MouvementLineaire());
     }
+
+    @Override
+    public boolean estGrosseBalle() {
+        return true;
+    }
 }
