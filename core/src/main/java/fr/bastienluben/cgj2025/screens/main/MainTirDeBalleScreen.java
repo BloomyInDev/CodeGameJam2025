@@ -69,7 +69,7 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
             {
                 // on kill
                 feux.createExplosionAt(clickPosition, 2f, sang);
-                this.getGame().shake(0.05f, 4);
+                this.getGame().shake(0.08f, 6);
             }
         }
 
@@ -81,6 +81,7 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
     @Override
     public void draw(SpriteBatch batch) {
         feux.draw(batch);
+        batch.setColor(Color.WHITE);
         for (Balle balle : tirDeBalle.getBalles()) {
             float rayon = balle.getHitbox().radius;
             float taille = rayon * 1.3f; // Diamètre

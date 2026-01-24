@@ -22,6 +22,7 @@ import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
 
 public class Main extends Game {
     public static final boolean DEBUG = true;
+    public static final int BPM = 140;
 
     public static Vector2 camera = new Vector2(0, 0);
     private static Random rand = new Random();
