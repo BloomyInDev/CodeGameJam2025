@@ -25,10 +25,10 @@ public class FabriqueGame {
 
     public AbstractGameScreen fabriqueNiveauKamikaze(int niveau) {
         System.out.println("Fabrication Kamikaze");
-        int nbBombes = (int) ((Math.floor((double) niveau / 4) + 1) * 2) + 6;
+        int nbBombes = (int) ((Math.floor((double) niveau / 4) + 1) * 2) + 4;
         float probabiliteApparitionBombe = (0.008163265306122f * niveau) + 0.01f;
         System.out.printf("Nombre de bombes : %d\n", nbBombes);
-        return new MainKamikazeScreen(game, assets, nbBombes, probabiliteApparitionBombe, 50);
+        return new MainKamikazeScreen(game, assets, nbBombes, probabiliteApparitionBombe, 30);
     }
 
     public AbstractGameScreen fabriqueNiveauTirDeBalle(int niveau) {
