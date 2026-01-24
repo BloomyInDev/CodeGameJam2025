@@ -142,15 +142,17 @@ public class TirDeBalle extends Attaque {
     }
 
     private void ajouterBalleBoss() {
+        boolean isFlipped = false;
         float x;
         if (random.nextInt(0, 2) == 0) {
             x = 0.1f;
+            isFlipped = true;
         } else {
             x = 1f;
         }
         x *= Gdx.graphics.getWidth();
         float y = Gdx.graphics.getHeight();
-        balles.add(new BalleBoss(x, y, cible.getPosition()));
+        balles.add(new BalleBoss(x, y, cible.getPosition(), isFlipped));
     }
 
     /**
