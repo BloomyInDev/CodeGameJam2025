@@ -13,11 +13,12 @@ import fr.bastienluben.cgj2025.Attaques.TirDeBalle;
 import fr.bastienluben.cgj2025.Entite.Balle;
 import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.lib.ui.UI;
+import fr.bastienluben.cgj2025.screens.AbstractGameScreen;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 
 import java.util.Random;
 
-public class MainTirDeBalleScreen extends AbstractScreen {
+public class MainTirDeBalleScreen extends AbstractGameScreen {
     private Hero hero;
     private TirDeBalle tirDeBalle;
     private float vitesseMin;
@@ -83,5 +84,10 @@ public class MainTirDeBalleScreen extends AbstractScreen {
     @Override
     public void dispose() {
         super.dispose();
+    }
+
+    @Override
+    public boolean estTerminee() {
+        return tirDeBalle.isEstTermine();
     }
 }

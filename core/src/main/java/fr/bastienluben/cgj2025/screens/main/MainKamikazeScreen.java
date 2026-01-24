@@ -18,9 +18,10 @@ import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontParameterBuilder;
+import fr.bastienluben.cgj2025.screens.AbstractGameScreen;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 
-public class MainKamikazeScreen extends AbstractScreen {
+public class MainKamikazeScreen extends AbstractGameScreen {
     private SpriteBatch batch;
     private Texture bombeTexture;
     private BitmapFont font, redFont, orangeFont;
@@ -31,14 +32,14 @@ public class MainKamikazeScreen extends AbstractScreen {
     private int nbBombes;
     private float probabiliteApparitionBombe;
 
-    public MainKamikazeScreen(Main game, AssetManager assets, int nbBombes, float probabiliteApparitionBombe) {
+    public MainKamikazeScreen(Main game, AssetManager assets, int nbBombes, float probabiliteApparitionBombe, int nbBombesAvantFin) {
         super(game, assets);
         batch = new SpriteBatch();
         bombeTexture = new Texture(Gdx.files.internal("bombe.png"));
         font = FontLoader.getInstance().getFont("default", new FontParameterBuilder().build());
         redFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setColor(Color.RED).build());
         orangeFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setColor(Color.ORANGE).build());
-        kamikaze = new Kamikaze(Hero.getInstance(), nbBombes);
+        kamikaze = new Kamikaze(Hero.getInstance(), nbBombes, nbBombesAvantFin);
         this.probabiliteApparitionBombe = probabiliteApparitionBombe;
         bombes = new ArrayList<>();
         screenWidth = Gdx.graphics.getWidth();
@@ -46,7 +47,7 @@ public class MainKamikazeScreen extends AbstractScreen {
     }
 
     public MainKamikazeScreen(Main game, AssetManager assets) {
-        this(game, assets, 8, .01f);
+        this(game, assets, 8, .01f, 50);
     }
 
     @Override
@@ -68,8 +69,12 @@ public class MainKamikazeScreen extends AbstractScreen {
         while (iterator.hasNext()) {
             Bombe bombe = iterator.next();
             bombe.update(delta);
-            if (bombe.isEstClique() || bombe.getTimer() <= 0) {
+            if (bombe.isEstClique()) {
                 iterator.remove();
+            }
+            else if (bombe.getTimer() <= 0) {
+                iterator.remove();
+                Hero.getInstance().getVie().retirerStat(10);
             }
         }
         // Gestion des clics
@@ -116,5 +121,10 @@ public class MainKamikazeScreen extends AbstractScreen {
 
     @Override
     public void start() {
+    }
+
+    @Override
+    public boolean estTerminee() {
+        return kamikaze.estTerminee();
     }
 }

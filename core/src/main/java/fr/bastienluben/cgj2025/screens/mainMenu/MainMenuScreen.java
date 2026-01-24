@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainMenuScreen extends AbstractScreen {
+    private Image background;
+
     public MainMenuScreen(Main game, AssetManager assets) {
         super(game, assets);
     }
@@ -26,6 +28,7 @@ public class MainMenuScreen extends AbstractScreen {
     {
         scripts = new ArrayList<>();
         scripts.addAll(Arrays.asList(new HighScoreText(), new MenuButtons(this)));
+        background = new Image(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), assets.getTexture("background.png"));
 
     }
 
@@ -51,6 +54,7 @@ public class MainMenuScreen extends AbstractScreen {
     {
 
         batch.begin();
+        background.draw(batch);
         scripts.forEach(script -> script.draw(batch));
         batch.end();
     }

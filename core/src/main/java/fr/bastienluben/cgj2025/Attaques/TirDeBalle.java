@@ -50,7 +50,7 @@ public class TirDeBalle extends Attaque {
             super.attaquer(attaquant, adversaire);
 
             // débogage
-            System.out.printf("%s a touché %s avec %s et inflige %f points de dégâts ! Vie restante : %f", attaquant.getNom(), adversaire.getNom(), this.getNom(), degats, adversaire.getVie().getNbStat());
+            System.out.printf("%s a touché %s avec %s et inflige %f points de dégâts ! Vie restante : %f\n", attaquant.getNom(), adversaire.getNom(), this.getNom(), degats, adversaire.getVie().getNbStat());
             adversaire.getVie().retirerStat(this.getNbDegatAuHit());
         } else {
             // debogage utilisateur rate
@@ -65,7 +65,7 @@ public class TirDeBalle extends Attaque {
      */
     public void attaqueAvecBalle(Balle balle, Hero adversaire) {
         // débogage
-        System.out.printf("%s a touché %s avec %s et inflige %f points de dégâts ! Vie restante : %f", balle.getNom(), adversaire.getNom(), this.getNom(), this.getNbDegatAuHit(), adversaire.getVie().getNbStat());
+        System.out.printf("%s a touché %s avec %s et inflige %f points de dégâts ! Vie restante : %f\n", balle.getNom(), adversaire.getNom(), this.getNom(), this.getNbDegatAuHit(), adversaire.getVie().getNbStat());
         adversaire.getVie().retirerStat(this.getNbDegatAuHit());
     }
 

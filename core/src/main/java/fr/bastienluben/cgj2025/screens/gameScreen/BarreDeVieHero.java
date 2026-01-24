@@ -25,7 +25,7 @@ public class BarreDeVieHero extends BarreDeVie implements IScript {
 
     @Override
     public void update(float delta) {
-        this.setLife(this.hero.getPointDeVie());
+        this.setLife(Hero.getInstance().getPointDeVie());
     }
 
     @Override

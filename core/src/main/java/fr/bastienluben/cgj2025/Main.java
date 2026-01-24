@@ -59,8 +59,7 @@ public class Main extends Game {
 
         //notreScreen = new BosstestScreen(this, assets);
         //notreScreen = new MainTirDeBalleScreen(this, assets);
-        notreScreen = new MainKamikazeScreen(this, assets);
-        this.setScreen(new GameScreen(this, assets));
+        this.setScreen(new MainMenuScreen(this, assets));
         //notreScreen = new MainTirDeBalleScreen(this, assets);
         //this.setScreen(notreScreen);
 
