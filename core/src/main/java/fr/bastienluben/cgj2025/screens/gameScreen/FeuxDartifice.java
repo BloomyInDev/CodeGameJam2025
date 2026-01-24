@@ -91,6 +91,7 @@ public class FeuxDartifice implements ISpriteDrawable
                     bet[i].y - 2 + Main.camera.x,
                     4, 4);
             }
+            batch.setColor(Color.WHITE);
         }
     }
 }
