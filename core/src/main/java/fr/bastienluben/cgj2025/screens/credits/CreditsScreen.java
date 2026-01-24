@@ -41,7 +41,7 @@ public class CreditsScreen extends AbstractScreen
     @Override
     public void start()
     {
-        credits = new Text("Bastinou L\nClement ?\nQuentin ?\nLeo M\nOmar ?\nRomain ?\nRomain T");
+        credits = new Text("Bastinou L\nClement ?\nQuentin N\nLeo M\nOmar Q\nRomain ?\nRomain T");
         credits.setPosition(Bounds.Center);
         credits.posOffset.y -= 16;
         rnd = new Random();

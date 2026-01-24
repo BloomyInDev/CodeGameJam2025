@@ -36,7 +36,7 @@ public class HighScoreText implements IScript {
         // Position AFTER all properties are set
         highScoreText.setPosition(Bounds.TopRight);
 
-        testText = new Text("123456789");
+        testText = new Text("C# better que java");
         testText.setMargin(10);
         // Position AFTER all properties are set
         testText.setPosition(Bounds.Bottom);

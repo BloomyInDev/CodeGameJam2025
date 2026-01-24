@@ -42,10 +42,10 @@ public class MenuButtons implements IScript {
     @Override
     public void start() {
         BitmapFont smallFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setSize(20).build());
-        BitmapFont titleFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setSize(60).build());
+        BitmapFont titleFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setSize(40).build());
 
 
-        titleText = new Text("CGJ2025");
+        titleText = new Text("Le Carnaval de Makoto");
         titleText.setPosition(Bounds.Top);
         titleText.setFont(titleFont);
         titleText.setMargin(150);
