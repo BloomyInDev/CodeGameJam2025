@@ -1,6 +1,5 @@
 package fr.bastienluben.cgj2025.screens.main;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,17 +19,12 @@ import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontParameterBuilder;
 import fr.bastienluben.cgj2025.screens.AbstractGameScreen;
-import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartificeManager;
 
 public class MainKamikazeScreen extends AbstractGameScreen {
     private Texture bombeTexture;
     private BitmapFont font, redFont, orangeFont;
     private Kamikaze kamikaze;
-    private List<Bombe> bombes;
-    private float screenWidth;
-    private float screenHeight;
-    private int nbBombes;
     private float probabiliteApparitionBombe;
 
     private FeuxDartificeManager feux;
@@ -43,9 +37,6 @@ public class MainKamikazeScreen extends AbstractGameScreen {
         orangeFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setColor(Color.ORANGE).build());
         kamikaze = new Kamikaze(Hero.getInstance(), nbBombes, nbBombesAvantFin);
         this.probabiliteApparitionBombe = probabiliteApparitionBombe;
-        bombes = new ArrayList<>();
-        screenWidth = Gdx.graphics.getWidth();
-        screenHeight = Gdx.graphics.getHeight();
         feux = new FeuxDartificeManager(1f);
     }
 
@@ -60,16 +51,12 @@ public class MainKamikazeScreen extends AbstractGameScreen {
 
     @Override
     public void update(float delta) {
-        // Logique de jeu
-        if (MathUtils.randomBoolean(probabiliteApparitionBombe)) {
-            int x = MathUtils.random(0, (int) screenWidth - 50);
-            int y = MathUtils.random(150, (int) screenHeight - 50);
-            Bombe bombe = new Bombe(60, x, y, 0);
-            kamikaze.augmenterNbBombesCrees();
-            System.out.printf("Il y a %d / %d bombes crées\n", kamikaze.getNbBombesCrees(), kamikaze.getLimiteNbBombesSpawnees());
-            bombes.add(bombe);
+        // Logique de jeu - spawn de bombes via Kamikaze
+        if (MathUtils.randomBoolean(probabiliteApparitionBombe) && kamikaze.peutSpawnerBombe()) {
+            kamikaze.spawnBombe(60);
         }
 
+        List<Bombe> bombes = kamikaze.getBombes();
         Iterator<Bombe> iterator = bombes.iterator();
         while (iterator.hasNext()) {
             Bombe bombe = iterator.next();
@@ -104,10 +91,8 @@ public class MainKamikazeScreen extends AbstractGameScreen {
     public void draw(SpriteBatch batch) {
         feux.draw(batch);
 
-        // Mettre à jour les bombes
-        Iterator<Bombe> iterator = bombes.iterator();
-        while (iterator.hasNext()) {
-            Bombe bombe = iterator.next();
+        // Dessiner les bombes
+        for (Bombe bombe : kamikaze.getBombes()) {
             if (!(bombe.isEstClique() || bombe.getTimer() <= 0)) {
                 // Dessiner la bombe
                 batch.draw(bombeTexture,
@@ -123,7 +108,6 @@ public class MainKamikazeScreen extends AbstractGameScreen {
                 }
             }
         }
-
 
     }
 
