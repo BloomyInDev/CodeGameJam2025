@@ -48,7 +48,7 @@ public class CreditsScreen extends AbstractScreen
             game.getSoundManager().play("fondMusicalJeu");
         }, assets.getTexture("retour.png"), 252, 103);
 
-        credits = new Image(360, 560, assets.getTexture("creditsName.png"));
+        credits = new Image(360, 560, assets.getTexture("creditsNames.png"));
         credits.setPosition(Bounds.Center);
         credits.posOffset.y += 32;
         feux = new FeuxDartificeManager(2f, assets);
