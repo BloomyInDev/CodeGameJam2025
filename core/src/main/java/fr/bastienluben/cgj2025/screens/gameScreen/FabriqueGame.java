@@ -43,7 +43,7 @@ public class FabriqueGame {
 
     public AbstractGameScreen fabriqueNiveauAleatoire(int niveau, boolean appelerStart) {
         List<CustomCallable<AbstractGameScreen>> fabriques = Arrays.asList(
-            //() -> fabriqueNiveauKamikaze(niveau),
+            () -> fabriqueNiveauKamikaze(niveau),
             () -> fabriqueNiveauTirDeBalle(niveau)
         );
         AbstractGameScreen screen = fabriques.get(new Random().nextInt(fabriques.size())).call();
