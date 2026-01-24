@@ -37,7 +37,7 @@ public class MainKamikazeScreen extends AbstractGameScreen {
         orangeFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setColor(Color.ORANGE).build());
         kamikaze = new Kamikaze(Hero.getInstance(), nbBombes, nbBombesAvantFin);
         this.probabiliteApparitionBombe = probabiliteApparitionBombe;
-        feux = new FeuxDartificeManager(1f);
+        feux = new FeuxDartificeManager(1f, assets);
     }
 
     public MainKamikazeScreen(Main game, AssetManager assets) {

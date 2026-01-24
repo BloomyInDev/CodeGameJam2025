@@ -51,6 +51,7 @@ public class CreditsScreen extends AbstractScreen
         credits = new Image(360, 560, assets.getTexture("creditsName.png"));
         credits.setPosition(Bounds.Center);
         credits.posOffset.y += 32;
+        feux = new FeuxDartificeManager(2f, assets);
     }
 
     @Override
@@ -61,7 +62,6 @@ public class CreditsScreen extends AbstractScreen
 
         retour.setPosition(Bounds.Bottom);
         retour.setMargin(0, 16);
-        feux = new FeuxDartificeManager(2f);
 
         timer = new Chrono(() ->
         {

@@ -42,6 +42,8 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
         this.heroTexture = new Texture(Gdx.files.internal("hero.png"));
         sang = new Color(0.5f, 0, 0, 1f);
         this.maxBallesMortes = maxBallesMortes;
+        // sang
+        feux = new FeuxDartificeManager(12f, assets);
     }
 
     public MainTirDeBalleScreen(Main game, AssetManager assets) {
@@ -55,9 +57,6 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
         // Créer l'attaque TirDeBalle : cible, délai 1s, rayon 60, 1 dégât par balle
         // Chaque balle est l'attaquant
         this.tirDeBalle = new TirDeBalle( vitesseMin, vitesseMax, maxBallesMortes);
-
-        // sang
-        feux = new FeuxDartificeManager(12f);
     }
 
     @Override

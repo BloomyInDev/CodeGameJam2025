@@ -16,14 +16,14 @@ public class FeuxDartificeManager implements IScript
     private Random rnd;
     int currentIdex;
 
-    public FeuxDartificeManager(float fadeTime)
+    public FeuxDartificeManager(float fadeTime, AssetManager assets)
     {
         feux = new FeuxDartifice[maxfeux];
         rnd = new Random();
         currentIdex = 0;
         for (int i = 0; i < maxfeux; i++)
         {
-            feux[i] = new FeuxDartifice(rnd, fadeTime);
+            feux[i] = new FeuxDartifice(rnd, fadeTime, assets.getTexture("dot.png"));
         }
     }
 
