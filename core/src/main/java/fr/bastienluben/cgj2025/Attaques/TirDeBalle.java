@@ -25,12 +25,13 @@ public class TirDeBalle extends Attaque {
     private boolean estTermine;
     private float vitesseMin;
     private float vitesseMax;
+    private int maxBallesMortes;
 
     /**
      * Constructeur pour la gestion des projectiles avec cible.
      * Les balles elles-mêmes sont les attaquants.
      */
-    public TirDeBalle(float vitesseMin, float vitesseMax) {
+    public TirDeBalle(float vitesseMin, float vitesseMax, int maxBallesMortes) {
         super(10, "Tir de balle", 10, 4);
         this.balles = new ArrayList<>();
         this.random = new Random();
@@ -38,6 +39,7 @@ public class TirDeBalle extends Attaque {
         this.cible = Hero.getInstance();
         this.vitesseMin = vitesseMin;
         this.vitesseMax = vitesseMax;
+        this.maxBallesMortes = maxBallesMortes;
     }
 
     // === Méthode héritée de Attaque ===
@@ -101,7 +103,7 @@ public class TirDeBalle extends Attaque {
 
         // Créer une nouvelle balle si le délai est écoulé
         if (tempsDepuisDerniereBalle >= TirDeBalle.delaiEntreBalles) {
-            if (compteurBallesMortes < 20) {
+            if (compteurBallesMortes < maxBallesMortes) {
                 ajouterBalle();
             } else if (!stopProduction) {
                 ajouterBalleBoss();
@@ -137,7 +139,13 @@ public class TirDeBalle extends Attaque {
     }
 
     private void ajouterBalleBoss() {
-        float x = random.nextFloat() * Gdx.graphics.getWidth();
+        float x;
+        if (random.nextInt(0, 2) == 0) {
+            x = 0.1f;
+        } else {
+            x = 1f;
+        }
+        x *= Gdx.graphics.getWidth();
         float y = Gdx.graphics.getHeight();
         balles.add(new BalleBoss(x, y, cible.getPosition()));
     }
