@@ -125,6 +125,12 @@ public class SoundManager {
         }
     }
 
+    public void effectuerEffetSonore(String nomFichier) {
+        Music punch = Gdx.audio.newMusic(Gdx.files.internal("soundEffects/" + nomFichier + ".mp3"));
+        punch.setVolume(.2f);
+        punch.play();
+    }
+
     public SoundManager getSoundManager() {
         return this;
     }
