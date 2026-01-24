@@ -35,8 +35,10 @@ public class FabriqueGame {
         System.out.println("Fabrication TirDeBalle");
         float vitesseMin = 200f + niveau * 10f;
         float vitesseMax = 500f + niveau * 50f;
+
+        int maxBallesMortes = niveau * 5;
         System.out.printf("Vitesses : %f - %f\n", vitesseMin, vitesseMax);
-        return new MainTirDeBalleScreen(game, assets, vitesseMin, vitesseMax);
+        return new MainTirDeBalleScreen(game, assets, vitesseMin, vitesseMax, maxBallesMortes);
     }
 
     public AbstractGameScreen fabriqueNiveauAleatoire(int niveau, boolean appelerStart) {
