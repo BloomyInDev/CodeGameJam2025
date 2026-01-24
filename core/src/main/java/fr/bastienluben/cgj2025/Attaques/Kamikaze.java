@@ -8,19 +8,19 @@ import fr.bastienluben.cgj2025.Entite.Bombe;
 import fr.bastienluben.cgj2025.Entite.Entite;
 import fr.bastienluben.cgj2025.Entite.Personnage;
 
-public class kamikaze extends Attaque {
+public class Kamikaze extends Attaque {
     private List<Bombe> bombes;
     private Random random;
     private int nbBombes;
 
-    public kamikaze(Entite attaquant, int nbBombes) {
+    public Kamikaze(Entite attaquant, int nbBombes) {
         super(1, "kamikaze", 10, 10);
         bombes = new ArrayList<>();
         random = new Random();
         this.nbBombes = nbBombes;
     }
 
-    public kamikaze(Entite attaquant) {
+    public Kamikaze(Entite attaquant) {
         this(attaquant, 8);
     }
 

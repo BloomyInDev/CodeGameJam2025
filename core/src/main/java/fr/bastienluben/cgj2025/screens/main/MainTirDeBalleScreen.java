@@ -18,13 +18,19 @@ import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import java.util.Random;
 
 public class MainTirDeBalleScreen extends AbstractScreen {
-    private ShapeRenderer shapeRenderer;
     private Hero hero;
     private TirDeBalle tirDeBalle;
+    private float vitesseMin;
+    private float vitesseMax;
+
+    public MainTirDeBalleScreen(Main game, AssetManager assets, float vitesseMin, float vitesseMax) {
+        super(game, assets);
+        this.vitesseMin = vitesseMin;
+        this.vitesseMax = vitesseMax;
+    }
 
     public MainTirDeBalleScreen(Main game, AssetManager assets) {
-        super(game, assets);
-        this.shapeRenderer = new ShapeRenderer();
+        this(game, assets, 200f, 700f);
     }
 
     @Override
@@ -33,7 +39,7 @@ public class MainTirDeBalleScreen extends AbstractScreen {
 
         // Créer l'attaque TirDeBalle : cible, délai 1s, rayon 60, 1 dégât par balle
         // Chaque balle est l'attaquant
-        this.tirDeBalle = new TirDeBalle( 200f, 700f);
+        this.tirDeBalle = new TirDeBalle( vitesseMin, vitesseMax);
     }
 
     @Override
@@ -52,16 +58,8 @@ public class MainTirDeBalleScreen extends AbstractScreen {
 
     @Override
     public void draw(SpriteBatch batch) {
-        // Dessiner le héros (carré blanc) avec ShapeRenderer
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(1, 1, 1, 1); // Blanc
-        float heroX = hero.getPosition().x - hero.getTaille() / 2;
-        float heroY = hero.getPosition().y - hero.getTaille() / 2;
-        shapeRenderer.rect(heroX, heroY, hero.getTaille(), hero.getTaille());
-        shapeRenderer.end();
-
         // Dessiner les ennemis (images enerve.png) avec SpriteBatch
-        batch.begin();
+
         for (Balle balle : tirDeBalle.getBalles()) {
             float rayon = balle.getHitbox().radius;
             float taille = rayon * ((float)1.3); // Diamètre
@@ -69,14 +67,21 @@ public class MainTirDeBalleScreen extends AbstractScreen {
             float y = balle.getPosition().y - rayon;
             batch.draw(balle.getTexture(), x, y, taille, taille);
         }
+
+    }
+
+    @Override
+    public void draw(ShapeRenderer batch) {
+        batch.begin(ShapeRenderer.ShapeType.Filled);
+        batch.setColor(1, 1, 1, 1); // Blanc
+        float heroX = hero.getPosition().x - hero.getTaille() / 2;
+        float heroY = hero.getPosition().y - hero.getTaille() / 2;
+        batch.rect(heroX, heroY, hero.getTaille(), hero.getTaille());
         batch.end();
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        if (shapeRenderer != null) {
-            shapeRenderer.dispose();
-        }
     }
 }

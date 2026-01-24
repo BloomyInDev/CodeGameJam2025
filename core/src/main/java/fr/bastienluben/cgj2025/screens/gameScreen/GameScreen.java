@@ -3,17 +3,24 @@ package fr.bastienluben.cgj2025.screens.gameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.Chrono;
+import fr.bastienluben.cgj2025.lib.ui.Image;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 
 public class GameScreen extends AbstractScreen {
+    private int level = 1;
+    private FabriqueGame fabrique;
+    private AbstractScreen currentScreen;
+    private Image background;
 
     public GameScreen(Main game, AssetManager assets) {
         super(game, assets);
+        fabrique = new FabriqueGame(game, assets);
     }
 
     Chrono test;
@@ -24,32 +31,21 @@ public class GameScreen extends AbstractScreen {
     public void onLoad(AssetManager assets)
     {
         vie = new BarreDeVieHero(assets);
+        background = new Image(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), assets.getTexture("background.png"));
     }
 
     @Override
     public void start()
     {
-        test = new Chrono(() ->
-        {
-            Hero.getInstance().getVie().retirerStat(10);
-        }, 1f);
-
-        feux = new FeuxDartificeManager(16);
+        currentScreen = fabrique.fabriqueNiveauAleatoire(level, true);
     }
 
     @Override
     public void update(float delta)
     {
         vie.update(delta);
-        test.update(delta);
-        feux.update(delta);
-        if (Gdx.input.isTouched())
-        {
-            feux.createExplosionAt(
-                new Vector2(
-                Gdx.input.getX(),
-                Gdx.graphics.getHeight() - Gdx.input.getY()
-                ), 2f, Color.RED);
+        if (currentScreen != null) {
+            currentScreen.update(delta);
         }
     }
 
@@ -57,8 +53,18 @@ public class GameScreen extends AbstractScreen {
     public void draw(SpriteBatch batch)
     {
         batch.begin();
+        background.draw(batch);
+        if (currentScreen != null) {
+            currentScreen.draw(batch);
+        }
         vie.draw(batch);
-        feux.draw(batch);
         batch.end();
+    }
+
+    @Override
+    public void draw(ShapeRenderer batch) {
+        if (currentScreen != null) {
+            currentScreen.draw(batch);
+        }
     }
 }
