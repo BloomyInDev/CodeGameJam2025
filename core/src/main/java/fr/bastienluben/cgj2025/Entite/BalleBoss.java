@@ -8,7 +8,7 @@ public class BalleBoss extends Balle
 {
     public BalleBoss(float x, float y, Vector2 cible)
     {
-        super(x, y, 200f, cible, 60, "boss");
+        super(x, y, 200f, cible, 50, "boss");
         setVitesse(45f);
 
         setTexture(new Texture(Gdx.files.internal("enerve.png")));
