@@ -1,6 +1,7 @@
 package fr.bastienluben.cgj2025.screens.gameScreen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -12,12 +13,15 @@ import fr.bastienluben.cgj2025.lib.Chrono;
 import fr.bastienluben.cgj2025.lib.config.ConfigLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontParameterBuilder;
+import fr.bastienluben.cgj2025.lib.son.SoundManager;
 import fr.bastienluben.cgj2025.lib.ui.Bounds;
 import fr.bastienluben.cgj2025.lib.ui.Image;
 import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.screens.AbstractGameScreen;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
+
+import java.util.List;
 
 public class GameScreen extends AbstractScreen {
     Chrono test;
@@ -33,6 +37,9 @@ public class GameScreen extends AbstractScreen {
     private float timerTransition = 0f;
     private boolean gameOver = false;
     private Text textDeFin;
+
+    private List<Music> annonceEtape = null;
+    private boolean aLuAnnonceEtape = false;
 
     public GameScreen(Main game, AssetManager assets) {
         super(game, assets);
@@ -86,11 +93,23 @@ public class GameScreen extends AbstractScreen {
                 }
             }
         } else {
-            timerTransition += delta;
-            if (timerTransition >= 5f) {
-                enTransition = false;
-                timerTransition = 0f;
+            if (annonceEtape == null) {
+                if (aLuAnnonceEtape) {
+                    game.getSoundManager().augmenterLeVolumeTemporairement();
+                    enTransition = false;
+                    start();
+                } else {
+                    SoundManager sm = this.game.getSoundManager();
+                    annonceEtape = sm.chargerSonsPourNiveau(level);
+                    sm.reduireLeVolumeTemporairement();
+                    aLuAnnonceEtape = sm.ecouterSonSuivantQuandLaMusiqueEstTerminee(annonceEtape);
+                    if (annonceEtape == null) {
+                        aLuAnnonceEtape = true;
+                    }
+                }
             }
+            timerTransition += delta;
+
         }
     }
 
