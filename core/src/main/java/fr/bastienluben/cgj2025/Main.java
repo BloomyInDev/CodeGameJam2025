@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -28,7 +29,6 @@ public class Main extends Game {
     private static Random rand = new Random();
     private static float shakeTimer, shakeTime;
     private static int shakeAmount;
-    private static SoundManager soundManager;
     public static void resetCamera()
     {
         camera.x = 0;
@@ -61,6 +61,7 @@ public class Main extends Game {
     private FontLoader fonts;
     private FitViewport viewport;
     private AssetManager assets;
+    private SoundManager soundManager;
 
     private AbstractScreen notreScreen;
 
@@ -128,8 +129,7 @@ public class Main extends Game {
         return assets;
     }
 
-    public static SoundManager getSoundManager() {
+    public SoundManager getSoundManager() {
         return soundManager;
     }
-
 }

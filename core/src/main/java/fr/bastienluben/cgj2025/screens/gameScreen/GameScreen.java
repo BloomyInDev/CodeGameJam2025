@@ -3,6 +3,7 @@ package fr.bastienluben.cgj2025.screens.gameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -32,6 +33,7 @@ public class GameScreen extends AbstractScreen {
     private AbstractGameScreen currentScreen;
     private Image background;
     private Text levelText;
+    private BitmapFont inGameFont, inWaitFont;
     private boolean enTransition = false;
     private boolean aDejaRegenLeNiveau = false;
     private float timerTransition = 0f;
@@ -49,6 +51,8 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void onLoad(AssetManager assets) {
         vie = new BarreDeVieHero(assets);
+        inGameFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().build());
+        inWaitFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setSize(40).build());
         background = new Image(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), assets.getTexture("background.png"));
     }
 
@@ -78,12 +82,14 @@ public class GameScreen extends AbstractScreen {
                 this.game.setScreen(new MainMenuScreen(this.game, this.game.getAssets()));
             }
         } else if (!enTransition) {
+            setInLevelText();
             vie.update(delta);
             if (currentScreen != null) {
                 currentScreen.update(delta);
                 if (currentScreen.estTerminee()) {
                     level++;
                     enTransition = true;
+                    timerTransition = 0f;
                     currentScreen.update(delta);
                     start();
                 }
@@ -93,23 +99,12 @@ public class GameScreen extends AbstractScreen {
                 }
             }
         } else {
-            if (annonceEtape == null) {
-                if (aLuAnnonceEtape) {
-                    game.getSoundManager().augmenterLeVolumeTemporairement();
-                    enTransition = false;
-                    start();
-                } else {
-                    SoundManager sm = this.game.getSoundManager();
-                    annonceEtape = sm.chargerSonsPourNiveau(level);
-                    sm.reduireLeVolumeTemporairement();
-                    aLuAnnonceEtape = sm.ecouterSonSuivantQuandLaMusiqueEstTerminee(annonceEtape);
-                    if (annonceEtape == null) {
-                        aLuAnnonceEtape = true;
-                    }
-                }
+            setInWaitText();
+            if (timerTransition >= 3f) {
+                enTransition = false;
             }
+            System.out.println(timerTransition);
             timerTransition += delta;
-
         }
     }
 
@@ -127,6 +122,16 @@ public class GameScreen extends AbstractScreen {
             vie.draw(batch);
         }
         batch.end();
+    }
+
+    private void setInLevelText() {
+        levelText.setFont(inGameFont);
+        levelText.setPosition(Bounds.Top);
+    }
+
+    private void setInWaitText() {
+        levelText.setFont(inWaitFont);
+        levelText.setPosition(Bounds.Center);
     }
 
     @Override
