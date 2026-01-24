@@ -26,7 +26,7 @@ public class CreditsScreen extends AbstractScreen
         super(game, assets);
     }
 
-    Text credits;
+    Image credits;
     Button retour;
     FeuxDartificeManager feux;
     Chrono timer;
@@ -36,28 +36,31 @@ public class CreditsScreen extends AbstractScreen
     @Override
     public void onLoad(AssetManager assets)
     {
-        morganaaaaaaa = new Image(138, 198,
-            assets.getTexture("morgana.png"));
+        morganaaaaaaa = new Image(138, 138,
+            assets.getTexture("enerve1.png"));
         morganaaaaaaa.setMargin(0, 0, 32, 0);
         morganaaaaaaa.setPosition(Bounds.BottomLeft);
+
+        retour = new Button(() ->
+        {
+            Button.disoseAllButtons();
+            this.getGame().setScreen(new MainMenuScreen(getGame(), getGame().getAssets()));
+            game.getSoundManager().play("fondMusicalJeu");
+        }, assets.getTexture("retour.png"), 252, 103);
+
+        credits = new Image(360, 560, assets.getTexture("creditsName.png"));
+        credits.setPosition(Bounds.Center);
+        credits.posOffset.y += 32;
     }
 
     @Override
     public void start()
     {
         game.getSoundManager().play("credit");
-        credits = new Text("Bastinou L\nClement ?\nQuentin N\nLeo M\nOmar Q\nRomain ?\nRomain T");
-        credits.setPosition(Bounds.Center);
-        credits.posOffset.y -= 16;
         rnd = new Random();
-        retour = new Button(() ->
-        {
-            Button.disoseAllButtons();
-            this.getGame().setScreen(new MainMenuScreen(getGame(), getGame().getAssets()));
-            game.getSoundManager().play("fondMusicalJeu");
-        }, 256, 64, Color.BLUE, "retour");
+
         retour.setPosition(Bounds.Bottom);
-        retour.setMargin(0, 128);
+        retour.setMargin(0, 16);
         feux = new FeuxDartificeManager(2f);
 
         timer = new Chrono(() ->

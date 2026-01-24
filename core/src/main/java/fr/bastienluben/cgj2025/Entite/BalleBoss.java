@@ -11,7 +11,7 @@ public class BalleBoss extends Balle
         super(x, y, 200f, cible, 50, "boss");
         setVitesse(45f);
 
-        setTexture(new Texture(Gdx.files.internal("enerve.png")));
+        setTexture(new Texture(Gdx.files.internal("boss.png")));
 
         setTypeMouvement(new MouvementLineaire());
     }

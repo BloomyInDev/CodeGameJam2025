@@ -15,7 +15,7 @@ public class UI implements ISpriteDrawable
     }
     private static UI Screen;
 
-    protected static Vector2[] outlinePos = new Vector2[]
+    public static Vector2[] outlinePos = new Vector2[]
     {
         new Vector2(-2, -2),
         new Vector2(0, -2),

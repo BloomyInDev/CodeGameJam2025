@@ -25,7 +25,8 @@ public class HighScoreText implements IScript {
 
     @Override
     public void start() {
-        BitmapFont smallFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setSize(10).build());
+        BitmapFont smallFont = FontLoader.getInstance().getFont("default",
+            new FontParameterBuilder().setSize(10).build());
 
         highScore = ConfigLoader.getInstance().getConfig().getBestScore();
 

@@ -100,7 +100,7 @@ public class Main extends Game {
     }
 
     public void render() {
-        ScreenUtils.clear(0.1f, 0f, 0f, 0f);  // faut clear avant bande de batard
+        ScreenUtils.clear(0f, 0f, 0f, 0f);  // faut clear avant bande de batard
 
         // ça appelle le draw du screen
         super.render(); // important ?!?!?!
