@@ -1,7 +1,9 @@
 package fr.bastienluben.cgj2025.screens.gameScreen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -12,12 +14,15 @@ import fr.bastienluben.cgj2025.lib.Chrono;
 import fr.bastienluben.cgj2025.lib.config.ConfigLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontParameterBuilder;
+import fr.bastienluben.cgj2025.lib.son.SoundManager;
 import fr.bastienluben.cgj2025.lib.ui.Bounds;
 import fr.bastienluben.cgj2025.lib.ui.Image;
 import fr.bastienluben.cgj2025.lib.ui.Text;
 import fr.bastienluben.cgj2025.screens.AbstractGameScreen;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
+
+import java.util.List;
 
 public class GameScreen extends AbstractScreen {
     Chrono test;
@@ -28,10 +33,15 @@ public class GameScreen extends AbstractScreen {
     private AbstractGameScreen currentScreen;
     private Image background;
     private Text levelText;
+    private BitmapFont inGameFont, inWaitFont;
     private boolean enTransition = false;
+    private boolean aDejaRegenLeNiveau = false;
     private float timerTransition = 0f;
     private boolean gameOver = false;
     private Text textDeFin;
+
+    private List<Music> annonceEtape = null;
+    private boolean aLuAnnonceEtape = false;
 
     public GameScreen(Main game, AssetManager assets) {
         super(game, assets);
@@ -41,7 +51,9 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void onLoad(AssetManager assets) {
         vie = new BarreDeVieHero(assets);
-        background = new Image(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), assets.getTexture("background.png"));
+        inGameFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().build());
+        inWaitFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setSize(40).build());
+        background = new Image(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), assets.getTexture("bgCombat.png"));
     }
 
     @Override
@@ -70,12 +82,15 @@ public class GameScreen extends AbstractScreen {
                 this.game.setScreen(new MainMenuScreen(this.game, this.game.getAssets()));
             }
         } else if (!enTransition) {
+            setInLevelText();
             vie.update(delta);
             if (currentScreen != null) {
                 currentScreen.update(delta);
                 if (currentScreen.estTerminee()) {
                     level++;
                     enTransition = true;
+                    timerTransition = 0f;
+                    currentScreen.update(delta);
                     start();
                 }
                 if (Hero.getInstance().getPointDeVie() <= 0) {
@@ -84,21 +99,24 @@ public class GameScreen extends AbstractScreen {
                 }
             }
         } else {
-            timerTransition += delta;
-            if (timerTransition >= 5f) {
+            setInWaitText();
+            if (timerTransition >= 3f) {
                 enTransition = false;
-                timerTransition = 0f;
             }
+            System.out.println(timerTransition);
+            timerTransition += delta;
         }
     }
 
     @Override
     public void draw(SpriteBatch batch) {
         batch.begin();
+        batch.setColor(Color.WHITE);
         background.draw(batch);
         if (currentScreen != null) {
             currentScreen.draw(batch);
         }
+        batch.setColor(Color.WHITE);
         levelText.draw(batch);
         if (gameOver) {
             textDeFin.draw(batch);
@@ -106,6 +124,16 @@ public class GameScreen extends AbstractScreen {
             vie.draw(batch);
         }
         batch.end();
+    }
+
+    private void setInLevelText() {
+        levelText.setFont(inGameFont);
+        levelText.setPosition(Bounds.Top);
+    }
+
+    private void setInWaitText() {
+        levelText.setFont(inWaitFont);
+        levelText.setPosition(Bounds.Center);
     }
 
     @Override

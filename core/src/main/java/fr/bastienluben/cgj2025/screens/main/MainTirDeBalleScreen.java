@@ -27,20 +27,27 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
     private float vitesseMin;
     private float vitesseMax;
 
+    private int maxBallesMortes;
+
     private FeuxDartificeManager feux;
+    private Texture heroTexture;
 
     private final Color sang;
 
 
-    public MainTirDeBalleScreen(Main game, AssetManager assets, float vitesseMin, float vitesseMax) {
+    public MainTirDeBalleScreen(Main game, AssetManager assets, float vitesseMin, float vitesseMax, int maxBallesMortes) {
         super(game, assets);
         this.vitesseMin = vitesseMin;
         this.vitesseMax = vitesseMax;
+        this.heroTexture = new Texture(Gdx.files.internal("hero.png"));
         sang = new Color(0.5f, 0, 0, 1f);
+        this.maxBallesMortes = maxBallesMortes;
+        // sang
+        feux = new FeuxDartificeManager(12f, assets);
     }
 
     public MainTirDeBalleScreen(Main game, AssetManager assets) {
-        this(game, assets, 200f, 700f);
+        this(game, assets, 200f, 700f, 5);
     }
 
     @Override
@@ -49,10 +56,7 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
 
         // Créer l'attaque TirDeBalle : cible, délai 1s, rayon 60, 1 dégât par balle
         // Chaque balle est l'attaquant
-        this.tirDeBalle = new TirDeBalle( vitesseMin, vitesseMax);
-
-        // sang
-        feux = new FeuxDartificeManager(12f);
+        this.tirDeBalle = new TirDeBalle( vitesseMin, vitesseMax, maxBallesMortes);
     }
 
     @Override
@@ -65,11 +69,10 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
         if (Gdx.input.justTouched()) {
             Vector2 clickPosition = new Vector2(Gdx.input.getX(), Gdx.input.getY());
             clickPosition = UI.normalToGdx(clickPosition);
-            if (tirDeBalle.gererClic(clickPosition.x, clickPosition.y))
-            {
+            if (tirDeBalle.gererClic(clickPosition.x, clickPosition.y)) {
                 // on kill
                 feux.createExplosionAt(clickPosition, 2f, sang);
-                this.getGame().shake(0.05f, 4);
+                this.getGame().shake(0.08f, 6);
             }
         }
 
@@ -80,30 +83,50 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
 
     @Override
     public void draw(SpriteBatch batch) {
+        // Dessiner le héros avec la texture hero.png
+        float heroX = hero.getPosition().x - hero.getTaille() / 2 + Main.camera.x;
+        float heroY = hero.getPosition().y - hero.getTaille() / 2 + Main.camera.y;
+        batch.draw(heroTexture, heroX, heroY, hero.getTaille(), hero.getTaille());
+
         feux.draw(batch);
         for (Balle balle : tirDeBalle.getBalles()) {
             float rayon = balle.getHitbox().radius;
             float taille = rayon * 1.3f; // Diamètre
             float x = balle.getPosition().x - rayon + getGame().camera.x;
             float y = balle.getPosition().y - rayon + getGame().camera.y;
-            batch.draw(balle.getTexture(), x, y, taille, taille);
+            if (balle.isBoss)
+            {
+                batch.draw(balle.getTexture(),
+                    x + (balle.rotation / 2),
+                    y + (balle.rotation / 2),
+                    taille - balle.rotation,
+                    taille - balle.rotation);
+            }
+            else
+            {
+                batch.draw(balle.getTexture(), x, y, taille * 1.75f, taille);
+            }
+            batch.setColor(Color.WHITE);
         }
 
     }
 
     @Override
     public void draw(ShapeRenderer batch) {
-        batch.begin(ShapeRenderer.ShapeType.Filled);
+        /**batch.begin(ShapeRenderer.ShapeType.Filled);
         batch.setColor(1, 1, 1, 1); // Blanc
         float heroX = hero.getPosition().x - hero.getTaille() / 2;
         float heroY = hero.getPosition().y - hero.getTaille() / 2;
         batch.rect(heroX, heroY, hero.getTaille(), hero.getTaille());
-        batch.end();
+        batch.end();*/
     }
 
     @Override
     public void dispose() {
         super.dispose();
+        if (heroTexture != null) {
+            heroTexture.dispose();
+        }
     }
 
     @Override

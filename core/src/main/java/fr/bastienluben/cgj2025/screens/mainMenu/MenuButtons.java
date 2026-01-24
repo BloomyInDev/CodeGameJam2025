@@ -5,13 +5,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.IScript;
+import fr.bastienluben.cgj2025.lib.Lerps;
 import fr.bastienluben.cgj2025.lib.fonts.FontLoader;
 import fr.bastienluben.cgj2025.lib.fonts.FontParameterBuilder;
-import fr.bastienluben.cgj2025.lib.ui.Bounds;
-import fr.bastienluben.cgj2025.lib.ui.Button;
-import fr.bastienluben.cgj2025.lib.ui.Text;
+import fr.bastienluben.cgj2025.lib.ui.*;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
 import fr.bastienluben.cgj2025.screens.credits.CreditsScreen;
 import fr.bastienluben.cgj2025.screens.gameScreen.GameScreen;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 public class MenuButtons implements IScript {
     private AbstractScreen screen;
 
-    private Text titleText;
+    private Image titleText;
     private Button startGameButton;
     private Button exitButton;
     private Button credits;
@@ -55,6 +55,9 @@ public class MenuButtons implements IScript {
         }, manager.getTexture("credits.png"), 252, 103);
         credits.setMargin(0, 200);
         credits.setPosition(Bounds.Bottom);
+
+        titleText = new Image(1000, 200, manager.getTexture("titre.png"));
+        titleText.setPosition(Bounds.Top);
     }
 
     @Override
@@ -62,20 +65,29 @@ public class MenuButtons implements IScript {
         BitmapFont smallFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setSize(20).build());
         BitmapFont titleFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setSize(40).build());
 
-
-        titleText = new Text("Le Carnaval de Makoto");
-        titleText.setPosition(Bounds.Top);
-        titleText.setFont(titleFont);
-        titleText.setMargin(150);
+        timer = 0f;
     }
+
+    private float timer;
 
     @Override
     public void update(float delta) {
-
+        titleText.setMargin((int)Math.round(Lerps.BounceOut(-60, 60, timer, false)));
+        timer += delta;
     }
 
     @Override
     public void draw(SpriteBatch batch) {
+        titleText.setColor(Color.BLACK);
+        for (Vector2 po : UI.outlinePos)
+        {
+            titleText.posOffset.x = po.x * 2;
+            titleText.posOffset.y = po.y * 2;
+            titleText.draw(batch);
+        }
+        batch.setColor(Color.WHITE);
+        titleText.setColor(Color.WHITE);
+        titleText.posOffset = new Vector2(0, 0);
         Arrays.asList(titleText, startGameButton, exitButton, credits).forEach(e -> e.draw(batch));
 
     }

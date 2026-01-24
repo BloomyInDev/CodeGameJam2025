@@ -1,6 +1,7 @@
 package fr.bastienluben.cgj2025.screens.gameScreen;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import fr.bastienluben.cgj2025.Main;
@@ -12,7 +13,7 @@ import java.util.Random;
 
 public class FeuxDartifice implements ISpriteDrawable
 {
-    private static final int lumCount = 24;
+    private static final int lumCount = 32;
     private Vector2 pos;
     private Vector2[] lums;
     private Vector2[] bet;
@@ -21,10 +22,13 @@ public class FeuxDartifice implements ISpriteDrawable
     private final Random rnd;
     private float timer;
     final float ft;
+    private final Texture tex;
+    private float size;
 
-    public FeuxDartifice(Random rnd, float ft)
+    public FeuxDartifice(Random rnd, float ft, Texture tex)
     {
         this.ft = ft;
+        this.tex = tex;
         alive = false;
         this.rnd = rnd;
         lums = new Vector2[lumCount];
@@ -53,6 +57,7 @@ public class FeuxDartifice implements ISpriteDrawable
         timer = 0f;
         alive = true;
         this.color = c;
+        size = 8f;
     }
 
     public void update(float dt)
@@ -62,16 +67,18 @@ public class FeuxDartifice implements ISpriteDrawable
             alive = false;
         }
 
-        color.a = 1f - timer;
+        color.a = Lerps.EaseIn(1f, 0f, timer);
+
+        size = Lerps.EaseIn(6f, 0f, timer);
 
         if (alive)
         {
             for (int i = 0; i < lumCount; i++)
             {
                 bet[i].x = Lerps.CubeOut(lums[i].x, targs[i].x,
-                    ft > 10 ? timer : timer / 6, (byte)64);
+                    ft > 10 ? timer : timer / 6, (byte)48);
                 bet[i].y = Lerps.CubeOut(lums[i].y, targs[i].y,
-                    ft > 10 ? timer : timer / 6, (byte)64);
+                    ft > 10 ? timer : timer / 6, (byte)48);
             }
         }
         timer += dt / ft;
@@ -86,11 +93,12 @@ public class FeuxDartifice implements ISpriteDrawable
             batch.setColor(color);
             for (int i = 0; i < lumCount; i++)
             {
-                batch.draw(Image.getDefaultTexture(),
-                    bet[i].x - 2 + Main.camera.x,
-                    bet[i].y - 2 + Main.camera.x,
-                    4, 4);
+                batch.draw(tex,
+                    bet[i].x - size + Main.camera.x,
+                    bet[i].y - size + Main.camera.x,
+                    size * 2, size * 2);
             }
+            batch.setColor(Color.WHITE);
         }
     }
 }

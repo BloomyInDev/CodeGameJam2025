@@ -1,18 +1,21 @@
 package fr.bastienluben.cgj2025.Attaques;
 
 import fr.bastienluben.cgj2025.Entite.Personnage;
+import fr.bastienluben.cgj2025.lib.son.SoundManager;
 
 public abstract class Attaque {
     private double nbDegatAuHit;
     private String nom;
     private float tempsExecution;
     private float delaiAvantProchaineAttaque;
+    protected SoundManager soundManager;
 
     protected Attaque (double nbDegat, String nom, float tempsExecution, float delaiAvantProchaineAttaque) {
         this.nom = nom;
         this.nbDegatAuHit = nbDegat;
         this.tempsExecution = tempsExecution;
         this.delaiAvantProchaineAttaque = delaiAvantProchaineAttaque;
+        soundManager = new SoundManager();
     }
 
     public double getNbDegatAuHit() {

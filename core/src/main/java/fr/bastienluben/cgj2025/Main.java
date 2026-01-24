@@ -5,6 +5,7 @@ import java.util.Random;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -22,6 +23,7 @@ import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
 
 public class Main extends Game {
     public static final boolean DEBUG = true;
+    public static final int BPM = 140;
 
     public static Vector2 camera = new Vector2(0, 0);
     private static Random rand = new Random();
@@ -59,6 +61,7 @@ public class Main extends Game {
     private FontLoader fonts;
     private FitViewport viewport;
     private AssetManager assets;
+    private SoundManager soundManager;
 
     private AbstractScreen notreScreen;
 
@@ -78,10 +81,8 @@ public class Main extends Game {
         fonts.loadFont("font.ttf", "font");
         fonts.loadFont("font.ttf", "default");
 
-        Music musicDeFond =  Gdx.audio.newMusic(Gdx.files.internal("musique/musiqueDeFond.mp3"));
-        musicDeFond.setLooping(true);
-        musicDeFond.play();
-        SoundManager soundManager = new SoundManager();
+        soundManager = new SoundManager();
+        soundManager.play("fondMusicalJeu");
 
         assets = new AssetManager();
         UI.setScreenResolution(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -99,7 +100,7 @@ public class Main extends Game {
     }
 
     public void render() {
-        ScreenUtils.clear(0.1f, 0f, 0f, 0f);  // faut clear avant bande de batard
+        ScreenUtils.clear(0f, 0f, 0f, 0f);  // faut clear avant bande de batard
 
         // ça appelle le draw du screen
         super.render(); // important ?!?!?!
@@ -126,5 +127,9 @@ public class Main extends Game {
 
     public AssetManager getAssets() {
         return assets;
+    }
+
+    public SoundManager getSoundManager() {
+        return soundManager;
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.IScript;
 import fr.bastienluben.cgj2025.lib.config.ConfigLoader;
@@ -16,7 +17,6 @@ import java.util.Arrays;
 public class HighScoreText implements IScript {
     private int highScore;
     private Text highScoreText;
-    private float timer;
 
     @Override
     public void onLoad(AssetManager manager) {
@@ -25,7 +25,8 @@ public class HighScoreText implements IScript {
 
     @Override
     public void start() {
-        BitmapFont smallFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setSize(10).build());
+        BitmapFont smallFont = FontLoader.getInstance().getFont("default",
+            new FontParameterBuilder().setSize(10).build());
 
         highScore = ConfigLoader.getInstance().getConfig().getBestScore();
 

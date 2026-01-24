@@ -25,18 +25,20 @@ public class FabriqueGame {
 
     public AbstractGameScreen fabriqueNiveauKamikaze(int niveau) {
         System.out.println("Fabrication Kamikaze");
-        int nbBombes = (int) ((Math.floor((double) niveau / 4) + 1) * 2) + 6;
-        float probabiliteApparitionBombe = (0.008163265306122f * niveau) + 0.01f;
+        int nbBombes = (int) ((Math.floor((double) niveau / 4)+1) * 2) + 2;
+        float probabiliteApparitionBombe = ((0.008163265306122f/3) * niveau) + 0.01f;
         System.out.printf("Nombre de bombes : %d\n", nbBombes);
-        return new MainKamikazeScreen(game, assets, nbBombes, probabiliteApparitionBombe, 50);
+        return new MainKamikazeScreen(game, assets, nbBombes, probabiliteApparitionBombe, 30);
     }
 
     public AbstractGameScreen fabriqueNiveauTirDeBalle(int niveau) {
         System.out.println("Fabrication TirDeBalle");
         float vitesseMin = 200f + niveau * 10f;
         float vitesseMax = 500f + niveau * 50f;
+
+        int maxBallesMortes = niveau * 5;
         System.out.printf("Vitesses : %f - %f\n", vitesseMin, vitesseMax);
-        return new MainTirDeBalleScreen(game, assets, vitesseMin, vitesseMax);
+        return new MainTirDeBalleScreen(game, assets, vitesseMin, vitesseMax, maxBallesMortes);
     }
 
     public AbstractGameScreen fabriqueNiveauAleatoire(int niveau, boolean appelerStart) {
