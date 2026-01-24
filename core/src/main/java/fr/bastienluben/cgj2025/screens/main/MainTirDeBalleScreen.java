@@ -41,6 +41,7 @@ public class MainTirDeBalleScreen extends AbstractScreen {
         // Chaque balle est l'attaquant
         this.tirDeBalle = new TirDeBalle(60f);
 
+
         // sang
         feux = new FeuxDartificeManager(12f);
     }
