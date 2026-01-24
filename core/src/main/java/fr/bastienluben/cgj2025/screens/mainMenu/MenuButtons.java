@@ -23,8 +23,6 @@ public class MenuButtons implements IScript {
     private AbstractScreen screen;
 
     private Text titleText;
-    private Text startGameText;
-    private Text exitText;
     private Button startGameButton;
     private Button exitButton;
     private Button credits;
@@ -35,8 +33,27 @@ public class MenuButtons implements IScript {
     }
 
     @Override
-    public void onLoad(AssetManager manager) {
+    public void onLoad(AssetManager manager)
+    {
+        startGameButton = new Button(() -> {
+            this.screen.getGame().setScreen(new MainTirDeBalleScreen(this.screen.getGame(), this.screen.getGame().getAssets()));
+        }, manager.getTexture("jouer.png"), 252, 103);
+        startGameButton.setPosition(Bounds.Bottom);
+        startGameButton.setMargin(0, 300);
 
+        exitButton = new Button(() -> {
+            System.out.println("Bouton exit cliqué");
+            Gdx.app.exit();
+        }, manager.getTexture("quiter.png"), 252, 103);
+        exitButton.setPosition(Bounds.Bottom);
+        exitButton.setMargin(0, 100);
+
+        credits = new Button(() -> {
+            Button.disoseAllButtons();
+            screen.getGame().setScreen(new CreditsScreen(this.screen.getGame(), screen.getGame().getAssets()));
+        }, manager.getTexture("credits.png"), 252, 103);
+        credits.setMargin(0, 200);
+        credits.setPosition(Bounds.Bottom);
     }
 
     @Override
@@ -49,35 +66,6 @@ public class MenuButtons implements IScript {
         titleText.setPosition(Bounds.Top);
         titleText.setFont(titleFont);
         titleText.setMargin(150);
-
-        startGameButton = new Button(() -> {
-            this.screen.getGame().setScreen(new MainTirDeBalleScreen(this.screen.getGame(), this.screen.getGame().getAssets()));
-        }, 400, 100, Color.BLUE);
-        startGameButton.setPosition(Bounds.Bottom);
-        startGameButton.setMargin(0, 300);
-
-        startGameText = new Text("Jouer");
-        startGameText.setFont(smallFont);
-        startGameText.setPosition(Bounds.Bottom);
-        startGameText.setMargin(0, 345);
-
-        exitButton = new Button(() -> {
-            System.out.println("Bouton exit cliqué");
-            Gdx.app.exit();
-        }, 400, 100, Color.BLUE);
-        exitButton.setPosition(Bounds.Bottom);
-        exitButton.setMargin(0, 150);
-        exitText = new Text("Quitter");
-        exitText.setFont(smallFont);
-        exitText.setPosition(Bounds.Bottom);
-        exitText.setMargin(0, 195);
-
-        credits = new Button(() -> {
-            Button.disoseAllButtons();
-            screen.getGame().setScreen(new CreditsScreen(this.screen.getGame(), screen.getGame().getAssets()));
-        }, 256, 64, Color.YELLOW, "credits");
-        credits.setMargin(0, 32);
-        credits.setPosition(Bounds.Bottom);
     }
 
     @Override
@@ -87,7 +75,7 @@ public class MenuButtons implements IScript {
 
     @Override
     public void draw(SpriteBatch batch) {
-        Arrays.asList(titleText, startGameButton, startGameText, exitButton, exitText, credits).forEach(e -> e.draw(batch));
+        Arrays.asList(titleText, startGameButton, exitButton, credits).forEach(e -> e.draw(batch));
 
     }
 

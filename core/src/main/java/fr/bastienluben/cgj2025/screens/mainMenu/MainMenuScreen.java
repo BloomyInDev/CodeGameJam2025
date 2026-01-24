@@ -27,6 +27,10 @@ public class MainMenuScreen extends AbstractScreen {
         scripts = new ArrayList<>();
         scripts.addAll(Arrays.asList(new HighScoreText(), new MenuButtons(this)));
 
+        for (IScript scr : scripts)
+        {
+            scr.onLoad(assets);
+        }
     }
 
     @Override
