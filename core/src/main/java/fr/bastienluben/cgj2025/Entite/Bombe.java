@@ -9,6 +9,7 @@ public class Bombe {
     private int y;
 
     public Bombe(double timer, int x, int y, float delaiApparitionBombe) {
+        System.out.println("Une nouvelle bombe est apparue !");
         this.timer = timer;
         this.estClique = false;
         this.x = x;
@@ -23,7 +24,7 @@ public class Bombe {
                 tempsApparitionBombe = 0;
                 timer--;
             }
-            
+
         }
     }
 

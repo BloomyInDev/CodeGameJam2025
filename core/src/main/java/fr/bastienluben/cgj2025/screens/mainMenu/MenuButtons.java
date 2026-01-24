@@ -36,8 +36,9 @@ public class MenuButtons implements IScript {
     public void onLoad(AssetManager manager)
     {
         startGameButton = new Button(() -> {
-            this.screen.getGame().setScreen(new MainTirDeBalleScreen(this.screen.getGame(), this.screen.getGame().getAssets()));
+            this.screen.getGame().setScreen(new GameScreen(this.screen.getGame(), this.screen.getGame().getAssets()));
         }, manager.getTexture("jouer.png"), 252, 103);
+
         startGameButton.setPosition(Bounds.Bottom);
         startGameButton.setMargin(0, 300);
 

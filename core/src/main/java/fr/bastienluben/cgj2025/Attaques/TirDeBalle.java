@@ -50,10 +50,8 @@ public class TirDeBalle extends Attaque {
             super.attaquer(attaquant, adversaire);
 
             // débogage
-            System.out.println(
-                    attaquant.getNom() + " a touché " +
-                            adversaire.getNom() + " avec " + this.getNom() +
-                            " et inflige " + degats + " points de dégâts !");
+            System.out.printf("%s a touché %s avec %s et inflige %f points de dégâts ! Vie restante : %f\n", attaquant.getNom(), adversaire.getNom(), this.getNom(), degats, adversaire.getVie().getNbStat());
+            adversaire.getVie().retirerStat(this.getNbDegatAuHit());
         } else {
             // debogage utilisateur rate
             System.out.println(
@@ -65,12 +63,10 @@ public class TirDeBalle extends Attaque {
     /**
      * Effectue une attaque avec une balle spécifique comme attaquant.
      */
-    public void attaqueAvecBalle(Balle balle, Entite adversaire) {
+    public void attaqueAvecBalle(Balle balle, Hero adversaire) {
         // débogage
-        System.out.println(
-                balle.getNom() + " a touché " +
-                        adversaire.getNom() + " avec " + this.getNom() +
-                        " et inflige " + this.getNbDegatAuHit() + " points de dégâts !");
+        System.out.printf("%s a touché %s avec %s et inflige %f points de dégâts ! Vie restante : %f\n", balle.getNom(), adversaire.getNom(), this.getNom(), this.getNbDegatAuHit(), adversaire.getVie().getNbStat());
+        adversaire.getVie().retirerStat(this.getNbDegatAuHit());
     }
 
     private boolean entiteEstTouche(Personnage attaquant, Personnage adversaire) {
