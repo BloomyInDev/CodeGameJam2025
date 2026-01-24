@@ -14,7 +14,7 @@ public class BalleNormale extends Balle {
     private float timer;
 
     public BalleNormale(float x, float y, Vector2 cible, float vitesseMin, float vitesseMax) {
-        super(x, y, 80f, cible, 1, "normale");
+        super(x, y, 80f, cible, 1, "normale", false);
         random = new Random();
         setVitesse(random.nextFloat(vitesseMin, vitesseMax));
 

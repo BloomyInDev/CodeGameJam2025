@@ -1,6 +1,7 @@
 package fr.bastienluben.cgj2025.Entite;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Circle;
@@ -15,10 +16,15 @@ public abstract class Balle extends Entite {
     private Vector2 direction;
     private Texture texture;
     private Random random;
+    public final boolean isBoss;
     private TypeMouvementBalle typeMouvement;
 
-    public Balle(float x, float y, float rayon, Vector2 cible, int pointDeVie, String complementNom) {
+    public Color color = Color.WHITE;
+
+    public Balle(float x, float y, float rayon, Vector2 cible, int pointDeVie,
+                 String complementNom, boolean isBoss) {
         super();
+        this.isBoss = isBoss;
         this.pointDeVie = pointDeVie;
         this.position = new Vector2(x, y);
         this.nom = "Balle " + complementNom;

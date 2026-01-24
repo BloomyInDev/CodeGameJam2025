@@ -180,6 +180,11 @@ public class TirDeBalle extends Attaque {
         for (Balle balle : balles) {
             if (balle.estTouche(clickX, clickY)) {
                 balle.retirerPV();
+                if (balle.isBoss)
+                {
+                    balle.color.b = 0;
+                    balle.color.g = 0;
+                }
                 if (balle.getPointDeVie() <= 0) {
                     balle.detruire();
                     return true;

@@ -28,7 +28,7 @@ public class MainMenuScreen extends AbstractScreen {
     {
         scripts = new ArrayList<>();
         scripts.addAll(Arrays.asList(new HighScoreText(), new MenuButtons(this)));
-        background = new Image(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), assets.getTexture("background.png"));
+        background = new Image(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), assets.getTexture("bgMenu.png"));
 
         for (IScript scr : scripts)
         {

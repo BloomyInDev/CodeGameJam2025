@@ -53,7 +53,7 @@ public class GameScreen extends AbstractScreen {
         vie = new BarreDeVieHero(assets);
         inGameFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().build());
         inWaitFont = FontLoader.getInstance().getFont("default", new FontParameterBuilder().setSize(40).build());
-        background = new Image(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), assets.getTexture("background.png"));
+        background = new Image(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), assets.getTexture("bgCombat.png"));
     }
 
     @Override
@@ -111,10 +111,12 @@ public class GameScreen extends AbstractScreen {
     @Override
     public void draw(SpriteBatch batch) {
         batch.begin();
+        batch.setColor(Color.WHITE);
         background.draw(batch);
         if (currentScreen != null) {
             currentScreen.draw(batch);
         }
+        batch.setColor(Color.WHITE);
         levelText.draw(batch);
         if (gameOver) {
             textDeFin.draw(batch);

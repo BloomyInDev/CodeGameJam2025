@@ -90,13 +90,21 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
         batch.draw(heroTexture, heroX, heroY, hero.getTaille(), hero.getTaille());
 
         feux.draw(batch);
-        batch.setColor(Color.WHITE);
         for (Balle balle : tirDeBalle.getBalles()) {
             float rayon = balle.getHitbox().radius;
             float taille = rayon * 1.3f; // Diamètre
             float x = balle.getPosition().x - rayon + getGame().camera.x;
             float y = balle.getPosition().y - rayon + getGame().camera.y;
-            batch.draw(balle.getTexture(), x, y, taille * 1.75f, taille);
+            batch.setColor(balle.color);
+            if (balle.isBoss)
+            {
+                batch.draw(balle.getTexture(), x, y, taille, taille);
+            }
+            else
+            {
+                batch.draw(balle.getTexture(), x, y, taille * 1.75f, taille);
+            }
+            batch.setColor(Color.WHITE);
         }
 
     }
