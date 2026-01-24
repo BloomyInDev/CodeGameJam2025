@@ -50,7 +50,7 @@ public class MainKamikazeScreen extends AbstractGameScreen {
     }
 
     public MainKamikazeScreen(Main game, AssetManager assets) {
-        this(game, assets, 8, .01f, 50);
+        this(game, assets, 8, .01f, 30);
     }
 
     @Override
@@ -63,8 +63,10 @@ public class MainKamikazeScreen extends AbstractGameScreen {
         // Logique de jeu
         if (MathUtils.randomBoolean(probabiliteApparitionBombe)) {
             int x = MathUtils.random(0, (int) screenWidth - 50);
-            int y = MathUtils.random(0, (int) screenHeight - 50);
+            int y = MathUtils.random(150, (int) screenHeight - 50);
             Bombe bombe = new Bombe(60, x, y, 0);
+            kamikaze.augmenterNbBombesCrees();
+            System.out.printf("Il y a %d / %d bombes crées\n", kamikaze.getNbBombesCrees(), kamikaze.getLimiteNbBombesSpawnees());
             bombes.add(bombe);
         }
 
