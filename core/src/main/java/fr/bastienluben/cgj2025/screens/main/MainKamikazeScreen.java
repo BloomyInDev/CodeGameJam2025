@@ -66,6 +66,7 @@ public class MainKamikazeScreen extends AbstractGameScreen {
             }
             else if (bombe.getTimer() <= 0) {
                 iterator.remove();
+                this.game.getSoundManager().effectuerEffetSonore("explosion");
                 Hero.getInstance().getVie().retirerStat(10);
             }
         }
@@ -76,6 +77,7 @@ public class MainKamikazeScreen extends AbstractGameScreen {
             for (Bombe bombe : bombes) {
                 if (x >= bombe.getX() && x <= bombe.getX() + 50 && y >= bombe.getY() && y <= bombe.getY() + 50) {
                     bombe.click();
+                    this.game.getSoundManager().effectuerEffetSonore("extinction");
                     feux.createExplosionAt(
                         new Vector2(bombe.getX() + 25, bombe.getY() + 25), 1f, Color.ORANGE);
                     Main.shake(0.1f, 6);

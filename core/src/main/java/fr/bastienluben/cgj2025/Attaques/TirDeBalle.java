@@ -1,9 +1,11 @@
 package fr.bastienluben.cgj2025.Attaques;
 
+import com.badlogic.gdx.audio.Music;
 import fr.bastienluben.cgj2025.Entite.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import fr.bastienluben.cgj2025.lib.son.SoundManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +70,7 @@ public class TirDeBalle extends Attaque {
     public void attaqueAvecBalle(Balle balle, Hero adversaire) {
         // débogage
         System.out.printf("%s a touché %s avec %s et inflige %f points de dégâts ! Vie restante : %f\n", balle.getNom(), adversaire.getNom(), this.getNom(), this.getNbDegatAuHit(), adversaire.getVie().getNbStat());
+        soundManager.effectuerEffetSonore("megaPunch");
         adversaire.getVie().retirerStat(this.getNbDegatAuHit() * (balle.estGrosseBalle() ? 2 : 1));
     }
 
@@ -179,6 +182,7 @@ public class TirDeBalle extends Attaque {
     public boolean gererClic(float clickX, float clickY) {
         for (Balle balle : balles) {
             if (balle.estTouche(clickX, clickY)) {
+                soundManager.effectuerEffetSonore("punch");
                 balle.retirerPV();
                 if (balle.isBoss)
                 {

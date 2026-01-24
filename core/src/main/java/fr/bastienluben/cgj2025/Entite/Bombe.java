@@ -1,5 +1,7 @@
 package fr.bastienluben.cgj2025.Entite;
 
+import fr.bastienluben.cgj2025.lib.son.SoundManager;
+
 public class Bombe {
     private double timer;
     private boolean estClique;
@@ -8,6 +10,8 @@ public class Bombe {
     private int x;
     private int y;
 
+    private SoundManager soundManager;
+
     public Bombe(double timer, int x, int y, float delaiApparitionBombe) {
         System.out.println("Une nouvelle bombe est apparue !");
         this.timer = timer;
@@ -15,6 +19,8 @@ public class Bombe {
         this.x = x;
         this.y = y;
         this.delaiApparitionBombe = (float) (delaiApparitionBombe == 0.0 ?  0.1 : delaiApparitionBombe);
+        soundManager = new SoundManager();
+        soundManager.effectuerEffetSonore("clock");
     }
 
     public void update(float delta) {

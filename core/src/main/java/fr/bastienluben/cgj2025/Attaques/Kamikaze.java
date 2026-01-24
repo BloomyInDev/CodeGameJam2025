@@ -101,6 +101,7 @@ public class Kamikaze extends Attaque {
             b.update(0);
             if (!b.isEstClique() && b.getTimer() <= 0) {
                 //super.attaquer(attaquant, adversaire);
+                soundManager.effectuerEffetSonore("extinction");
                 bombes.remove(b);
 
                 //gameOver();
@@ -111,6 +112,7 @@ public class Kamikaze extends Attaque {
     public void clickBombe(int x, int y) {
         for (Bombe b : bombes) {
             if (x >= b.getX() && x <= b.getX() + 50 && y >= b.getY() && y <= b.getY() + 50) {
+                soundManager.effectuerEffetSonore("extinction");
                 b.click();
             }
         }

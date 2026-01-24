@@ -14,6 +14,8 @@ public class BalleBoss extends Balle
         setTexture(new Texture(Gdx.files.internal("boss.png")));
 
         setTypeMouvement(new MouvementLineaire());
+
+        soundManager.effectuerEffetSonore("boss");
     }
 
     @Override
