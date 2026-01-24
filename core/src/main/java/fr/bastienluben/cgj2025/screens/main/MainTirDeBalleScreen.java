@@ -82,14 +82,10 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
     @Override
     public void draw(SpriteBatch batch) {
         // Dessiner le héros avec la texture hero.png
-        batch.begin();
         float heroX = hero.getPosition().x - hero.getTaille() / 2 + Main.camera.x;
         float heroY = hero.getPosition().y - hero.getTaille() / 2 + Main.camera.y;
         batch.draw(heroTexture, heroX, heroY, hero.getTaille(), hero.getTaille());
-        batch.end();
 
-        // Dessiner les ennemis (images enerve.png) avec SpriteBatch
-        batch.begin();
         feux.draw(batch);
         for (Balle balle : tirDeBalle.getBalles()) {
             float rayon = balle.getHitbox().radius;
@@ -103,12 +99,12 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
 
     @Override
     public void draw(ShapeRenderer batch) {
-        batch.begin(ShapeRenderer.ShapeType.Filled);
+        /**batch.begin(ShapeRenderer.ShapeType.Filled);
         batch.setColor(1, 1, 1, 1); // Blanc
         float heroX = hero.getPosition().x - hero.getTaille() / 2;
         float heroY = hero.getPosition().y - hero.getTaille() / 2;
         batch.rect(heroX, heroY, hero.getTaille(), hero.getTaille());
-        batch.end();
+        batch.end();*/
     }
 
     @Override

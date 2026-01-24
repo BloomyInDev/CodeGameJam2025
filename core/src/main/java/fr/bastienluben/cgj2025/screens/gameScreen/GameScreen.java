@@ -29,6 +29,7 @@ public class GameScreen extends AbstractScreen {
     private Image background;
     private Text levelText;
     private boolean enTransition = false;
+    private boolean aDejaRegenLeNiveau = false;
     private float timerTransition = 0f;
     private boolean gameOver = false;
     private Text textDeFin;
@@ -76,6 +77,7 @@ public class GameScreen extends AbstractScreen {
                 if (currentScreen.estTerminee()) {
                     level++;
                     enTransition = true;
+                    currentScreen.update(delta);
                     start();
                 }
                 if (Hero.getInstance().getPointDeVie() <= 0) {
