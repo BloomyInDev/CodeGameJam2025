@@ -95,10 +95,13 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
             float taille = rayon * 1.3f; // Diamètre
             float x = balle.getPosition().x - rayon + getGame().camera.x;
             float y = balle.getPosition().y - rayon + getGame().camera.y;
-            batch.setColor(balle.color);
             if (balle.isBoss)
             {
-                batch.draw(balle.getTexture(), x, y, taille, taille);
+                batch.draw(balle.getTexture(),
+                    x + (balle.rotation / 2),
+                    y + (balle.rotation / 2),
+                    taille - balle.rotation,
+                    taille - balle.rotation);
             }
             else
             {

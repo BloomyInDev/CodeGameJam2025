@@ -20,14 +20,11 @@ public class BalleBoss extends Balle
     public void mettreAJour(float dt)
     {
         super.mettreAJour(dt);
-
-        this.color.g += dt * 8;
-        if (this.color.g > 1)
-            this.color.g = 1f;
-
-        this.color.b += dt * 8;
-        if (this.color.b > 1)
-            this.color.b = 1f;
+        this.rotation -= dt * 128;
+        if (rotation < 0)
+        {
+            rotation = 0;
+        }
     }
 
     @Override

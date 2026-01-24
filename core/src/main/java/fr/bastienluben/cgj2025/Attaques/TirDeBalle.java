@@ -182,8 +182,7 @@ public class TirDeBalle extends Attaque {
                 balle.retirerPV();
                 if (balle.isBoss)
                 {
-                    balle.color.b = 0;
-                    balle.color.g = 0;
+                    balle.rotation = 40;
                 }
                 if (balle.getPointDeVie() <= 0) {
                     balle.detruire();

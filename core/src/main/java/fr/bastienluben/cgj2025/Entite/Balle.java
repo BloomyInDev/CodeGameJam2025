@@ -19,7 +19,7 @@ public abstract class Balle extends Entite {
     public final boolean isBoss;
     private TypeMouvementBalle typeMouvement;
 
-    public Color color = Color.WHITE;
+    public int rotation;
 
     public Balle(float x, float y, float rayon, Vector2 cible, int pointDeVie,
                  String complementNom, boolean isBoss) {
