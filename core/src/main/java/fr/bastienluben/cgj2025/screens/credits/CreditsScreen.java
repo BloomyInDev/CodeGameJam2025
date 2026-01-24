@@ -32,7 +32,8 @@ public class CreditsScreen extends AbstractScreen
     @Override
     public void onLoad(AssetManager assets)
     {
-        morganaaaaaaa = new Image(138, 198, assets.getTexture("morgana.png"));
+        morganaaaaaaa = new Image(138, 198,
+            assets.getTexture("morgana.png"));
         morganaaaaaaa.setMargin(0, 0, 32, 0);
         morganaaaaaaa.setPosition(Bounds.BottomLeft);
     }
@@ -40,7 +41,7 @@ public class CreditsScreen extends AbstractScreen
     @Override
     public void start()
     {
-        credits = new Text("Bastinou L\nClement ?\nQuentin ?\nLeo M\nOmar ?\nRomain ?\nRomain T");
+        credits = new Text("Bastinou L\nClement ?\nQuentin N\nLeo M\nOmar Q\nRomain ?\nRomain T");
         credits.setPosition(Bounds.Center);
         credits.posOffset.y -= 16;
         rnd = new Random();

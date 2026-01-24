@@ -3,6 +3,7 @@ package fr.bastienluben.cgj2025.screens.gameScreen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.Lerps;
 import fr.bastienluben.cgj2025.lib.entities.ISpriteDrawable;
 import fr.bastienluben.cgj2025.lib.ui.Image;
@@ -67,8 +68,10 @@ public class FeuxDartifice implements ISpriteDrawable
         {
             for (int i = 0; i < lumCount; i++)
             {
-                bet[i].x = Lerps.CubeOut(lums[i].x, targs[i].x, timer / (ft * 2), (byte)64);
-                bet[i].y = Lerps.CubeOut(lums[i].y, targs[i].y, timer / (ft * 2), (byte)64);
+                bet[i].x = Lerps.CubeOut(lums[i].x, targs[i].x,
+                    ft > 10 ? timer : timer / 6, (byte)64);
+                bet[i].y = Lerps.CubeOut(lums[i].y, targs[i].y,
+                    ft > 10 ? timer : timer / 6, (byte)64);
             }
         }
         timer += dt / ft;
@@ -84,8 +87,8 @@ public class FeuxDartifice implements ISpriteDrawable
             for (int i = 0; i < lumCount; i++)
             {
                 batch.draw(Image.getDefaultTexture(),
-                    bet[i].x - 2,
-                    bet[i].y - 2,
+                    bet[i].x - 2 + Main.camera.x,
+                    bet[i].y - 2 + Main.camera.x,
                     4, 4);
             }
         }

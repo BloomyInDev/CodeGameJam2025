@@ -30,6 +30,10 @@ public class MainMenuScreen extends AbstractScreen {
         scripts.addAll(Arrays.asList(new HighScoreText(), new MenuButtons(this)));
         background = new Image(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), assets.getTexture("background.png"));
 
+        for (IScript scr : scripts)
+        {
+            scr.onLoad(assets);
+        }
     }
 
     @Override

@@ -1,6 +1,8 @@
 package fr.bastienluben.cgj2025.screens.main;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,19 +17,26 @@ import fr.bastienluben.cgj2025.Entite.Hero;
 import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractGameScreen;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
+import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartificeManager;
 
-import java.util.Random;
 
 public class MainTirDeBalleScreen extends AbstractGameScreen {
     private Hero hero;
     private TirDeBalle tirDeBalle;
+
     private float vitesseMin;
     private float vitesseMax;
+
+    private FeuxDartificeManager feux;
+
+    private final Color sang;
+
 
     public MainTirDeBalleScreen(Main game, AssetManager assets, float vitesseMin, float vitesseMax) {
         super(game, assets);
         this.vitesseMin = vitesseMin;
         this.vitesseMax = vitesseMax;
+        sang = new Color(0.5f, 0, 0, 1f);
     }
 
     public MainTirDeBalleScreen(Main game, AssetManager assets) {
@@ -41,6 +50,9 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
         // Créer l'attaque TirDeBalle : cible, délai 1s, rayon 60, 1 dégât par balle
         // Chaque balle est l'attaquant
         this.tirDeBalle = new TirDeBalle( vitesseMin, vitesseMax);
+
+        // sang
+        feux = new FeuxDartificeManager(12f);
     }
 
     @Override
@@ -53,19 +65,27 @@ public class MainTirDeBalleScreen extends AbstractGameScreen {
         if (Gdx.input.justTouched()) {
             Vector2 clickPosition = new Vector2(Gdx.input.getX(), Gdx.input.getY());
             clickPosition = UI.normalToGdx(clickPosition);
-            tirDeBalle.gererClic(clickPosition.x, clickPosition.y);
+            if (tirDeBalle.gererClic(clickPosition.x, clickPosition.y))
+            {
+                // on kill
+                feux.createExplosionAt(clickPosition, 2f, sang);
+                this.getGame().shake(0.05f, 4);
+            }
         }
+
+        Main.updateShake(delta);
+
+        feux.update(delta);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        // Dessiner les ennemis (images enerve.png) avec SpriteBatch
-
+        feux.draw(batch);
         for (Balle balle : tirDeBalle.getBalles()) {
             float rayon = balle.getHitbox().radius;
-            float taille = rayon * ((float)1.3); // Diamètre
-            float x = balle.getPosition().x - rayon;
-            float y = balle.getPosition().y - rayon;
+            float taille = rayon * 1.3f; // Diamètre
+            float x = balle.getPosition().x - rayon + getGame().camera.x;
+            float y = balle.getPosition().y - rayon + getGame().camera.y;
             batch.draw(balle.getTexture(), x, y, taille, taille);
         }
 
