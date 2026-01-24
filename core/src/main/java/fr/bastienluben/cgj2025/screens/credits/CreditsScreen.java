@@ -1,19 +1,23 @@
 package fr.bastienluben.cgj2025.screens.credits;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+
 import fr.bastienluben.cgj2025.Main;
 import fr.bastienluben.cgj2025.lib.AssetManager;
 import fr.bastienluben.cgj2025.lib.Chrono;
-import fr.bastienluben.cgj2025.lib.ui.*;
+import fr.bastienluben.cgj2025.lib.ui.Bounds;
+import fr.bastienluben.cgj2025.lib.ui.Button;
+import fr.bastienluben.cgj2025.lib.ui.Image;
+import fr.bastienluben.cgj2025.lib.ui.Text;
+import fr.bastienluben.cgj2025.lib.ui.UI;
 import fr.bastienluben.cgj2025.screens.AbstractScreen;
-import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartifice;
 import fr.bastienluben.cgj2025.screens.gameScreen.FeuxDartificeManager;
 import fr.bastienluben.cgj2025.screens.mainMenu.MainMenuScreen;
-
-import java.util.Random;
 
 public class CreditsScreen extends AbstractScreen
 {
@@ -41,6 +45,7 @@ public class CreditsScreen extends AbstractScreen
     @Override
     public void start()
     {
+        game.getSoundManager().play("credit");
         credits = new Text("Bastinou L\nClement ?\nQuentin N\nLeo M\nOmar Q\nRomain ?\nRomain T");
         credits.setPosition(Bounds.Center);
         credits.posOffset.y -= 16;
@@ -49,6 +54,7 @@ public class CreditsScreen extends AbstractScreen
         {
             Button.disoseAllButtons();
             this.getGame().setScreen(new MainMenuScreen(getGame(), getGame().getAssets()));
+            game.getSoundManager().play("fondMusicalJeu");
         }, 256, 64, Color.BLUE, "retour");
         retour.setPosition(Bounds.Bottom);
         retour.setMargin(0, 128);

@@ -28,6 +28,7 @@ public class Main extends Game {
     private static Random rand = new Random();
     private static float shakeTimer, shakeTime;
     private static int shakeAmount;
+    private static SoundManager soundManager;
     public static void resetCamera()
     {
         camera.x = 0;
@@ -79,10 +80,8 @@ public class Main extends Game {
         fonts.loadFont("font.ttf", "font");
         fonts.loadFont("font.ttf", "default");
 
-        Music musicDeFond =  Gdx.audio.newMusic(Gdx.files.internal("musique/musiqueDeFond.mp3"));
-        musicDeFond.setLooping(true);
-        musicDeFond.play();
-        SoundManager soundManager = new SoundManager();
+        soundManager = new SoundManager();
+        soundManager.play("fondMusicalJeu");
 
         assets = new AssetManager();
         UI.setScreenResolution(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -128,4 +127,9 @@ public class Main extends Game {
     public AssetManager getAssets() {
         return assets;
     }
+
+    public static SoundManager getSoundManager() {
+        return soundManager;
+    }
+
 }
