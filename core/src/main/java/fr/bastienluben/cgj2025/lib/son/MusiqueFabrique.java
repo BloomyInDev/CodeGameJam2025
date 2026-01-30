@@ -25,8 +25,11 @@ public class MusiqueFabrique {
         Music sonDeFond = Gdx.audio.newMusic(Gdx.files.internal("musique/musiqueDeFond.mp3"));
         sonDeFond.setVolume(.2f);
 
+        Music sonDeCredit = Gdx.audio.newMusic(Gdx.files.internal("musique/10eCodeGameJam.mp3"));
+        sonDeCredit.setVolume(.5f);
+
         listeMusique.put("fondMusicalJeu", sonDeFond);
-        listeMusique.put("credit",Gdx.audio.newMusic(Gdx.files.internal("musique/10eCodeGameJam.mp3")));
+        listeMusique.put("credit", sonDeCredit);
         return listeMusique;
     }
 }
